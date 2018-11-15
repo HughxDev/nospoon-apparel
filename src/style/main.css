@@ -133,7 +133,8 @@ p {
 }
 
 .shading {
-  background-color: hsla(0, 0%, 0%, 0.75);
+  /* background-color: rgba(0, 0, 0, 0.75); */
+  background-color: rgba(16, 16, 16, 0.75);
   position: absolute;
   top: 0;
   left: 0;
@@ -156,7 +157,6 @@ a:hover, a:focus {
 }
 
 .site-nav {
-  color: rgb(10, 10, 10);
   flex: 1;
   text-align: center;
   margin: 1.5rem auto;
@@ -240,7 +240,7 @@ nav, .hamburger, audio, .volume {
   position: absolute;
   top: 0;
   right: 0;
-  background: rgb(20,20,20) /*url('../img/concrete-black.png') repeat*/;
+  background: rgb(16, 16, 16) /*url('../img/concrete-black.png') repeat*/;
   color: rgb(235, 235, 235);
   padding: 2.1rem 0.75rem;
   width: 29rem;
@@ -270,7 +270,7 @@ nav, .hamburger, audio, .volume {
 
 button, .button {
   background: rgb(235, 235, 235);
-  color: rgb(20, 20, 20);
+  color: rgb(16, 16, 16);
   border: 1px solid transparent;
   border-radius: .3rem;
   font-size: 1.5rem;
