@@ -44,7 +44,7 @@ gulp.task( 'jsmin', ( cb ) => {
 
 gulp.task( 'img', ( cb ) => {
   pump( [
-    gulp.src('./src/img/*.{png,gif,jpg,jpeg,jxr,webp,bpg,bmp}'),
+    gulp.src('./src/img/*.{png,gif,jpg,jpeg,jxr,webp,bpg,bmp,svg}'),
     gulp.dest('./dist/img')
   ], cb );
 } );
