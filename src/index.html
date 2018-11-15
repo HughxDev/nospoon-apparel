@@ -1,97 +1,98 @@
 <!DOCTYPE html>
-<html lang="ja" xml:lang="ja" class="no-js">
+<html lang="en" xml:lang="en" class="no-js">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>レッドブルー・東京支社</title>
-    <meta name="description" content="いつか、この夢は本当になるでしょうよ。" />
+    <title>No Spoon Apparel</title>
+    <meta name="description" content="Escape the Matrix. Streetwear for the indie creative. | A side-hustle by Hugh Guiney." />
     <link rel="icon" type="image/x-icon" sizes="16x16 32x32 48x48 256x256" href="/favicon.ico" />
     <link rel="stylesheet" href="style/main.css" />
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:700,900&amp;subset=japanese" onload="this.rel = 'stylesheet'" />
-    <link rel="preload" as="style" href="style/hamburgers.css" onload="this.rel = 'stylesheet'" />
-    <link rel="preload" as="style" href="style/grain.css" onload="this.rel = 'stylesheet'" />
+    <!-- <link rel="preload" as="style" href="style/hamburgers.css" onload="this.rel = 'stylesheet'" /> -->
+    <!-- <link rel="preload" as="style" href="style/grain.css" onload="this.rel = 'stylesheet'" /> -->
     <noscript>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:700,900&amp;subset=japanese" />
-      <link rel="stylesheet" href="style/hamburgers.css" />
+      <!-- <link rel="stylesheet" href="style/hamburgers.css" /> -->
       <link rel="stylesheet" href="style/grain.css" />
     </noscript>
-    <!-- <link rel="preload" as="audio" href="audio/Tatsuro Yamashita - Someday.mp3" /> -->
   </head>
   <body>
     <div class="shading">
       <div id="controls" class="controls">
-        <button id="volume" class="volume" data-playing-icon="🔊" data-muted-icon="🔇" tabindex="0">🔇</button>
-        <!-- <div id="language" class="language">
-          <a class="active" href="/ja">🇯🇵</a>
-          <a href="/en">🇺🇸</a>
-        </div> -->
-      </div>
-      <nav>
-        <input id="checkbox" class="checkbox" type="checkbox" hidden />
-        <label
-          id="hamburger"
-          for="checkbox"
-          class="hamburger hamburger--collapse"
-          aria-label="メニューをトグルして"
-          title="メニューをトグルして"
-          role="button"
-          tabindex="0"
-          aria-controls="tray"
-          aria-expanded="false"
-        >
-          <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-          </span>
-        </label>
-        <div id="tray" class="tray" aria-hidden="true">
-          <h2 class="tray-heading">リソース</h2>
-          <h3 id="visa-resources" class="tray-heading">ビザ</h3>
-          <ul id="tray-links" class="tray-links">
-            <li>
-              <a class="tray-link" href="https://asia.nikkei.com/Japan-Update/Japan-eyes-startup-visa-program-to-lure-foreign-businesses" target="_blank" rel="noopener">Japan eyes startup visa program to lure foreign businesses</a>
-              <ul>
-                <li><a class="tray-link" href="https://news.ycombinator.com/item?id=15875627" target="_blank" rel="noopener">Hacker News discussion</a></li>
-              </ul>
-            </li>
-            <li><a class="tray-link" href="https://medium.com/makersbootcamp/how-hard-is-is-to-get-a-startup-visa-to-move-to-japan-95292d48ae8e" target="_blank" rel="noopener">How hard is it to get a Startup Visa to move to Japan?</a></li>
-            <li><a class="tray-link" href="https://www.tokyoimmigration.jp/?p=171" target="_blank" rel="noopener">I want to start my own business in Japan.</a></li>
-            <li><a class="tray-link" href="https://startup.fukuoka.jp/" target="_blank" rel="noopener">Startup City Fukuoka</a></li>
-          </ul>
-          <h3 id="culture" class="tray-heading"><ruby>文化<rp>（</rp><rt>ぶんか</rt><rp>）</rp></ruby></h3>
-          <ul class="tray-links">
-            <li><a class="tray-link" href="https://www.kalzumeus.com/2014/11/07/doing-business-in-japan/" target="_blank" rel="noopener">Doing Business In Japan</a></li>
-          </ul>
+        <div id="language" class="language">
+          <a title="Japanese" href="/ja">🇯🇵</a>
+          <a class="active" title="English" href="/en">🇺🇸</a>
         </div>
-      </nav>
-      <!-- <img id="godzilla" class="godzilla" src="img/godzilla.png" width="64" alt="ゴジラ" /> -->
+
+        <div id="cart-toggle" class="cart-toggle">
+          <input id="checkbox" class="checkbox" type="checkbox" hidden />
+          <label
+            id="hamburger"
+            for="checkbox"
+            class="hamburger hamburger--collapse"
+            aria-label="Toggle menu"
+            title="Toggle menu"
+            role="button"
+            tabindex="0"
+            aria-controls="cart"
+            aria-expanded="false"
+          >
+            <!-- <span class="hamburger-box">
+              <span class="hamburger-inner"></span>
+            </span> -->
+            <img src="img/shopping-cart-solid.svg" width="20" alt="🛒" />
+          </label>
+          <div id="cart" class="cart" aria-hidden="true">
+            <h2 class="cart-heading sr-only">Cart</h2>
+            <p id="cart-empty" class="cart-text">Your cart is empty.</p>
+            <form>
+              <button id="checkout" class="cart-action" disabled>Checkout</button>
+            </form>
+          </div><!--/#cart-->
+        </div>
+      </div>
       <main>
-        <img id="logo" class="logo" src="img/redblue-logo--1024-transparent-dropshadow.png" width="192" alt="ロゴ" />
-        <h1><span id="brand-name" class="brand-name">レッドブルー</span><span id="middle-dot" class="middle-dot">・</span><span id="branch-name" class="toukyou-shisha">東京支社</span></h1>
-        <p id="motivation-nihongo" class="motivation"><span><span id="itsuka" class="wordwrap">いつか、</span><span id="kono" class="wordwrap">この</span><span id="yume-ha" class="wordwrap">夢は</span><span id="hontou-ni" class="wordwrap">本当に</span><span id="naru-deshou-yo" class="wordwrap">なるでしょうよ。</span></span></p>
-        <!-- <p class="motivation">いつか、この夢は本当になりますよ。</p> -->
-        <p id="motivation-eigo" class="motivation" hidden>Someday, this dream will come true.</p>
+        <div class="content">
+          <h1 id="branding" class="branding">
+            <span id="brand" class="brand">No Spoon</span>
+            <img id="logo" class="logo" src="img/no-spoon-logo.svg" width="211" alt="logo" />
+            <span id="sub-brand" class="sub-brand">Apparel</span>
+          </h1>
+          <div id="intro" class="intro">
+            <p lang="en">Escape the Matrix. Streetwear for the indie creative.</p>
+            <p lang="ja" hidden><span><span class="ww">マトリックスを</span><span class="ww">脱出</span><span class="ww">して。</span><span class="ww">インディーズの</span><span class="ww">クリエイティブな</span><span class="ww">人の</span><span class="ww">ための</span><span class="ww">ストリートウェア。</span></span></p>
+            <p lang="en">A side-hustle by Hugh Guiney.</p>
+            <p lang="ja" hidden><span><span class="ww">ヒュー・</span><span class="ww">ガイニーによる</span><span class="ww">サイド・</span><span class="ww">ハッスル。</span></span></p>
+            <nav id="site-nav" class="site-nav">
+              <div class="nav-content">
+                <!-- <a class="nav-link" href="#">Home</a> -->
+                <a id="about-link" class="nav-link" href="#">About</a>
+                <a id="collection-link" class="nav-link" href="#">Collection</a>
+                <!-- <a class="nav-link" href="#">New Arrivals</a> -->
+                <!-- <details class="nav-submenu">
+                  <summary class="nav-link">Shirts</summary>
+                  <div class="nav-submenu__menu">
+                    <a class="nav-link" href="#">T-shirts</a>
+                    <a class="nav-link" href="#">Sweatshirts</a>
+                  </div>
+                </details>
+                <a class="nav-link" href="#">Holiday</a> -->
+                <!-- <a class="nav-link" href="#">Home</a>
+                <a class="nav-link" href="#">About</a>
+                <a class="nav-link" href="#">New Arrivals</a>
+                <a class="nav-link" href="#">Shirts</a>
+                <a class="nav-link" href="#">Sweatshirts</a>
+                <a class="nav-link" href="#">Holiday</a> -->
+              </div>
+            </nav>
+          </div>
+        </div>
       </main>
-      <footer>
-        <p id="current-time" class="current-time" style="opacity: 0; transition: 1s ease opacity;">
-          <span id="current-time-text">東京での<ruby>現在<rp>（</rp><rt>げんざい</rt><rp>）</rp>時刻<rp>（</rp><rt>じこく</rt><rp>）</rp>：</span>
-          <time id="datetime" datetime="">
-            <span></span>
-            <span id="year"></span><span id="year-kanji">年</span><span id="month"></span><span id="month-kanji">月</span><span id="day"></span><span id="day-kanji">日</span>
-            <span id="hour"></span><span id="hour-kanji">時</span><span id="minutes"></span><span id="minute-kanji">分</span><span id="seconds"></span><span id="seconds-kanji">秒</span>
-            <span id="am" hidden>
-              <ruby id="am-nihongo">午前<rp>（</rp><rt>ごぜん</rt><rp>）</rp></ruby>
-              <!-- <abbr id="am-eigo" hidden>PM</abbr> -->
-            </span>
-            <span id="pm" hidden>
-              <ruby id="pm-nihongo">午後<rp>（</rp><rt>ごご</rt><rp>）</rp></ruby>
-              <!-- <abbr id="pm-eigo" hidden>PM</abbr> -->
-            </span>
-          </time>
-        </p>
-      </footer>
-    </div>
-    <audio id="someday" autoplay muted loop src="audio/Tatsuro Yamashita - Someday.mp3"></audio>
+      <!-- <footer id="footer" class="footer">
+        <p>© <span id="est-year">2016</span>–<span id="current-year">2018</span> No Spoon Apparel</p>
+      </footer> -->
+    </div><!--/#shading-->
     <script src="script/main.js"></script>
   </body>
 </html>

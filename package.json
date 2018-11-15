@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "crunch": "find ./src/img/png/ -type f -name \"*.png\" -exec guetzli --verbose --quality 84 {} {}.jpg \\; && rename \"s/png.jpg/jpg/\" ./src/img/png/*.png.jpg",
+    "progressive": "find ./src/img/png/ -type f -name \"*.jpg\" -exec jpegtran -outfile {}.prog -progressive {} \\; && rename \"s/jpg.prog/prog.jpg/\" ./src/img/png/*.prog"
+  },
   "dependencies": {
     "apache-server-configs": "^3.0.0",
     "autoprefixer": "^9.3.1",

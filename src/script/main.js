@@ -1,13 +1,13 @@
 'use strict';
 // https://stackoverflow.com/a/46261084/214325
-function getTokyoTime() {
+function getBostonTime() {
   // create Date object for current location
   var date = new Date();
 
   // convert to milliseconds, add local time zone offset and get UTC time in milliseconds
   var utcTime = date.getTime() + (date.getTimezoneOffset() * 60000);
 
-  // time offset for Tokyo is +9
+  // time offset for Boston is +9
   var timeOffset = 9;
 
   // create new Date object for a different timezone using supplied its GMT offset.
@@ -22,23 +22,23 @@ function isNewYears() {
   return ( $month.textContent === '12' ) && ( $day.textContent === '31' );
 }
 
-function displayTokyoTime() {
-  var tokyoTime = getTokyoTime();
-  var isCurrentlyLastDay = isLastDay( tokyoTime );
-  var hours = tokyoTime.getHours();
-  var minutes = tokyoTime.getMinutes();
-  var seconds = tokyoTime.getSeconds();
+function displayBostonTime() {
+  var BostonTime = getBostonTime();
+  var isCurrentlyLastDay = isLastDay( BostonTime );
+  var hours = BostonTime.getHours();
+  var minutes = BostonTime.getMinutes();
+  var seconds = BostonTime.getSeconds();
 
   if ( !$year.textContent.length || isNewYears() ) {
-    $year.textContent = tokyoTime.getFullYear();
+    $year.textContent = BostonTime.getFullYear();
   }
 
   if ( !$month.textContent.length || isCurrentlyLastDay ) {
-    $month.textContent = tokyoTime.getMonth();
+    $month.textContent = BostonTime.getMonth();
   }
 
   if ( !$day.textContent.length || ( hours >= 23 ) || ( hours <= 1 ) ) {
-    $day.textContent = tokyoTime.getDate();
+    $day.textContent = BostonTime.getDate();
   }
 
   if ( !$hour.textContent.length || ( seconds >= 59 ) || ( seconds <= 1 ) ) {
@@ -58,7 +58,7 @@ function displayTokyoTime() {
 
   $minutes.textContent = ( minutes >= 10 ) ? minutes : '0' + minutes;
   $seconds.textContent = ( seconds >= 10 ) ? seconds : '0' + seconds;
-  $datetime.setAttribute( 'datetime', tokyoTime.toISOString() );
+  $datetime.setAttribute( 'datetime', BostonTime.toISOString() );
 }
 
 function playMusic() {
@@ -73,28 +73,27 @@ $html.classList.add( 'js' );
 var $checkbox = document.getElementById( 'checkbox' );
 var $hamburger = document.getElementById( 'hamburger' );
 var $hamburgerTarget = document.getElementById( $hamburger.getAttribute( 'aria-controls' ) );
-var $trayLinks = document.querySelectorAll( '.tray-link' );
-var $someday = document.getElementById( 'someday' );
-var $volume = document.getElementById( 'volume' );
-var $nav = document.querySelector( 'nav' );
+var $cart = document.getElementById( 'cart' );
+var $cartLinks = document.querySelectorAll( '.cart-link, .cart-action' );
+var $nav = document.getElementById( 'site-nav' );
 
 var KEY_ENTER = 13;
 var KEY_SPACE = 32;
 
-$nav.addEventListener( 'click', function ( event ) {
+$cart.addEventListener( 'click', function ( event ) {
   event.stopPropagation();
 } );
 
 // Accessibility
-function takeTrayLinksOutOfTabOrder() {
-  for ( var i = 0; i < $trayLinks.length; i++ ) {
-    $trayLinks[i].setAttribute( 'tabindex', '-1' );
+function takecartLinksOutOfTabOrder() {
+  for ( var i = 0; i < $cartLinks.length; i++ ) {
+    $cartLinks[i].setAttribute( 'tabindex', '-1' );
   }
 }
 
-function putTrayLinksIntoTabOrder() {
-  for ( var i = 0; i < $trayLinks.length; i++ ) {
-    $trayLinks[i].setAttribute( 'tabindex', '0' );
+function putcartLinksIntoTabOrder() {
+  for ( var i = 0; i < $cartLinks.length; i++ ) {
+    $cartLinks[i].setAttribute( 'tabindex', '0' );
   }
 }
 
@@ -103,7 +102,7 @@ function setExpandedMenuState( $button, $toggleTarget ) {
 
   $button.setAttribute( 'aria-expanded', 'true' );
   $toggleTarget.setAttribute( 'aria-hidden', 'false' );
-  putTrayLinksIntoTabOrder();
+  putcartLinksIntoTabOrder();
 
   setTimeout( function () {
     document.body.addEventListener( 'click', collapseHamburgerMenu );
@@ -122,7 +121,7 @@ function setCollapsedMenuState( $button, $toggleTarget ) {
 
   $button.setAttribute( 'aria-expanded', 'false' );
   $toggleTarget.setAttribute( 'aria-hidden', 'true' );
-  takeTrayLinksOutOfTabOrder();
+  takecartLinksOutOfTabOrder();
 
   setTimeout( function () {
     document.body.removeEventListener( 'click', collapseHamburgerMenu );
@@ -170,24 +169,10 @@ function isPlaying( media ) {
   return !!( media.currentTime > 0 && !media.paused && !media.ended && media.readyState > 2 );
 }
 
-takeTrayLinksOutOfTabOrder();
+takecartLinksOutOfTabOrder();
 
 $hamburger.addEventListener( 'keypress', hamburgerKeyHandler );
 $hamburger.addEventListener( 'click', hamburgerClickHandler );
-
-$volume.addEventListener( 'click', function ( event ) {
-  switch ( $volume.textContent ) {
-    case '🔊':
-      $volume.textContent = $volume.getAttribute( 'data-muted-icon' );
-      $someday.muted = true;
-    break;
-
-    case '🔇':
-      $volume.textContent = $volume.getAttribute( 'data-playing-icon' );
-      $someday.muted = false;
-    break;
-  }
-} );
 
 // Date & time
 var $currentTime = document.getElementById( 'current-time' );
@@ -200,14 +185,20 @@ var $seconds = document.getElementById( 'seconds' );
 var $am = document.getElementById( 'am' );
 var $pm = document.getElementById( 'pm' );
 var $datetime = document.getElementById( 'datetime' );
+var $currentYear = document.getElementById( 'current-year' );
 
-displayTokyoTime();
+var currentYear = ( new Date() ).getFullYear();
+if ( $currentYear && ( $currentYear.textContent !== currentYear ) ) {
+  $currentYear.textContent = currentYear;
+}
+
+// displayBostonTime();
 
 setTimeout( function () {
-  $currentTime.style.opacity = 1;
+  // $currentTime.style.opacity = 1;
 }, 1000 );
 
-setInterval( displayTokyoTime, 1000 );
+// setInterval( displayBostonTime, 1000 );
 
 function startMusic() {
   if ( !isPlaying( $someday ) ) {
@@ -218,13 +209,25 @@ function startMusic() {
   document.removeEventListener( 'click', startMusic );
 }
 
-window.addEventListener( 'scroll', startMusic );
-document.addEventListener( 'click', startMusic );
+// window.addEventListener( 'scroll', startMusic );
+// document.addEventListener( 'click', startMusic );
 
 // Language
-// var $language = document.getElementById( 'language' );
-// var $brandName = document.getElementById( 'brand-name' );
-// var $branchName = document.getElementById( 'branch-name' );
+function hideElements( $elements ) {
+  for ( var i = 0; i < $elements.length; i++ ) {
+    $elements[i].hidden = true;
+  }
+}
+
+function showElements( $elements ) {
+  for ( var i = 0; i < $elements.length; i++ ) {
+    $elements[i].hidden = false;
+  }
+}
+
+var $language = document.getElementById( 'language' );
+var $brand = document.getElementById( 'brand' );
+var $subBrand = document.getElementById( 'sub-brand' );
 // var $motivationNihongo = document.getElementById( 'motivation-nihongo' );
 // var $motivationEigo = document.getElementById( 'motivation-eigo' );
 // var $currentTimeText = document.getElementById( 'current-time-text' );
@@ -238,115 +241,163 @@ document.addEventListener( 'click', startMusic );
 // var $pmNihongo = document.getElementById( 'pm-nihongo' );
 // var $amEigo = document.getElementById( 'am-eigo' );
 // var $pmEigo = document.getElementById( 'pm-eigo' );
-// var $visaResources = document.getElementById( 'visa-resources' );
 // var $middleDot = document.getElementById( 'middle-dot' );
-// var $title = document.querySelector( 'title' );
-//
-// var lang = {
-//   "BRAND_NAME": {
-//     "ja": "レッドブルー",
-//     "en": "RedBlue"
-//   },
-//   "BRANCH_NAME": {
-//     "ja": "東京支社",
-//     "en": "Tokyo Branch"
-//   },
-//   "CURRENT_TIME": {
-//     "ja": "東京での現在時刻：",
-//     "en": "Current time in Tokyo:"
-//   },
-//   "YEAR_KANJI": {
-//     "ja": "年",
-//     "en": "-"
-//   },
-//   "MONTH_KANJI": {
-//     "ja": "月",
-//     "en": "-"
-//   },
-//   "DAY_KANJI": {
-//     "ja": "日",
-//     "en": ""
-//   },
-//   "HOUR_KANJI": {
-//     "ja": "時",
-//     "en": ":"
-//   },
-//   "MINUTE_KANJI": {
-//     "ja": "分",
-//     "en": ":"
-//   },
-//   "SECONDS_KANJI": {
-//     "ja": "秒",
-//     "en": ""
-//   },
-//   "VISA_RESOURCES": {
-//     "ja": "ビザのリソース",
-//     "en": "Visa Resources"
-//   },
-//   "MIDDLE_DOT": {
-//     "ja": "・",
-//     "en": " · "
-//   }
-// };
-//
-// lang.TITLE = {
-//   "ja": lang.BRAND_NAME.ja + lang.MIDDLE_DOT.ja + lang.BRANCH_NAME.ja,
-//   "en": lang.BRAND_NAME.en + lang.MIDDLE_DOT.en + lang.BRANCH_NAME.en
-// };
-//
-// $language.addEventListener( 'click', function ( event ) {
-//   event.preventDefault();
-//
-//   var $clicked = event.target;
-//   ( $clicked.nextElementSibling || $clicked.previousElementSibling ).classList.remove( 'active' );
-//   $clicked.classList.add( 'active' );
-//
-//   switch ( $clicked.textContent ) {
-//     case '🇯🇵':
-//       $html.setAttribute( 'lang', 'ja' );
-//       $html.setAttribute( 'xml:lang', 'ja' );
-//       $title
-//       $brandName.textContent = lang.BRAND_NAME.ja;
-//       $branchName.textContent = lang.BRANCH_NAME.ja;
-//       $currentTimeText.textContent = lang.CURRENT_TIME.ja;
-//       $yearKanji.textContent = lang.YEAR_KANJI.ja;
-//       $monthKanji.textContent = lang.MONTH_KANJI.ja;
-//       $dayKanji.textContent = lang.DAY_KANJI.ja;
-//       $hourKanji.textContent = lang.HOUR_KANJI.ja;
-//       $minuteKanji.textContent = lang.MINUTE_KANJI.ja;
-//       $secondsKanji.textContent = lang.SECONDS_KANJI.ja;
-//       $visaResources.textContent = lang.VISA_RESOURCES.ja;
-//       $middleDot.textContent = lang.MIDDLE_DOT.ja;
-//       $title.textContent = lang.TITLE.ja;
-//       $motivationEigo.hidden = true;
-//       $motivationNihongo.hidden = false;
-//       $amEigo.hidden = true;
-//       $amNihongo.hidden = false;
-//       $pmEigo.hidden = true;
-//       $pmNihongo.hidden = false;
-//     break;
-//
-//     case '🇺🇸':
-//       $html.setAttribute( 'lang', 'en' );
-//       $html.setAttribute( 'xml:lang', 'en' );
-//       $brandName.textContent = lang.BRAND_NAME.en;
-//       $branchName.textContent = lang.BRANCH_NAME.en;
-//       $currentTimeText.textContent = lang.CURRENT_TIME.en;
-//       $yearKanji.textContent = lang.YEAR_KANJI.en;
-//       $monthKanji.textContent = lang.MONTH_KANJI.en;
-//       $dayKanji.textContent = lang.DAY_KANJI.en;
-//       $hourKanji.textContent = lang.HOUR_KANJI.en;
-//       $minuteKanji.textContent = lang.MINUTE_KANJI.en;
-//       $secondsKanji.textContent = lang.SECONDS_KANJI.en;
-//       $visaResources.textContent = lang.VISA_RESOURCES.en;
-//       $middleDot.textContent = lang.MIDDLE_DOT.en;
-//       $title.textContent = lang.TITLE.en;
-//       $motivationEigo.hidden = false;
-//       $motivationNihongo.hidden = true;
-//       $amEigo.hidden = false;
-//       $amNihongo.hidden = true;
-//       $pmEigo.hidden = false;
-//       $pmNihongo.hidden = true;
-//     break;
-//   }
-// } )
+var $title = document.querySelector( 'title' );
+// var $tagline = document.getElementById( 'tagline' );
+// var $sideHustle = document.getElementById( 'side-hustle' );
+var $cartEmpty = document.getElementById( 'cart-empty' );
+var $checkout = document.getElementById( 'checkout' );
+var $aboutLink = document.getElementById( 'about-link' );
+var $collectionLink = document.getElementById( 'collection-link' );
+var $englishText = document.querySelectorAll( 'p[lang="en"]' );
+var $japaneseText = document.querySelectorAll( 'p[lang="ja"]' );
+
+var lang = {
+  "BRAND_NAME": {
+    "ja": "ノ・スプーン・アパレル",
+    "en": "No Spoon Apparel"
+  },
+  "BRAND": {
+    "ja": "ノ・スプーン",
+    "en": "No Spoon"
+  },
+  "SUB_BRAND": {
+    "ja": "アパレル",
+    "en": "Apparel"
+  },
+  // "CURRENT_TIME": {
+  //   "ja": "ボストンでの現在時刻：",
+  //   "en": "Current time in Boston:"
+  // },
+  // "YEAR_KANJI": {
+  //   "ja": "年",
+  //   "en": "-"
+  // },
+  // "MONTH_KANJI": {
+  //   "ja": "月",
+  //   "en": "-"
+  // },
+  // "DAY_KANJI": {
+  //   "ja": "日",
+  //   "en": ""
+  // },
+  // "HOUR_KANJI": {
+  //   "ja": "時",
+  //   "en": ":"
+  // },
+  // "MINUTE_KANJI": {
+  //   "ja": "分",
+  //   "en": ":"
+  // },
+  // "SECONDS_KANJI": {
+  //   "ja": "秒",
+  //   "en": ""
+  // },
+  // "MIDDLE_DOT": {
+  //   "ja": "・",
+  //   "en": " · "
+  // },
+  "TOGGLE_MENU": {
+    "ja": "メニューをトグルして",
+    "en": "Toggle menu"
+  },
+  // "TAGLINE": {
+  //   "ja": "マトリックスを脱出して。インディーズのクリエイティブな人のためのストリートウェア。",
+  //   "en": "Escape the Matrix. Streetwear for the indie creative."
+  // },
+  // "SIDE_HUSTLE": {
+  //   "ja": "ヒュー・ガイニーによるサイド・ハッスル。",
+  //   "en": "A side-hustle by Hugh Guiney."
+  // },
+  "CART_EMPTY": {
+    "ja": "あなたのカートは空です。",
+    "en": "Your cart is empty."
+  },
+  "CHECKOUT": {
+    "ja": "チェックアウトして",
+    "en": "Checkout"
+  },
+  "ABOUT": {
+    "ja": "ついて",
+    "en": "About"
+  },
+  "COLLECTION": {
+    "ja": "コレクション",
+    "en": "Collection"
+  }
+};
+
+lang.TITLE = {
+  "ja": lang.BRAND_NAME.ja,
+  "en": lang.BRAND_NAME.en
+};
+
+$language.addEventListener( 'click', function ( event ) {
+  event.preventDefault();
+
+  var $clicked = event.target;
+  ( $clicked.nextElementSibling || $clicked.previousElementSibling ).classList.remove( 'active' );
+  $clicked.classList.add( 'active' );
+
+  switch ( $clicked.textContent ) {
+    case '🇯🇵':
+      $html.setAttribute( 'lang', 'ja' );
+      $html.setAttribute( 'xml:lang', 'ja' );
+      $brand.textContent = lang.BRAND.ja;
+      $subBrand.textContent = lang.SUB_BRAND.ja;
+      // $currentTimeText.textContent = lang.CURRENT_TIME.ja;
+      // $yearKanji.textContent = lang.YEAR_KANJI.ja;
+      // $monthKanji.textContent = lang.MONTH_KANJI.ja;
+      // $dayKanji.textContent = lang.DAY_KANJI.ja;
+      // $hourKanji.textContent = lang.HOUR_KANJI.ja;
+      // $minuteKanji.textContent = lang.MINUTE_KANJI.ja;
+      // $secondsKanji.textContent = lang.SECONDS_KANJI.ja;
+      // $middleDot.textContent = lang.MIDDLE_DOT.ja;
+      $title.textContent = lang.TITLE.ja;
+      // $motivationEigo.hidden = true;
+      // $motivationNihongo.hidden = false;
+      // $amEigo.hidden = true;
+      // $amNihongo.hidden = false;
+      // $pmEigo.hidden = true;
+      // $pmNihongo.hidden = false;
+      // $tagline.textContent = lang.TAGLINE.ja;
+      // $sideHustle.textContent = lang.SIDE_HUSTLE.ja;
+      $cartEmpty.textContent = lang.CART_EMPTY.ja;
+      $checkout.textContent = lang.CHECKOUT.ja;
+      $aboutLink.textContent = lang.ABOUT.ja;
+      $collectionLink.textContent = lang.COLLECTION.ja;
+      hideElements( $englishText );
+      showElements( $japaneseText );
+    break;
+
+    case '🇺🇸':
+      $html.setAttribute( 'lang', 'en' );
+      $html.setAttribute( 'xml:lang', 'en' );
+      $brand.textContent = lang.BRAND.en;
+      $subBrand.textContent = lang.SUB_BRAND.en;
+      // $currentTimeText.textContent = lang.CURRENT_TIME.en;
+      // $yearKanji.textContent = lang.YEAR_KANJI.en;
+      // $monthKanji.textContent = lang.MONTH_KANJI.en;
+      // $dayKanji.textContent = lang.DAY_KANJI.en;
+      // $hourKanji.textContent = lang.HOUR_KANJI.en;
+      // $minuteKanji.textContent = lang.MINUTE_KANJI.en;
+      // $secondsKanji.textContent = lang.SECONDS_KANJI.en;
+      // $middleDot.textContent = lang.MIDDLE_DOT.en;
+      $title.textContent = lang.TITLE.en;
+      // $motivationEigo.hidden = false;
+      // $motivationNihongo.hidden = true;
+      // $amEigo.hidden = false;
+      // $amNihongo.hidden = true;
+      // $pmEigo.hidden = false;
+      // $pmNihongo.hidden = true;
+      // $tagline.textContent = lang.TAGLINE.en;
+      // $sideHustle.textContent = lang.SIDE_HUSTLE.en;
+      $cartEmpty.textContent = lang.CART_EMPTY.en;
+      $checkout.textContent = lang.CHECKOUT.en;
+      $aboutLink.textContent = lang.ABOUT.en;
+      $collectionLink.textContent = lang.COLLECTION.en;
+      hideElements( $japaneseText );
+      showElements( $englishText );
+    break;
+  }
+} )
