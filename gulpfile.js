@@ -32,7 +32,7 @@ gulp.task( 'fonts', ( cb ) => {
 
 gulp.task( 'htmlmin', ( cb ) => {
   pump( [
-    gulp.src( './src/*.html' ),
+    gulp.src( './src/**/*.html' ),
     htmlmin( {
       "collapseWhitespace": true,
       "removeComments": true
@@ -51,8 +51,8 @@ gulp.task( 'jsmin', ( cb ) => {
 
 gulp.task( 'img', ( cb ) => {
   pump( [
-    gulp.src('./src/img/*.{png,gif,jpg,jpeg,jxr,webp,bpg,bmp,svg}'),
-    gulp.dest('./dist/img')
+    gulp.src('./src/**/*.{png,gif,jpg,jpeg,jxr,webp,bpg,bmp,svg}'),
+    gulp.dest('./dist/')
   ], cb );
 } );
 
