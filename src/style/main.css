@@ -23,8 +23,12 @@ body {
   color: whitesmoke;
   color: rgb(235, 235, 235);
   text-align: left;
-  font-family: 'Noto Sans', 'Noto Sans CJK JP', 'Noto Sans CJK', 'Noto Sans JP', 'Source Sans Pro', 'Roboto', 'Helvetica Neue', sans-serif;
+  font-family: 'Noto Sans', 'Source Sans Pro', 'Roboto', 'Proxima Nova', 'Helvetica Neue', Helvetica, sans-serif;
   line-height: 1.5;
+}
+
+body:lang(ja) {
+  font-family: 'Noto Sans', 'Noto Sans CJK JP', 'Noto Sans CJK', 'Noto Sans JP', 'Source Sans Pro', 'Roboto', 'Helvetica Neue', Helvetica, sans-serif;
 }
 
 @media only screen and (min-width: 1351px) {
@@ -467,7 +471,7 @@ button[disabled], .button[disabled] {
 }
 
 .branding {
-  font-family: 'Accord Alternate', 'AccordAlternate', 'Noto Sans', 'Noto Sans CJK JP', 'Noto Sans CJK', 'Noto Sans JP', 'Source Sans Pro', 'Roboto', 'Helvetica Neue', sans-serif;
+  font-family: 'Accord Alternate', 'AccordAlternate', 'Ubuntu', 'Noto Sans', 'Source Sans Pro', 'Roboto', 'Helvetica Neue', Helvetica, sans-serif;
   text-align: center;
   white-space: nowrap;
   background-repeat: no-repeat;
@@ -481,6 +485,10 @@ button[disabled], .button[disabled] {
   justify-content: center;
   align-items: center;
   margin-bottom: 1.5rem;
+}
+
+.branding:lang(ja) {
+  font-family: inherit;
 }
 
 .brand,
@@ -504,8 +512,8 @@ button[disabled], .button[disabled] {
   margin-top: 1.1rem;
 }
 
-html[lang="ja"] .brand,
-html[lang="ja"] .sub-brand {
+.brand:lang(ja),
+.sub-brand:lang(ja) {
   font-size: 2rem;
 }
 
