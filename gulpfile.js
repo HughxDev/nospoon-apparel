@@ -5,6 +5,7 @@ const cssnano = require('cssnano');
 const htmlmin = require('gulp-htmlmin');
 const uglify = require('gulp-uglify');
 const pump = require('pump');
+const imagemin = require('gulp-imagemin');
 
 gulp.task( 'cssmin', ( cb ) => {
   var plugins = [
@@ -52,6 +53,14 @@ gulp.task( 'jsmin', ( cb ) => {
 gulp.task( 'img', ( cb ) => {
   pump( [
     gulp.src('./src/**/*.{png,gif,jpg,jpeg,jxr,webp,bpg,bmp,svg}'),
+    imagemin([
+      imagemin.gifsicle(),
+      // imagemin.jpegtran(),
+      imagemin.optipng(),
+      imagemin.svgo()
+    ], {
+      "verbose": true
+    }),
     gulp.dest('./dist/')
   ], cb );
 } );
