@@ -132,10 +132,13 @@ main > .content.content--collection {
   height: 1rem;
   overflow: hidden;
   color: transparent;
-  border-color: rgb(235,235,235);
+  /* border-color: rgb(235,235,235); */
+  /* border-color: rgb(16,16,16); */
   border-color: transparent;
+  box-shadow: 1px 1px 0 rgba(235,235,235,.75);
+  border-width: 1px;
   padding: 0;
-  border-width: 0.1rem;
+  /* border-width: 0.1rem; */
   border-radius: 0;
 }
 
@@ -193,6 +196,16 @@ img {
 .product-category {
   margin: 0;
   font-size: 1.125rem;
+}
+
+.product-rundown > div {
+  display: inline-block;
+}
+
+.product-rundown > :first-child::after {
+  display: inline-block;
+  content: ' · ';
+  margin: 0 0.125rem 0 0.5rem;
 }
 
 .intro {

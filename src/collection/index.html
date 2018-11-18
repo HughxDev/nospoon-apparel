@@ -68,29 +68,36 @@
       <main>
         <div class="content content--collection">
           <h1 class="collection-heading">Collection</h1>
-          <div class="products">
+          <div id="products" class="products">
             <article class="product">
               <a class="product-link" href="the-kramper/index.html">
                 <img src="the-kramper/product.png" width="256" alt=" " />
               </a>
               <h2 class="product-heading">The Kramper</h2>
               <!-- <p class="product-tagline">Kramer × Krampus</p> -->
-              <div class="product-category">T-shirt</div>
+              <div class="product-rundown">
+                <div class="product-category">T-shirt</div>
+                <div class="product-price">$25</div>
+              </div>
               <ul class="product-colors" aria-label="Colors">
-                <li><button class="color color--red" title="Red">Red</button></li>
-                <li><button class="color color--blue" title="Blue">Blue</button></li>
+                <li><button class="color" style="background-color:#000000;" title="Black">Black</button></li>
+                <li><button class="color" style="background-color:#990033" title="Cranberry">Cranberry</button></li>
+                <li><button class="color" style="background-color:#b0b0b2" title="Heather Grey">Heather Grey</button></li>
+                <li><button class="color" style="background-color:#1a8145" title="Kelly Green">Kelly Green</button></li>
+                <li><button class="color" style="background-color:#0092c1" title="Teal">Teal</button></li>
               </ul>
             </article>
             <article class="product">
-              <a class="product-link" data-href="tokyo-shisha/index.html">
-                <img src="the-kramper/product.png" width="256" alt=" " />
+              <a class="product-link" data-href="redblue-tokyo/index.html">
+                <img data-colorway="natural" src="redblue-tokyo/product--natural.png" srcset="redblue-tokyo/product--natural.png 1x, redblue-tokyo/product--natural@2x.png 2x, redblue-tokyo/product--natural@3x.png 3x" width="256" alt="Product shot" />
               </a>
-              <h2 class="product-heading">The Kramper</h2>
+              <h2 class="product-heading">RedBlue Tokyo</h2>
               <!-- <p class="product-tagline">Kramer × Krampus</p> -->
               <div class="product-category">T-shirt</div>
               <ul class="product-colors" aria-label="Colors">
-                <li><button class="color color--red" title="Red">Red</button></li>
-                <li><button class="color color--blue" title="Blue">Blue</button></li>
+                <li><button class="color" style="background-color:rgb(242, 235, 223);" title="Natural">Natural</button></li>
+                <li><button class="color" style="background-color:rgb(90, 166, 198);" title="Scuba Blue">Scuba Blue</button></li>
+                <li><button class="color" style="background-color:rgb(52, 56, 56);" title="Night">Night</button></li>
               </ul>
             </article>
           </div>
@@ -102,5 +109,53 @@
       </footer>
     </div><!--/#shading-->
     <script src="../script/main.js"></script>
+    <script>
+    (function () {
+      "use strict";
+
+      function getSrcset( src ) {
+        // src = redblue-tokyo/product--natural.png
+        var srcParts = src.split( '.' );
+        return src + ' 1x, ' + srcParts[0] + '@2x.' + srcParts[1] + ' 2x, ' + srcParts[0] + '@3x.' + srcParts[1] + ' 3x';
+      }
+
+      function changeProductShot( event ) {
+        var $clicked = event.target;
+        var $img = $clicked;
+        var colorway;
+        var src;
+        var newSrc;
+        var newColorway;
+
+        if ( ( $clicked.nodeName.toLowerCase() === 'button' ) && ( $clicked.getAttribute( 'class' ).match( /\bcolor\b/i ) !== null ) ) {
+          newColorway = $clicked.textContent.toLowerCase().replace( /\s+/, '-' );
+
+          while ( !$img.hasAttribute( 'class' ) || $img.getAttribute( 'class' ).match( /\bproduct-colors\b/i ) === null ) {
+            $img = $img.parentNode;
+          }
+
+          while ( !$img.hasAttribute( 'class' ) || $img.getAttribute( 'class' ).match( /\bproduct-link\b/i ) === null ) {
+            $img = $img.previousElementSibling;
+          }
+
+          $img = $img.querySelector( 'img' );
+          src = $img.getAttribute( 'src' );
+          colorway = $img.getAttribute( 'data-colorway' );
+
+          if ( colorway !== newColorway ) {
+            newSrc = src.replace( colorway, newColorway );
+            $img.setAttribute( 'data-colorway', newColorway );
+            $img.setAttribute( 'srcset', getSrcset( newSrc ) );
+            $img.setAttribute( 'src', newSrc );
+          }
+        }
+      }
+
+      var $products = document.getElementById( 'products' );
+
+      $products.addEventListener( 'click', changeProductShot );
+      $products.addEventListener( 'mouseover', changeProductShot );
+    })();
+    </script>
   </body>
 </html>
