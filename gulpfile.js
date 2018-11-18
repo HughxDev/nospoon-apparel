@@ -52,7 +52,10 @@ gulp.task( 'jsmin', ( cb ) => {
 
 gulp.task( 'img', ( cb ) => {
   pump( [
-    gulp.src('./src/**/*.{png,gif,jpg,jpeg,jxr,webp,bpg,bmp,svg}'),
+    gulp.src([
+      './src/**/*.{png,gif,jpg,jpeg,jxr,webp,bpg,bmp,svg}',
+      '!./src/img/source/**/*'
+    ]),
     imagemin([
       imagemin.gifsicle(),
       // imagemin.jpegtran(),
