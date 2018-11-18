@@ -23,6 +23,13 @@ gulp.task( 'cssmin', ( cb ) => {
   ] );
 } );
 
+gulp.task( 'fonts', ( cb ) => {
+  pump( [
+    gulp.src('./src/style/fonts/*.{eot,otf,ttf,woff,woff2}'),
+    gulp.dest('./dist/style/fonts/')
+  ], cb );
+} );
+
 gulp.task( 'htmlmin', ( cb ) => {
   pump( [
     gulp.src( './src/*.html' ),
@@ -63,4 +70,4 @@ gulp.task( 'favicon', ( cb ) => {
   ], cb );
 } );
 
-gulp.task( 'default', [ 'cssmin', 'htmlmin', 'jsmin', 'img', 'audio', 'favicon' ] );
+gulp.task( 'default', [ 'cssmin', 'fonts', 'htmlmin', 'jsmin', 'img', 'audio', 'favicon' ] );
