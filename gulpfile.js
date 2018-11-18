@@ -18,7 +18,7 @@ gulp.task( 'cssmin', ( cb ) => {
   ];
 
   pump( [
-    gulp.src( './src/style/*.css' ),
+    gulp.src( './src/style/**/*.css' ),
     postcss( plugins ),
     gulp.dest( './dist/style/' )
   ] );
