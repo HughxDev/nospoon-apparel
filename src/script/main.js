@@ -252,6 +252,7 @@
   var $collectionLink = document.getElementById( 'collection-link' );
   var $englishText = document.querySelectorAll( 'p[lang="en"]' );
   var $japaneseText = document.querySelectorAll( 'p[lang="ja"]' );
+  var $japaneseFont = document.getElementById( 'japanese-font' );
 
   var lang = {
     "BRAND_NAME": {
@@ -342,6 +343,15 @@
 
     switch ( $clicked.textContent ) {
       case '🇯🇵':
+        if ( !$japaneseFont ) {
+          $japaneseFont = document.createElement( 'link' );
+          $japaneseFont.setAttribute( 'id', 'japanese-font' );
+          $japaneseFont.setAttribute( 'rel', 'stylesheet' );
+          $japaneseFont.setAttribute( 'href', 'style/fonts/noto-sans-japanese.css' );
+          document.head.appendChild( $japaneseFont );
+        } else {
+          $japaneseFont.setAttribute( 'rel', 'stylesheet' );
+        }
         $html.setAttribute( 'lang', 'ja' );
         $html.setAttribute( 'xml:lang', 'ja' );
         $brand.textContent = lang.BRAND.ja;
