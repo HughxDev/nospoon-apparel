@@ -166,7 +166,11 @@ footer {
   /* text-shadow: 0.0625em 0.125em 0.125em rgba(0, 0, 0, 0.75); */
 }
 
-img {
+picture {
+  line-height: 0;
+}
+
+img, picture, video, audio, iframe {
   max-width: 100%;
 }
 
