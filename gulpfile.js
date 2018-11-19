@@ -6,6 +6,12 @@ const htmlmin = require('gulp-htmlmin');
 const uglify = require('gulp-uglify');
 const pump = require('pump');
 const imagemin = require('gulp-imagemin');
+const webp = require('gulp-webp');
+const del = require('del');
+
+gulp.task( 'del', () => {
+  return del( [ './dist/' ] );
+} );
 
 gulp.task( 'cssmin', ( cb ) => {
   var plugins = [
@@ -21,7 +27,7 @@ gulp.task( 'cssmin', ( cb ) => {
     gulp.src( './src/style/**/*.css' ),
     postcss( plugins ),
     gulp.dest( './dist/style/' )
-  ] );
+  ], cb );
 } );
 
 gulp.task( 'fonts', ( cb ) => {
@@ -51,19 +57,30 @@ gulp.task( 'jsmin', ( cb ) => {
 } );
 
 gulp.task( 'img', ( cb ) => {
+  var imgSources = [
+    './src/**/*.{png,gif,jpg,jpeg,jxr,webp,bpg,bmp,svg}',
+    '!./src/img/source/**/*'
+  ];
+
+  // pump( [
+  //   gulp.src( imgSources ),
+  //   webp( {
+  //     "lossless": true
+  //     // "nearLossless": 100
+  //   } ),
+  //   gulp.dest('./dist/')
+  // ] );
+
   pump( [
-    gulp.src([
-      './src/**/*.{png,gif,jpg,jpeg,jxr,webp,bpg,bmp,svg}',
-      '!./src/img/source/**/*'
-    ]),
-    imagemin([
+    gulp.src( imgSources ),
+    imagemin( [
       imagemin.gifsicle(),
       // imagemin.jpegtran(),
       imagemin.optipng(),
       imagemin.svgo()
     ], {
       "verbose": true
-    }),
+    } ),
     gulp.dest('./dist/')
   ], cb );
 } );
@@ -82,4 +99,9 @@ gulp.task( 'favicon', ( cb ) => {
   ], cb );
 } );
 
-gulp.task( 'default', [ 'cssmin', 'fonts', 'htmlmin', 'jsmin', 'img', 'audio', 'favicon' ] );
+gulp.task( 'default',
+  gulp.series(
+    'del',
+    gulp.parallel( 'cssmin', 'fonts', 'htmlmin', 'jsmin', 'img', 'audio', 'favicon' )
+  )
+);

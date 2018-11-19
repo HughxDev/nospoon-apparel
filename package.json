@@ -1,5 +1,7 @@
 {
   "scripts": {
+    "svg2png": "inkscape -z -e $OUTFILE -w $WIDTH $INFILE",
+    "build": "node modernizr-build.js && gulp",
     "crunch": "find ./src/img/png/ -type f -name \"*.png\" -exec guetzli --verbose --quality 84 {} {}.jpg \\; && rename \"s/png.jpg/jpg/\" ./src/img/png/*.png.jpg",
     "progressive": "find ./src/img/png/ -type f -name \"*.jpg\" -exec jpegtran -outfile {}.prog -progressive {} \\; && rename \"s/jpg.prog/prog.jpg/\" ./src/img/png/*.prog"
   },
@@ -7,11 +9,14 @@
     "apache-server-configs": "^3.0.0",
     "autoprefixer": "^9.3.1",
     "cssnano": "^4.1.7",
-    "gulp": "^3.9.1",
+    "del": "^3.0.0",
+    "gulp": "^4.0.0",
     "gulp-htmlmin": "^5.0.1",
     "gulp-imagemin": "^5.0.3",
     "gulp-postcss": "^8.0.0",
     "gulp-uglify": "^3.0.1",
+    "gulp-webp": "^3.0.0",
+    "modernizr": "^3.6.0",
     "pump": "^3.0.0"
   }
 }
