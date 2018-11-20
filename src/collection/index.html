@@ -42,18 +42,17 @@
     <!-- <link rel="preload" as="image" href="redblue-tokyo/product--night@3x.png" media="(min-resolution: 288dpi)" /> -->
 
     <link rel="preload" as="style" href="../style/fonts/noto-sans-latin-ext.css" onload="this.rel = 'stylesheet'" />
-    <link id="japanese-font" rel="preload" as="style" href="../style/fonts/noto-sans-japanese.css" />
     <noscript>
       <link rel="stylesheet" href="../style/fonts/noto-sans-latin-ext.css" />
-      <!-- <link rel="stylesheet" href="../style/fonts/noto-sans-japanese.css" /> -->
+      <link rel="stylesheet" href="../style/fonts/noto-sans-japanese.css" />
     </noscript>
   </head>
   <body>
     <div class="shading">
       <div id="controls" class="controls">
         <div id="language" class="language">
-          <a title="Japanese" href="/ja">🇯🇵</a>
-          <a class="active" title="English" href="/en">🇺🇸</a>
+          <a id="japanese" title="Japanese" href="/ja">🇯🇵</a>
+          <a id="english" class="active" title="English" href="/en">🇺🇸</a>
         </div>
 
         <div id="cart-toggle" class="cart-toggle">

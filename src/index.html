@@ -29,18 +29,17 @@
     <link rel="icon" type="image/x-icon" sizes="16x16 32x32 64x64 128x128 256x256" href="/favicon.ico" />
     <link rel="stylesheet" href="style/main.css" />
     <link rel="preload" as="style" href="style/fonts/noto-sans-latin-ext.css" onload="this.rel = 'stylesheet'" />
-    <link id="japanese-font" rel="preload" as="style" href="style/fonts/noto-sans-japanese.css" />
     <noscript>
       <link rel="stylesheet" href="style/fonts/noto-sans-latin-ext.css" />
-      <!-- <link rel="stylesheet" href="style/fonts/noto-sans-japanese.css" /> -->
+      <link rel="stylesheet" href="style/fonts/noto-sans-japanese.css" />
     </noscript>
   </head>
   <body>
     <div class="shading shading--splash">
       <div id="controls" class="controls">
         <div id="language" class="language">
-          <a title="Japanese" href="/ja">🇯🇵</a>
-          <a class="active" title="English" href="/en">🇺🇸</a>
+          <a id="japanese" title="Japanese" href="/ja">🇯🇵</a>
+          <a id="english" class="active" title="English" href="/en">🇺🇸</a>
         </div>
 
         <div id="cart-toggle" class="cart-toggle">

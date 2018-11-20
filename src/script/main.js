@@ -253,6 +253,7 @@
   var $englishText = document.querySelectorAll( 'p[lang="en"]' );
   var $japaneseText = document.querySelectorAll( 'p[lang="ja"]' );
   var $japaneseFont = document.getElementById( 'japanese-font' );
+  var $japaneseLink = document.getElementById( 'japanese' );
 
   var lang = {
     "BRAND_NAME": {
@@ -334,6 +335,18 @@
     "en": lang.BRAND_NAME.en
   };
 
+  $japaneseLink.addEventListener( 'mouseover', function ( event ) {
+    // <link id="japanese-font" rel="preload" as="style" href="../style/fonts/noto-sans-japanese.css" />
+    if ( !$japaneseFont ) {
+      $japaneseFont = document.createElement( 'link' );
+      $japaneseFont.setAttribute( 'id', 'japanese-font' );
+      $japaneseFont.setAttribute( 'rel', 'preload' );
+      $japaneseFont.setAttribute( 'as', 'style' );
+      $japaneseFont.setAttribute( 'href', '../style/fonts/noto-sans-japanese.css' );
+      document.head.appendChild( $japaneseFont );
+    }
+  } );
+
   $language.addEventListener( 'click', function ( event ) {
     event.preventDefault();
 
@@ -343,40 +356,30 @@
 
     switch ( $clicked.textContent ) {
       case '🇯🇵':
-        if ( !$japaneseFont ) {
-          $japaneseFont = document.createElement( 'link' );
-          $japaneseFont.setAttribute( 'id', 'japanese-font' );
-          $japaneseFont.setAttribute( 'rel', 'stylesheet' );
-          $japaneseFont.setAttribute( 'href', 'style/fonts/noto-sans-japanese.css' );
-          document.head.appendChild( $japaneseFont );
-        } else {
+        if ( $japaneseFont.getAttribute( 'rel' ) !== 'stylesheet' ) {
           $japaneseFont.setAttribute( 'rel', 'stylesheet' );
         }
+
         $html.setAttribute( 'lang', 'ja' );
         $html.setAttribute( 'xml:lang', 'ja' );
-        $brand.textContent = lang.BRAND.ja;
-        $subBrand.textContent = lang.SUB_BRAND.ja;
-        // $currentTimeText.textContent = lang.CURRENT_TIME.ja;
-        // $yearKanji.textContent = lang.YEAR_KANJI.ja;
-        // $monthKanji.textContent = lang.MONTH_KANJI.ja;
-        // $dayKanji.textContent = lang.DAY_KANJI.ja;
-        // $hourKanji.textContent = lang.HOUR_KANJI.ja;
-        // $minuteKanji.textContent = lang.MINUTE_KANJI.ja;
-        // $secondsKanji.textContent = lang.SECONDS_KANJI.ja;
-        // $middleDot.textContent = lang.MIDDLE_DOT.ja;
+
+        if ( $brand ) {
+          $brand.textContent = lang.BRAND.ja;
+          $subBrand.textContent = lang.SUB_BRAND.ja;
+        }
+
         $title.textContent = lang.TITLE.ja;
-        // $motivationEigo.hidden = true;
-        // $motivationNihongo.hidden = false;
-        // $amEigo.hidden = true;
-        // $amNihongo.hidden = false;
-        // $pmEigo.hidden = true;
-        // $pmNihongo.hidden = false;
-        // $tagline.textContent = lang.TAGLINE.ja;
-        // $sideHustle.textContent = lang.SIDE_HUSTLE.ja;
         $cartEmpty.textContent = lang.CART_EMPTY.ja;
         $checkout.textContent = lang.CHECKOUT.ja;
-        $aboutLink.textContent = lang.ABOUT.ja;
-        $collectionLink.textContent = lang.COLLECTION.ja;
+
+        if ( $aboutLink ) {
+          $aboutLink.textContent = lang.ABOUT.ja;
+        }
+
+        if ( $collectionLink ) {
+          $collectionLink.textContent = lang.COLLECTION.ja;
+        }
+
         hideElements( $englishText );
         showElements( $japaneseText );
       break;
@@ -384,29 +387,24 @@
       case '🇺🇸':
         $html.setAttribute( 'lang', 'en' );
         $html.setAttribute( 'xml:lang', 'en' );
-        $brand.textContent = lang.BRAND.en;
-        $subBrand.textContent = lang.SUB_BRAND.en;
-        // $currentTimeText.textContent = lang.CURRENT_TIME.en;
-        // $yearKanji.textContent = lang.YEAR_KANJI.en;
-        // $monthKanji.textContent = lang.MONTH_KANJI.en;
-        // $dayKanji.textContent = lang.DAY_KANJI.en;
-        // $hourKanji.textContent = lang.HOUR_KANJI.en;
-        // $minuteKanji.textContent = lang.MINUTE_KANJI.en;
-        // $secondsKanji.textContent = lang.SECONDS_KANJI.en;
-        // $middleDot.textContent = lang.MIDDLE_DOT.en;
+
+        if ( $brand ) {
+          $brand.textContent = lang.BRAND.en;
+          $subBrand.textContent = lang.SUB_BRAND.en;
+        }
+
         $title.textContent = lang.TITLE.en;
-        // $motivationEigo.hidden = false;
-        // $motivationNihongo.hidden = true;
-        // $amEigo.hidden = false;
-        // $amNihongo.hidden = true;
-        // $pmEigo.hidden = false;
-        // $pmNihongo.hidden = true;
-        // $tagline.textContent = lang.TAGLINE.en;
-        // $sideHustle.textContent = lang.SIDE_HUSTLE.en;
         $cartEmpty.textContent = lang.CART_EMPTY.en;
         $checkout.textContent = lang.CHECKOUT.en;
-        $aboutLink.textContent = lang.ABOUT.en;
-        $collectionLink.textContent = lang.COLLECTION.en;
+
+        if ( $aboutLink ) {
+          $aboutLink.textContent = lang.ABOUT.en;
+        }
+
+        if ( $collectionLink ) {
+          $collectionLink.textContent = lang.COLLECTION.en;
+        }
+
         hideElements( $japaneseText );
         showElements( $englishText );
       break;

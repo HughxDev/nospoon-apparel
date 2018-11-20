@@ -4,7 +4,11 @@
   function changeProductShot( event ) {
     var $clicked = event.target;
 
-    if ( ( $clicked.nodeName.toLowerCase() === 'button' ) && ( $clicked.getAttribute( 'class' ).match( /\bcolor\b/i ) !== null ) ) {
+    if (
+      ( $clicked.nodeName.toLowerCase() === 'button' )
+      && ( $clicked.getAttribute( 'class' ).match( /\bcolor\b/i ) !== null )
+      && ( $clicked.hasAttribute( 'data-colorway' ) )
+    ) {
       var colorway = $clicked.getAttribute( 'data-colorway' );
       var product = colorway.split( '--' ); product = product[0];
       var colorways = document.getElementById( product ).querySelectorAll( 'img' );
