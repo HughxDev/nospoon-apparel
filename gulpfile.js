@@ -105,3 +105,9 @@ gulp.task( 'default',
     gulp.parallel( 'cssmin', 'fonts', 'htmlmin', 'jsmin', 'img', 'audio', 'favicon' )
   )
 );
+
+gulp.task( 'update-noimg',
+  gulp.series(
+    gulp.parallel( 'cssmin', 'fonts', 'htmlmin', 'jsmin', 'audio', 'favicon' )
+  )
+);
