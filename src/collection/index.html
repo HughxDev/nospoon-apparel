@@ -33,13 +33,13 @@
     <!-- <link rel="preload" as="image" href="redblue-tokyo/product--natural@2x.png" media="(min-resolution: 192dpi)" /> -->
     <!-- <link rel="preload" as="image" href="redblue-tokyo/product--natural@3x.png" media="(min-resolution: 288dpi)" /> -->
 
-    <link rel="preload" as="image" href="redblue-tokyo/product--scuba-blue.png" media="(max-resolution: 191dpi)" />
-    <link rel="preload" as="image" href="redblue-tokyo/product--scuba-blue@2x.png" media="(min-resolution: 192dpi)" />
-    <link rel="preload" as="image" href="redblue-tokyo/product--scuba-blue@3x.png" media="(min-resolution: 288dpi)" />
+    <!-- <link rel="preload" as="image" href="redblue-tokyo/product--scuba-blue.png" media="(max-resolution: 191dpi)" /> -->
+    <!-- <link rel="preload" as="image" href="redblue-tokyo/product--scuba-blue@2x.png" media="(min-resolution: 192dpi)" /> -->
+    <!-- <link rel="preload" as="image" href="redblue-tokyo/product--scuba-blue@3x.png" media="(min-resolution: 288dpi)" /> -->
 
-    <link rel="preload" as="image" href="redblue-tokyo/product--night.png" media="(max-resolution: 191dpi)" />
-    <link rel="preload" as="image" href="redblue-tokyo/product--night@2x.png" media="(min-resolution: 192dpi)" />
-    <link rel="preload" as="image" href="redblue-tokyo/product--night@3x.png" media="(min-resolution: 288dpi)" />
+    <!-- <link rel="preload" as="image" href="redblue-tokyo/product--night.png" media="(max-resolution: 191dpi)" /> -->
+    <!-- <link rel="preload" as="image" href="redblue-tokyo/product--night@2x.png" media="(min-resolution: 192dpi)" /> -->
+    <!-- <link rel="preload" as="image" href="redblue-tokyo/product--night@3x.png" media="(min-resolution: 288dpi)" /> -->
 
     <link rel="preload" as="style" href="../style/fonts/noto-sans-latin-ext.css" onload="this.rel = 'stylesheet'" />
     <link id="japanese-font" rel="preload" as="style" href="../style/fonts/noto-sans-japanese.css" />
@@ -103,16 +103,41 @@
               </ul>
             </article>
             <article class="product">
-              <a class="product-link" title="View product" data-href="redblue-tokyo/index.html">
-                <img data-colorway="natural" src="redblue-tokyo/product--natural.png" srcset="redblue-tokyo/product--natural.png 1x, redblue-tokyo/product--natural@2x.png 2x, redblue-tokyo/product--natural@3x.png 3x" width="256" alt="Product shot" />
+              <a id="redblue-tokyo" class="product-link" title="View product" data-href="redblue-tokyo/index.html">
+                <img
+                  id="redblue-tokyo--natural"
+                  src="redblue-tokyo/product--natural.png"
+                  srcset="redblue-tokyo/product--natural.png 1x, redblue-tokyo/product--natural@2x.png 2x, redblue-tokyo/product--natural@3x.png 3x"
+                  sizes="(min-width: 342px) 256px"
+                  width="256"
+                  alt="Product shot"
+                />
+                <img
+                  id="redblue-tokyo--scuba-blue"
+                  src="redblue-tokyo/product--scuba-blue.png"
+                  srcset="redblue-tokyo/product--scuba-blue.png 1x, redblue-tokyo/product--scuba-blue@2x.png 2x, redblue-tokyo/product--scuba-blue@3x.png 3x"
+                  sizes="(min-width: 342px) 256px"
+                  width="256"
+                  alt="Product shot"
+                  hidden="hidden"
+                />
+                <img
+                  id="redblue-tokyo--night"
+                  src="redblue-tokyo/product--night.png"
+                  srcset="redblue-tokyo/product--night.png 1x, redblue-tokyo/product--night@2x.png 2x, redblue-tokyo/product--night@3x.png 3x"
+                  sizes="(min-width: 342px) 256px"
+                  width="256"
+                  alt="Product shot"
+                  hidden="hidden"
+                />
               </a>
               <h2 class="product-heading">RedBlue Tokyo</h2>
               <!-- <p class="product-tagline">Kramer × Krampus</p> -->
               <div class="product-category">T-shirt</div>
               <ul class="product-colors" aria-label="Colors">
-                <li><button class="color" style="background-color:rgb(242, 235, 223);" title="Natural">Natural</button></li>
-                <li><button class="color" style="background-color:rgb(90, 166, 198);" title="Scuba Blue">Scuba Blue</button></li>
-                <li><button class="color" style="background-color:rgb(52, 56, 56);" title="Night">Night</button></li>
+                <li><button class="color" style="background-color:rgb(242, 235, 223);" title="Natural" data-colorway="redblue-tokyo--natural">Natural</button></li>
+                <li><button class="color" style="background-color:rgb(90, 166, 198);" title="Scuba Blue" data-colorway="redblue-tokyo--scuba-blue">Scuba Blue</button></li>
+                <li><button class="color" style="background-color:rgb(52, 56, 56);" title="Night" data-colorway="redblue-tokyo--night">Night</button></li>
               </ul>
             </article>
           </div>
