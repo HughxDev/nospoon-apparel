@@ -1,0 +1,65 @@
+<%= erb :_top %>
+<main>
+  <div class="content content--collection">
+    <h1 class="collection-heading">Collection</h1>
+    <div id="products" class="products">
+      <article class="product">
+        <a class="product-link" title="View product" href="the-kramper/index.html">
+          <img src="the-kramper/product.png" srcset="the-kramper/product.png 1x, the-kramper/product@2x.png 2x, the-kramper/product@3x.png 3x" width="256" alt=" " />
+        </a>
+        <h2 class="product-heading">The Kramper</h2>
+        <!-- <p class="product-tagline">Kramer × Krampus</p> -->
+        <div class="product-rundown">
+          <div class="product-category">T-shirt</div>
+          <div class="product-price">$25</div>
+        </div>
+        <ul class="product-colors" aria-label="Colors">
+          <li><button class="color" style="background-color:#000000;" title="Black">Black</button></li>
+          <li><button class="color" style="background-color:#990033" title="Cranberry">Cranberry</button></li>
+          <li><button class="color" style="background-color:#b0b0b2" title="Heather Grey">Heather Grey</button></li>
+          <li><button class="color" style="background-color:#1a8145" title="Kelly Green">Kelly Green</button></li>
+          <li><button class="color" style="background-color:#0092c1" title="Teal">Teal</button></li>
+        </ul>
+      </article>
+      <article class="product">
+        <a id="redblue-tokyo" class="product-link" title="View product" data-href="redblue-tokyo/index.html">
+          <img
+            id="redblue-tokyo--natural"
+            src="redblue-tokyo/product--natural.png"
+            srcset="redblue-tokyo/product--natural.png 1x, redblue-tokyo/product--natural@2x.png 2x, redblue-tokyo/product--natural@3x.png 3x"
+            sizes="(min-width: 342px) 256px"
+            width="256"
+            alt="Product shot"
+          />
+          <img
+            id="redblue-tokyo--scuba-blue"
+            src="redblue-tokyo/product--scuba-blue.png"
+            srcset="redblue-tokyo/product--scuba-blue.png 1x, redblue-tokyo/product--scuba-blue@2x.png 2x, redblue-tokyo/product--scuba-blue@3x.png 3x"
+            sizes="(min-width: 342px) 256px"
+            width="256"
+            alt="Product shot"
+            hidden="hidden"
+          />
+          <img
+            id="redblue-tokyo--night"
+            src="redblue-tokyo/product--night.png"
+            srcset="redblue-tokyo/product--night.png 1x, redblue-tokyo/product--night@2x.png 2x, redblue-tokyo/product--night@3x.png 3x"
+            sizes="(min-width: 342px) 256px"
+            width="256"
+            alt="Product shot"
+            hidden="hidden"
+          />
+        </a>
+        <h2 class="product-heading">RedBlue Tokyo</h2>
+        <!-- <p class="product-tagline">Kramer × Krampus</p> -->
+        <div class="product-category">T-shirt</div>
+        <ul class="product-colors" aria-label="Colors">
+          <li><button class="color" style="background-color:rgb(242, 235, 223);" title="Natural" data-colorway="redblue-tokyo--natural">Natural</button></li>
+          <li><button class="color" style="background-color:rgb(90, 166, 198);" title="Scuba Blue" data-colorway="redblue-tokyo--scuba-blue">Scuba Blue</button></li>
+          <li><button class="color" style="background-color:rgb(52, 56, 56);" title="Night" data-colorway="redblue-tokyo--night">Night</button></li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</main>
+<%= erb :_bottom, :locals => { :scripts => 'products' } %>

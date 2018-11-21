@@ -1,0 +1,43 @@
+<%= erb :_top %>
+<main>
+  <div class="content">
+    <h1 id="branding" class="branding">
+      <span id="brand" class="brand">No Spoon</span>
+      <picture>
+        <source type="image/svg+xml" srcset="img/no-spoon-logo.svg" />
+        <img id="logo" class="logo" src="img/no-spoon-logo.png" srcset="img/no-spoon-logo.png 1x, img/no-spoon-logo@2x.png 2x, img/no-spoon-logo@3x.png 3x" width="211" alt="logo" />
+      </picture>
+      <!-- <img id="logo" class="logo" src="img/no-spoon-logo.svg" width="211" alt="logo" /> -->
+      <span id="sub-brand" class="sub-brand">Apparel</span>
+    </h1>
+    <div id="intro" class="intro">
+      <p lang="en">Escape the Matrix. Streetwear for the indie creative.</p>
+      <p lang="ja" hidden><span><span class="ww">マトリックスを</span><span class="ww">脱出</span><span class="ww">して。</span><span class="ww">インディーズの</span><span class="ww">クリエイティブな</span><span class="ww">人の</span><span class="ww">ための</span><span class="ww">ストリートウェア。</span></span></p>
+      <p lang="en">A side-hustle by Hugh Guiney.</p>
+      <p lang="ja" hidden><span><span class="ww">ヒュー・</span><span class="ww">ガイニーによる</span><span class="ww">サイド・</span><span class="ww">ハッスル。</span></span></p>
+      <nav id="site-nav" class="site-nav">
+        <div class="nav-content">
+          <!-- <a class="nav-link" href="#">Home</a> -->
+          <a id="about-link" class="nav-link" href="#">About</a>
+          <a id="collection-link" class="nav-link" href="/collection/">Collection</a>
+          <!-- <a class="nav-link" href="#">New Arrivals</a> -->
+          <!-- <details class="nav-submenu">
+            <summary class="nav-link">Shirts</summary>
+            <div class="nav-submenu__menu">
+              <a class="nav-link" href="#">T-shirts</a>
+              <a class="nav-link" href="#">Sweatshirts</a>
+            </div>
+          </details>
+          <a class="nav-link" href="#">Holiday</a> -->
+          <!-- <a class="nav-link" href="#">Home</a>
+          <a class="nav-link" href="#">About</a>
+          <a class="nav-link" href="#">New Arrivals</a>
+          <a class="nav-link" href="#">Shirts</a>
+          <a class="nav-link" href="#">Sweatshirts</a>
+          <a class="nav-link" href="#">Holiday</a> -->
+        </div>
+      </nav>
+    </div>
+  </div>
+</main>
+<%= erb :_bottom %>
