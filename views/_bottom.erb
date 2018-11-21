@@ -4,6 +4,6 @@
       </footer>
     </div><!--/#shading-->
     <script src="/script/main.js"></script>
-    <% if !scripts.nil? %><script src="/script/<%= scripts %>.js"></script><% end %>
+    <% if defined?(scripts) %><script src="/script/<%= scripts %>.js"></script><% end %>
   </body>
 </html>

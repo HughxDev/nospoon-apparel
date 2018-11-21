@@ -596,7 +596,6 @@ html[lang="ja"] .sub-brand {
 }
 
 .cart-toggle {
-  padding-right: .75rem;
   width: 2.25rem;
 }
 
@@ -646,4 +645,23 @@ html[lang="ja"] .sub-brand {
   display: inline-block;
   vertical-align: middle;
   font-size: .5em;
+}
+
+.inline-block {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.inline-block.inline-block--baseline {
+  vertical-align: baseline;
+}
+
+.controls__right {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-right: .75rem;
+  width: 4.5rem;
+  text-align: right;
 }

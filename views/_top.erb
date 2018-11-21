@@ -37,38 +37,47 @@
   <body>
     <div class="shading shading--splash">
       <div id="controls" class="controls">
-        <div id="language" class="language">
-          <a id="japanese" title="Japanese" href="/ja">🇯🇵</a>
-          <a id="english" class="active" title="English" href="/en">🇺🇸</a>
+        <div id="controls-left" class="controls__left">
+          <div id="language" class="language">
+            <a id="japanese" title="Japanese" href="/ja">🇯🇵</a>
+            <a id="english" class="active" title="English" href="/en">🇺🇸</a>
+          </div>
         </div>
-
-        <div id="cart-toggle" class="cart-toggle">
-          <input id="checkbox" class="checkbox" type="checkbox" hidden />
-          <label
-            id="hamburger"
-            for="checkbox"
-            class="hamburger hamburger--collapse"
-            aria-label="Toggle menu"
-            title="Toggle menu"
-            role="button"
-            tabindex="0"
-            aria-controls="cart"
-            aria-expanded="false"
-          >
-            <!-- <span class="hamburger-box">
-              <span class="hamburger-inner"></span>
-            </span> -->
+        <div id="controls-right" class="controls__right">
+          <a class="inline-block inline-block--baseline" href="/">
             <picture>
-              <source type="image/svg+xml" srcset="/img/shopping-cart-solid.svg" />
-              <img isrc="/img/shopping-cart-solid.png" srcset="/img/shopping-cart-solid.png 1x, /img/shopping-cart-solid@2x.png 2x, /img/shopping-cart-solid@3x.png 3x" width="20" alt="🛒" />
+              <source type="image/svg+xml" srcset="/img/home-solid.svg" />
+              <img isrc="/img/home-solid.png" srcset="/img/home-solid.png 1x, /img/home-solid@2x.png 2x, /img/home-solid@3x.png 3x" width="20" alt="🏠" />
             </picture>
-          </label>
-          <div id="cart" class="cart" aria-hidden="true">
-            <h2 class="cart-heading sr-only">Cart</h2>
-            <p id="cart-empty" class="cart-text">Your cart is empty.</p>
-            <form>
-              <button id="checkout" class="cart-action" disabled>Checkout</button>
-            </form>
-          </div><!--/#cart-->
+          </a>
+          <div id="cart-toggle" class="cart-toggle inline-block inline-block--baseline">
+            <input id="checkbox" class="checkbox" type="checkbox" hidden />
+            <label
+              id="hamburger"
+              for="checkbox"
+              class="hamburger hamburger--collapse"
+              aria-label="Toggle menu"
+              title="Toggle menu"
+              role="button"
+              tabindex="0"
+              aria-controls="cart"
+              aria-expanded="false"
+            >
+              <!-- <span class="hamburger-box">
+                <span class="hamburger-inner"></span>
+              </span> -->
+              <picture>
+                <source type="image/svg+xml" srcset="/img/shopping-cart-solid.svg" />
+                <img isrc="/img/shopping-cart-solid.png" srcset="/img/shopping-cart-solid.png 1x, /img/shopping-cart-solid@2x.png 2x, /img/shopping-cart-solid@3x.png 3x" width="20" alt="🛒" />
+              </picture>
+            </label>
+            <div id="cart" class="cart" aria-hidden="true">
+              <h2 class="cart-heading sr-only">Cart</h2>
+              <p id="cart-empty" class="cart-text">Your cart is empty.</p>
+              <form>
+                <button id="checkout" class="cart-action" disabled>Checkout</button>
+              </form>
+            </div><!--/#cart-->
+          </div>
         </div>
       </div>
