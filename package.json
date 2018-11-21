@@ -3,7 +3,8 @@
     "svg2png": "inkscape -z -e $OUTFILE -w $WIDTH $INFILE",
     "build": "node modernizr-build.js && gulp",
     "crunch": "find ./src/img/png/ -type f -name \"*.png\" -exec guetzli --verbose --quality 84 {} {}.jpg \\; && rename \"s/png.jpg/jpg/\" ./src/img/png/*.png.jpg",
-    "progressive": "find ./src/img/png/ -type f -name \"*.jpg\" -exec jpegtran -outfile {}.prog -progressive {} \\; && rename \"s/jpg.prog/prog.jpg/\" ./src/img/png/*.prog"
+    "progressive": "find ./src/img/png/ -type f -name \"*.jpg\" -exec jpegtran -outfile {}.prog -progressive {} \\; && rename \"s/jpg.prog/prog.jpg/\" ./src/img/png/*.prog",
+    "static": "wget -r http://local.apparel.nospoon.tv -P static/"
   },
   "dependencies": {
     "apache-server-configs": "^3.0.0",

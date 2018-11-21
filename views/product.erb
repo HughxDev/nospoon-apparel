@@ -1,0 +1,13 @@
+<%= erb :_top %>
+      <main>
+        <img
+          src="<%= @default_colorway_src %>"
+          srcset="<%= @default_colorway_src %>"
+          alt="Product shot"
+        />
+        <h1><%= @data.name.en %></h1>
+        <div>
+          <%=  %>
+        </div>
+      </main>
+<%= erb :_bottom %>
