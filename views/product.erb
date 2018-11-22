@@ -1,13 +1,51 @@
 <%= erb :_top %>
       <main>
-        <img
-          src="<%= @default_colorway_src %>"
-          srcset="<%= @default_colorway_src %>"
-          alt="Product shot"
-        />
-        <h1><%= @data.name.en %></h1>
-        <div>
-          <%=  %>
-        </div>
+        <article class="content content--collection content--product product">
+          <header class="product__header">
+            <h1 class="collection-heading product__name"><%= @data.name.en %></h1>
+            <div class="product__tagline"><%= @data.tagline.en %></div>
+            <nav class="product__breadcrumbs" aria-label="Breadcrumbs" itemscope="itemscope" itemtype="http://schema.org/BreadcrumbList">
+              <h2 class="sr-only">Product Type</h2>
+              <span itemprop="itemListElement" itemscope="itemscope" itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="/products/" rel="up up">
+                  <span itemprop="name">All Products</span>
+                </a>
+                <meta itemprop="position" content="1" />
+              </span
+              > <span aria-hidden="true">&gt;</span
+              > <span itemprop="itemListElement" itemscope="itemscope" itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="/products/t-shirts/" rel="up">
+                  <span itemprop="name">T-Shirts</span>
+                </a>
+                <meta itemprop="position" content="2" />
+              </span>
+            </nav>
+          </header>
+          <div class="row">
+            <div class="column column--image">
+              <img
+                src="<%= @default_colorway_src %>"
+                alt="Product shot"
+              />
+            </div>
+            <div class="column">
+              <%= erb :'the-kramper' %>
+              <dl temprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer">
+                <!--price is 1000, a number, with locale-specific thousands separator
+                  and decimal mark, and the $ character is marked up with the
+                  machine-readable code "USD" -->
+                <dt class="sr-only">Price</dt>
+                <dd>
+                  <b class="hpg-product-price"><span itemprop="priceCurrency" content="USD">$</span><span itemprop="price" content="<%= @default_price_clean %>"><%= @default_price_formatted %></span></b>
+                </dd>
+                <dt class="sr-only">Availability</dt>
+                <dd>
+                  <link itemprop="availability" href="http://schema.org/InStock" />
+                  Made to Order
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </article>
       </main>
 <%= erb :_bottom %>

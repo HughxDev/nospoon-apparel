@@ -4,3 +4,4 @@ source "https://rubygems.org"
 
 gem "sinatra"
 gem "hash_dot"
+gem "money"

@@ -2,6 +2,9 @@ the-kramper:
   name:
     en: 'The Kramper'
     ja: 'ザ・クランパー'
+  tagline:
+    en: Seinfeld’s Kramer × Krampus the Christmas Devil
+    ja: 『となりのサインフェルド』のクレイマー × クランパス、クリスマスの悪魔
   variants:
     - type: 't-shirt'
       sizes:
@@ -36,16 +39,14 @@ the-kramper:
           tags: [ blue, turquoise, teal, tiffany, cyan, sky-blue, blue-green ]
           hex: 0x0092C1
       price:
-        USA:
+        USD:
           amount: 25.00
           additional:
             XL: 5.00
-          currency: 'USD'
-        JPN:
+        JPY:
           amount: 250.00
           additional:
             XL: 50.00
-          current: 'JPY'
       stock:
         xs-white: 2
         s-white: 1

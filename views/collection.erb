@@ -3,9 +3,79 @@
   <div class="content content--collection">
     <h1 class="collection-heading">Collection</h1>
     <div id="products" class="products">
-      <article class="product">
-        <a class="product-link" title="View product" href="/collection/the-kramper">
-          <img src="/collection/the-kramper/product.png" srcset="/collection/the-kramper/product--white.png 1x, /collection/the-kramper/product--white@2x.png 2x, /collection/the-kramper/product--white@3x.png 3x" width="256" alt="Product shot" />
+      <article class="product-item">
+        <a id="the-kramper" class="product-link" title="View product" href="/collection/the-kramper">
+          <img
+            id="the-kramper--white"
+            src="/collection/the-kramper/product--white.png"
+            srcset="
+              /collection/the-kramper/product--white.png 1x,
+              /collection/the-kramper/product--white@2x.png 2x,
+              /collection/the-kramper/product--white@3x.png 3x"
+            sizes="(min-width: 342px) 256px"
+            width="256"
+            alt="Product shot"
+          />
+          <img
+            id="the-kramper--heather-grey"
+            src="/collection/the-kramper/product--heather-grey.png"
+            srcset="
+              /collection/the-kramper/product--heather-grey.png 1x,
+              /collection/the-kramper/product--heather-grey@2x.png 2x,
+              /collection/the-kramper/product--heather-grey@3x.png 3x"
+            sizes="(min-width: 342px) 256px"
+            width="256"
+            alt="Product shot"
+            hidden="hidden"
+          />
+          <img
+            id="the-kramper--black"
+            src="/collection/the-kramper/product--black.png"
+            srcset="
+              /collection/the-kramper/product--black.png 1x,
+              /collection/the-kramper/product--black@2x.png 2x,
+              /collection/the-kramper/product--black@3x.png 3x"
+            sizes="(min-width: 342px) 256px"
+            width="256"
+            alt="Product shot"
+            hidden="hidden"
+          />
+          <img
+            id="the-kramper--cranberry"
+            src="/collection/the-kramper/product--cranberry.png"
+            srcset="
+              /collection/the-kramper/product--cranberry.png 1x,
+              /collection/the-kramper/product--cranberry@2x.png 2x,
+              /collection/the-kramper/product--cranberry@3x.png 3x"
+            sizes="(min-width: 342px) 256px"
+            width="256"
+            alt="Product shot"
+            hidden="hidden"
+          />
+          <img
+            id="the-kramper--teal"
+            src="/collection/the-kramper/product--teal.png"
+            srcset="
+              /collection/the-kramper/product--teal.png 1x,
+              /collection/the-kramper/product--teal@2x.png 2x,
+              /collection/the-kramper/product--teal@3x.png 3x"
+            sizes="(min-width: 342px) 256px"
+            width="256"
+            alt="Product shot"
+            hidden="hidden"
+          />
+          <img
+            id="the-kramper--kelly-green"
+            src="/collection/the-kramper/product--kelly-green.png"
+            srcset="
+              /collection/the-kramper/product--kelly-green.png 1x,
+              /collection/the-kramper/product--kelly-green@2x.png 2x,
+              /collection/the-kramper/product--kelly-green@3x.png 3x"
+            sizes="(min-width: 342px) 256px"
+            width="256"
+            alt="Product shot"
+            hidden="hidden"
+          />
         </a>
         <h2 class="product-heading">The Kramper</h2>
         <!-- <p class="product-tagline">Kramer × Krampus</p> -->
@@ -14,14 +84,15 @@
           <div class="product-price">$25</div>
         </div>
         <ul class="product-colors" aria-label="Colors">
-          <li><button class="color" style="background-color:#000000;" title="Black">Black</button></li>
-          <li><button class="color" style="background-color:#990033" title="Cranberry">Cranberry</button></li>
-          <li><button class="color" style="background-color:#b0b0b2" title="Heather Grey">Heather Grey</button></li>
-          <li><button class="color" style="background-color:#1a8145" title="Kelly Green">Kelly Green</button></li>
-          <li><button class="color" style="background-color:#0092c1" title="Teal">Teal</button></li>
+          <li><button class="color" style="background-color:#FFFFFF;" title="White" data-colorway="the-kramper--white">White</button></li>
+          <li><button class="color" style="background-color:#b0b0b2" title="Heather Grey" data-colorway="the-kramper--heather-grey">Heather Grey</button></li>
+          <li><button class="color" style="background-color:#000000;" title="Black" data-colorway="the-kramper--black">Black</button></li>
+          <li><button class="color" style="background-color:#990033" title="Cranberry" data-colorway="the-kramper--cranberry">Cranberry</button></li>
+          <li><button class="color" style="background-color:#1a8145" title="Kelly Green" data-colorway="the-kramper--kelly-green">Kelly Green</button></li>
+          <li><button class="color" style="background-color:#0092c1" title="Teal" data-colorway="the-kramper--teal">Teal</button></li>
         </ul>
       </article>
-      <article class="product">
+      <article class="product-item">
         <a id="redblue-tokyo" class="product-link" title="View product" data-href="redblue-tokyo/index.html">
           <img
             id="redblue-tokyo--natural"
