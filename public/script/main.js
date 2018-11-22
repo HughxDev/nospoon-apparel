@@ -300,9 +300,11 @@
     //   "ja": "・",
     //   "en": " · "
     // },
-    "TOGGLE_MENU": {
-      "ja": "メニューをトグルして",
-      "en": "Toggle menu"
+    "TOGGLE_CART": {
+      "ja": "カートをトグルして",
+      "en": "Toggle cart",
+      "en-GB": "Toggle basket",
+      "es": "Cambiar el carrito",
     },
     // "TAGLINE": {
     //   "ja": "マトリックスを脱出して。インディーズのクリエイティブな人のためのストリートウェア。",

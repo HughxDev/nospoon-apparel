@@ -25,6 +25,7 @@
             <div class="column column--image">
               <img
                 src="<%= @default_colorway_src %>"
+                srcset="<%= "#{@default_colorway_src} 1x, #{@default_colorway_src.sub '@2x.png', '-full.png'} 2x" %>"
                 alt="Product shot"
               />
             </div>
