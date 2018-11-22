@@ -815,13 +815,13 @@ input, select, textarea {
   font-size: 1.125rem;
 }
 
-/* .column.column--image */
-.column > img
-{
-  position: sticky;
-  position: -webkit-sticky;
-  top: 12.5%;
-  top: 25%;
+@media only screen and (min-width: 44em) {
+  .column > img {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 12.5%;
+    top: 25%;
+  }
 }
 
 .hpg-wizard table,
@@ -861,6 +861,19 @@ input, select, textarea {
 
 .table-column.table-column--colorway {
   flex: 1;
+  width: 2rem;
+}
+
+.table-column.table-column--qty,
+.qty {
+  width: 2rem;
+}
+
+@media only screen and (min-width: 44em) {
+  .table-column.table-column--colorway,
+  .table-column.table-column--qty {
+    width: auto;
+  }
 }
 
 td.table-colum {
@@ -906,4 +919,10 @@ tbody > tr:not(:first-child) > .table-column.table-column--actions > .table-acti
 
 fieldset {
   margin-bottom: 1rem
+}
+
+fieldset {
+  width: 29rem;
+  max-width: 100%;
+  overflow: scroll;
 }
