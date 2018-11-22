@@ -86,6 +86,7 @@ main > .content {
 main > .content.content--collection {
   margin-top: 0;
   width: 100%;
+  max-width: 90%;
   height: 100%;
   text-align: center;
   /* min-height: 82vh; */
@@ -921,8 +922,142 @@ fieldset {
   margin-bottom: 1rem
 }
 
+.row {
+  padding-bottom: 7.5rem;
+  padding-bottom: 10rem;
+}
+
+/* @media only screen and (min-width: 44em) {
+  .row {
+    padding-bottom: 3.75rem;
+    padding-bottom: 5rem;
+  }
+} */
+
 fieldset {
-  width: 29rem;
+  /* width: 29rem; */
   max-width: 100%;
   overflow: scroll;
+  margin: 0 auto;
+  height: 6rem;
+  border: 0;
+  padding: 0;
+  /* margin: 0; */
+  display: inline-block;
+  vertical-align: middle;
+  /* padding: 1rem; */
+  width: 100%;
+  margin-bottom: 1.25rem;
+}
+
+@media only screen and (min-width: 44em) {
+  fieldset {
+    margin-bottom: 0;
+  }
+}
+
+#checkout {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgb(16,16,16);
+  color: rgb(235,235,235);
+  /* text-align: center; */
+  text-align: left;
+  z-index: 3;
+  /* padding: 1rem 2.25rem 0; */
+  padding: 1rem 0;
+}
+
+#your-order {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  /* width: 90%; */
+  width: 20rem;
+  margin: 0 auto;
+}
+
+@media only screen and (min-width: 32em) {
+  #your-order {
+    /* width: 66.666666%; */
+  }
+}
+
+@media only screen and (min-width: 34em) {
+  #your-order {
+    /* width: 50%; */
+
+  }
+}
+
+@media only screen and (min-width: 44em) {
+  #your-order {
+    width: 47rem;
+    max-width: 90%;
+    justify-content: space-around;
+  }
+}
+
+#your-order > * {
+  display: inline-block;
+  vertical-align: middle;
+  min-height: 4rem;
+  height: auto;
+  max-height: 8rem;
+}
+
+@media only screen and (min-width: 44em) {
+  #your-order > * {
+    flex: .3333;
+  }
+}
+
+[itemprop="offers"] {
+  /* width: 50%; */
+  width: 8rem;
+  margin: 0;
+  text-align: left;
+}
+
+#add-to-cart {
+  /* height: 50%; */
+  font-size: 1.2rem;
+}
+
+@media only screen and (min-width: 52em) {
+  #add-to-cart {
+    font-size: 1.5rem;
+  }
+}
+
+#your-order > .button-holder {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-holder.button-holder--order > table {
+  /* width: 29rem; */
+  width: 23rem;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+@media only screen and (min-width: 44em) {
+  .button-holder.button-holder--offers {
+    order: 1;
+  }
+
+  #your-order > .button-holder.button-holder--order {
+    order: 2;
+    flex: 1;
+  }
+
+  .button-holder.button-holder--add-to-cart {
+    order: 3;
+  }
 }

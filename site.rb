@@ -18,19 +18,19 @@ class NoSpoonApparel < Sinatra::Base
     erb :index
   end
 
-  get "/collection" do
-    redirect "/collection/", 302
-  end
+  # get "/collection" do
+  #   redirect "/collection/", 302
+  # end
 
-  get "/collection/:product/" do
-    redirect "/collection/#{params['product']}", 302
-  end
+  # get "/collection/:product/" do
+  #   redirect "/collection/#{params['product']}", 302
+  # end
 
   get "/collection/" do
     erb :collection
   end
 
-  get "/collection/:product" do
+  get "/collection/:product/" do
     @data = YAML.load_file('data/products.yaml')[params['product']]
     @product = params['product']
     @default_colorways = @data['variants'][0]['colorways']

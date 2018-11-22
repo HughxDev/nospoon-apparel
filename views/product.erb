@@ -31,22 +31,6 @@
             </div>
             <div class="column">
               <%= erb :'the-kramper' %>
-              <dl temprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer">
-                <!--price is 1000, a number, with locale-specific thousands separator
-                  and decimal mark, and the $ character is marked up with the
-                  machine-readable code "USD" -->
-                <dt class="sr-only">Price</dt>
-                <dd>
-                  <b class="hpg-product-price">
-                    <span itemprop="priceCurrency" content="USD">$</span><span itemprop="price" content="<%= @default_price_clean %>"><%= @default_price_formatted %></span>
-                  </b>
-                </dd>
-                <dt class="sr-only">Availability</dt>
-                <dd>
-                  <link itemprop="availability" href="http://schema.org/InStock" />
-                  Made to Order
-                </dd>
-              </dl>
               <form
                 role="form"
                 id="checkout"
@@ -55,8 +39,8 @@
                 method="POST"
               >
                 <div id="your-order" class="repeater hpg-wizard__step hpg-wizard__step--active">
-                  <fieldset>
-                    <legend>Your Order</legend>
+                  <fieldset class="button-holder button-holder--order">
+                    <legend class="sr-only">Your Order</legend>
                     <table>
                       <thead>
                         <tr>
@@ -110,14 +94,34 @@
                     </table><!--/data-repeater-list-->
                     <!-- </div> -->
                   </fieldset>
-                  <button
-                    id="add-to-cart"
-                    type="button"
-                    class="">Add to Cart</button>
-                  <!-- <button
-                    id="your-order-complete"
-                    type="button"
-                    class="">Quick Checkout</button> -->
+                  <div class="button-holder button-holder--offers">
+                    <dl itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer">
+                      <!--price is 1000, a number, with locale-specific thousands separator
+                        and decimal mark, and the $ character is marked up with the
+                        machine-readable code "USD" -->
+                      <dt class="sr-only">Price</dt>
+                      <dd>
+                        <b class="hpg-product-price">
+                          <span itemprop="priceCurrency" content="USD">$</span><span itemprop="price" content="<%= @default_price_clean %>"><%= @default_price_formatted %></span>
+                        </b>
+                      </dd>
+                      <dt class="sr-only">Availability</dt>
+                      <dd>
+                        <link itemprop="availability" href="http://schema.org/InStock" />
+                        Made to Order
+                      </dd>
+                    </dl>
+                  </div>
+                  <div class="button-holder button-holder--add-to-cart">
+                    <button
+                      id="add-to-cart"
+                      type="button"
+                      class="">Add to Cart</button>
+                    <!-- <button
+                      id="your-order-complete"
+                      type="button"
+                      class="">Quick Checkout</button> -->
+                  </div><!--/.button-holder-->
                 </div><!-- /#your-order -->
               </form>
             </div><!-- /.column -->
