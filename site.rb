@@ -33,6 +33,7 @@ class NoSpoonApparel < Sinatra::Base
   get "/collection/:product" do
     @data = YAML.load_file('data/products.yaml')[params['product']]
     @product = params['product']
+    @default_colorways = @data['variants'][0]['colorways']
     @default_colorway = @data['variants'][0]['colorways'][0]['id']
     @default_colorway_src = "/collection/#{@product}/product--#{@default_colorway}@2x.png"
     # @default_colorway_srcset = "#{@default_colorway_src} 1x, #{@default_colorway_src.sub '.png', '@2x.png'} 2x, #{@default_colorway_src.sub '.png', '@3x.png'} 3x"

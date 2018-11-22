@@ -4,6 +4,10 @@
       </footer>
     </div><!--/#shading-->
     <script src="/script/main.js"></script>
+    <% if defined?(jquery) %>
+      <script src="/node_modules/jquery/dist/jquery.slim.min.js"></script>
+      <script src="/node_modules/jquery.repeater/jquery.repeater.min.js"></script>
+    <% end %>
     <% if defined?(scripts) %><script src="/script/<%= scripts %>.js"></script><% end %>
   </body>
 </html>
