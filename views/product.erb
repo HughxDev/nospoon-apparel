@@ -1,5 +1,5 @@
-<%= erb :_top %>
-      <main>
+<%= erb :_top, :locals => { :page => 'product' } %>
+      <main class="view view--product">
         <article class="content content--collection content--product product">
           <header class="product__header">
             <h1 class="collection-heading product__name"><%= @data.name.en %></h1>
@@ -7,14 +7,14 @@
             <nav class="product__breadcrumbs" aria-label="Breadcrumbs" itemscope="itemscope" itemtype="http://schema.org/BreadcrumbList">
               <h2 class="sr-only">Product Type</h2>
               <span itemprop="itemListElement" itemscope="itemscope" itemtype="http://schema.org/ListItem">
-                <a itemprop="item" href="/products/" rel="up up">
-                  <span itemprop="name">All Products</span>
+                <a itemprop="item" href="/collection/" rel="up up">
+                  <span itemprop="name">Collection</span>
                 </a>
                 <meta itemprop="position" content="1" />
               </span
               > <span aria-hidden="true">&gt;</span
               > <span itemprop="itemListElement" itemscope="itemscope" itemtype="http://schema.org/ListItem">
-                <a itemprop="item" href="/products/t-shirts/" rel="up">
+                <a itemprop="item" href="/collection/t-shirts/" rel="up">
                   <span itemprop="name">T-Shirts</span>
                 </a>
                 <meta itemprop="position" content="2" />
@@ -31,99 +31,6 @@
             </div>
             <div class="column">
               <%= erb :'the-kramper' %>
-              <form
-                role="form"
-                id="checkout"
-                class="hpg-wizard"
-                action=""
-                method="POST"
-              >
-                <div id="your-order" class="repeater hpg-wizard__step hpg-wizard__step--active">
-                  <fieldset class="button-holder button-holder--order">
-                    <legend class="sr-only">Your Order</legend>
-                    <table>
-                      <thead>
-                        <tr>
-                          <th scope="col" class="table-column table-column--size">Size</th>
-                          <th scope="col" class="table-column table-column--colorway">Colorway</th>
-                          <th scope="col" class="table-column table-column--qty">
-                            <abbr title="Quantity" aria-label="Quantity">Qty</abbr>
-                          </th>
-                          <th scope="col" class="table-column table-column--actions" style="color:transparent;text-shadow:none;">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody data-repeater-list="batches">
-                        <tr data-repeater-item="" class="form-group">
-                          <td class="table-column table-column--size">
-                            <select id="sizes" class="clothing-sizes" name="batches[0][size]">
-                              <option>XS</option>
-                              <option selected="selected">S</option>
-                              <option>M</option>
-                              <option>L</option>
-                              <option>XL</option>
-                            </select>
-                          </td>
-                          <td class="table-column table-column--colorway">
-                            <select id="color-select-button">
-                              <% @default_colorways.each do |colorway| %>
-                                <option><%= colorway.name %></option>
-                              <% end %>
-                            </select>
-                          </td>
-                          <td class="table-column table-column--qty">
-                            <input id="qty" class="qty" name="batches[0][quantity]" type="number" min="1" value="1" required="required" />
-                          </td>
-                          <td class="table-column table-column--actions" scope="row">
-                            <button
-                              data-repeater-create=""
-                              type="button"
-                              class="table-action table-action--add"
-                              title="Add More"
-                              aria-label="Add More">+</button>
-                            <button
-                              data-repeater-delete=""
-                              type="button"
-                              class="table-action table-action--remove"
-                              title="Remove"
-                              aria-label="Remove">
-                              <span aria-hidden="true">-</span>
-                            </button>
-                          </td>
-                        </tr><!--/data-repeater-item-->
-                      </tbody>
-                    </table><!--/data-repeater-list-->
-                    <!-- </div> -->
-                  </fieldset>
-                  <div class="button-holder button-holder--offers">
-                    <dl itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer">
-                      <!--price is 1000, a number, with locale-specific thousands separator
-                        and decimal mark, and the $ character is marked up with the
-                        machine-readable code "USD" -->
-                      <dt class="sr-only">Price</dt>
-                      <dd>
-                        <b class="hpg-product-price">
-                          <span itemprop="priceCurrency" content="USD">$</span><span itemprop="price" content="<%= @default_price_clean %>"><%= @default_price_formatted %></span>
-                        </b>
-                      </dd>
-                      <dt class="sr-only">Availability</dt>
-                      <dd>
-                        <link itemprop="availability" href="http://schema.org/InStock" />
-                        Made to Order
-                      </dd>
-                    </dl>
-                  </div>
-                  <div class="button-holder button-holder--add-to-cart">
-                    <button
-                      id="add-to-cart"
-                      type="button"
-                      class="">Add to Cart</button>
-                    <!-- <button
-                      id="your-order-complete"
-                      type="button"
-                      class="">Quick Checkout</button> -->
-                  </div><!--/.button-holder-->
-                </div><!-- /#your-order -->
-              </form>
             </div><!-- /.column -->
           </div><!-- /.row -->
         </article>
