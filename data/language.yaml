@@ -1,0 +1,80 @@
+BRAND_NAME:
+  ja: ノ・スプーン・アパレル
+  en: No Spoon Apparel
+BRAND:
+  ja: ノ・スプーン
+  en: No Spoon
+SUB_BRAND:
+  ja: アパレル
+  en: Apparel
+# CURRENT_TIME:
+#   ja: ボストンでの現在時刻：
+#   en: 'Current time in Boston:'
+# YEAR_KANJI:
+#   ja: 年
+#   en: '-'
+# MONTH_KANJI:
+#   ja: 月
+#   en: '-'
+# DAY_KANJI:
+#   ja: 日
+#   en: ''
+# HOUR_KANJI:
+#   ja: 時
+#   en: ':'
+# MINUTE_KANJI:
+#   ja: 分
+#   en: ':'
+# SECONDS_KANJI:
+#   ja: 秒
+#   en: ''
+# MIDDLE_DOT:
+#   ja: ・
+#   en: ' · '
+TOGGLE_CART:
+  ja: カートをトグルして
+  en: Toggle cart
+  en-GB: Toggle basket
+  es: Cambiar el carrito
+TAGLINE:
+  ja: マトリックスを脱出して。インディーズのクリエイティブな人のためのストリートウェア。
+  en: Escape the Matrix. Streetwear for the indie creative.
+SIDE_HUSTLE:
+  ja: ヒュー・ガイニーによるサイド・ハッスル。
+  en: A side-hustle by Hugh Guiney.
+CART_EMPTY:
+  ja: あなたのカートは空です。
+  en: Your cart is empty.
+CHECKOUT:
+  ja: チェックアウトして
+  en: Checkout
+ABOUT:
+  ja: ついて
+  en: About
+COLLECTION:
+  ja: コレクション
+  en: Collection
+YOUR_ORDER:
+  ja: あなたの注文
+  en: Your Order
+SIZE:
+  ja: サイズ
+  en: Size
+QTY:
+  ja: 量
+  en: Qty
+QUANTITY:
+  ja: ''
+  en: Quantity
+COLORWAY:
+  ja: カラーウェイ
+  en: Colorway
+ACTIONS:
+  ja: 働き
+  en: Actions
+T_SHIRTS:
+  ja: Tシャツ
+  en: T-shirts
+PRODUCT_DETAILS:
+  ja: 製品の詳細
+  en: Product Details

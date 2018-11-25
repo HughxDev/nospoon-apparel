@@ -2,20 +2,20 @@
       <main class="view view--product">
         <article class="content content--collection content--product product">
           <header class="product__header">
-            <h1 class="collection-heading product__name"><%= @data.name.en %></h1>
-            <div class="product__tagline"><%= @data.tagline.en %></div>
+            <h1 class="collection-heading product__name"><%= @data.name[@language] %></h1>
+            <div class="product__tagline"><%= @data.tagline[@language] %></div>
             <nav class="product__breadcrumbs" aria-label="Breadcrumbs" itemscope="itemscope" itemtype="http://schema.org/BreadcrumbList">
               <h2 class="sr-only">Product Type</h2>
               <span itemprop="itemListElement" itemscope="itemscope" itemtype="http://schema.org/ListItem">
                 <a itemprop="item" href="/collection/" rel="up up">
-                  <span itemprop="name">Collection</span>
+                  <span itemprop="name"><%= @copy.COLLECTION[@language] %></span>
                 </a>
                 <meta itemprop="position" content="1" />
               </span
               > <span aria-hidden="true">&gt;</span
               > <span itemprop="itemListElement" itemscope="itemscope" itemtype="http://schema.org/ListItem">
                 <a itemprop="item" href="/collection/t-shirts/" rel="up">
-                  <span itemprop="name">T-Shirts</span>
+                  <span itemprop="name"><%= @copy.T_SHIRTS[@language] %></span>
                 </a>
                 <meta itemprop="position" content="2" />
               </span>
@@ -30,9 +30,11 @@
               />
             </div>
             <div class="column">
-              <%= erb :'the-kramper' %>
+              <%= erb :'_the-kramper' %>
+              <h2><%= @copy.PRODUCT_DETAILS[@language] %></h2>
+              <%= erb :'_american-apparel-2001' %>
             </div><!-- /.column -->
           </div><!-- /.row -->
         </article>
       </main>
-<%= erb :_bottom, :locals => { :jquery => true, :scripts => 'product' } %>
+<%= erb :_bottom, :locals => { :jquery => true, :scripts => 'product', :lang => lang } %>

@@ -16,6 +16,8 @@ GEM
       rack (~> 2.0)
       rack-protection (= 2.0.4)
       tilt (~> 2.0)
+    sinatra-subdomain (0.3.0)
+      sinatra
     tilt (2.0.8)
 
 PLATFORMS
@@ -25,6 +27,7 @@ DEPENDENCIES
   hash_dot
   money
   sinatra
+  sinatra-subdomain
 
 BUNDLED WITH
    1.17.1

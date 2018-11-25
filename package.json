@@ -4,8 +4,9 @@
     "build": "node modernizr-build.js && gulp",
     "crunch": "find ./src/img/png/ -type f -name \"*.png\" -exec guetzli --verbose --quality 84 {} {}.jpg \\; && rename \"s/png.jpg/jpg/\" ./src/img/png/*.png.jpg",
     "progressive": "find ./src/img/png/ -type f -name \"*.jpg\" -exec jpegtran -outfile {}.prog -progressive {} \\; && rename \"s/jpg.prog/prog.jpg/\" ./src/img/png/*.prog",
-    "static": "rm -r dist/ & wget -r http://local.apparel.nospoon.tv && mv local.apparel.nospoon.tv/ dist/",
-    "sync": "scp -r dist/ nospoon@hughguiney.com:/srv/www/nospoon-apparel/public/dist/"
+    "static": "rm -rf dist/ & wget -r http://local.apparel.nospoon.tv && mv local.apparel.nospoon.tv/ dist/ && gulp img-postprocess",
+    "sync": "scp -r dist/ nospoon@hughguiney.com:/srv/www/nospoon-apparel/public/dist/",
+    "yaml2json": "yaml2json data/ --pretty --save --recursive"
   },
   "dependencies": {
     "apache-server-configs": "^3.0.0",
@@ -21,6 +22,7 @@
     "jquery": "^3.3.1",
     "jquery.repeater": "^1.2.1",
     "modernizr": "^3.6.0",
-    "pump": "^3.0.0"
+    "pump": "^3.0.0",
+    "yamljs": "^0.3.0"
   }
 }

@@ -255,82 +255,7 @@
   var $japaneseFont = document.getElementById( 'japanese-font' );
   var $japaneseLink = document.getElementById( 'japanese' );
 
-  var lang = {
-    "BRAND_NAME": {
-      "ja": "ノ・スプーン・アパレル",
-      "en": "No Spoon Apparel"
-    },
-    "BRAND": {
-      "ja": "ノ・スプーン",
-      "en": "No Spoon"
-    },
-    "SUB_BRAND": {
-      "ja": "アパレル",
-      "en": "Apparel"
-    },
-    // "CURRENT_TIME": {
-    //   "ja": "ボストンでの現在時刻：",
-    //   "en": "Current time in Boston:"
-    // },
-    // "YEAR_KANJI": {
-    //   "ja": "年",
-    //   "en": "-"
-    // },
-    // "MONTH_KANJI": {
-    //   "ja": "月",
-    //   "en": "-"
-    // },
-    // "DAY_KANJI": {
-    //   "ja": "日",
-    //   "en": ""
-    // },
-    // "HOUR_KANJI": {
-    //   "ja": "時",
-    //   "en": ":"
-    // },
-    // "MINUTE_KANJI": {
-    //   "ja": "分",
-    //   "en": ":"
-    // },
-    // "SECONDS_KANJI": {
-    //   "ja": "秒",
-    //   "en": ""
-    // },
-    // "MIDDLE_DOT": {
-    //   "ja": "・",
-    //   "en": " · "
-    // },
-    "TOGGLE_CART": {
-      "ja": "カートをトグルして",
-      "en": "Toggle cart",
-      "en-GB": "Toggle basket",
-      "es": "Cambiar el carrito",
-    },
-    // "TAGLINE": {
-    //   "ja": "マトリックスを脱出して。インディーズのクリエイティブな人のためのストリートウェア。",
-    //   "en": "Escape the Matrix. Streetwear for the indie creative."
-    // },
-    // "SIDE_HUSTLE": {
-    //   "ja": "ヒュー・ガイニーによるサイド・ハッスル。",
-    //   "en": "A side-hustle by Hugh Guiney."
-    // },
-    "CART_EMPTY": {
-      "ja": "あなたのカートは空です。",
-      "en": "Your cart is empty."
-    },
-    "CHECKOUT": {
-      "ja": "チェックアウトして",
-      "en": "Checkout"
-    },
-    "ABOUT": {
-      "ja": "ついて",
-      "en": "About"
-    },
-    "COLLECTION": {
-      "ja": "コレクション",
-      "en": "Collection"
-    }
-  };
+  var lang = NoSpoonApparel.lang;
 
   lang.TITLE = {
     "ja": lang.BRAND_NAME.ja,
@@ -344,7 +269,7 @@
       $japaneseFont.setAttribute( 'id', 'japanese-font' );
       $japaneseFont.setAttribute( 'rel', 'preload' );
       $japaneseFont.setAttribute( 'as', 'style' );
-      $japaneseFont.setAttribute( 'href', '../style/fonts/noto-sans-japanese.css' );
+      $japaneseFont.setAttribute( 'href', '/style/fonts/noto-sans-japanese.css' );
       document.head.appendChild( $japaneseFont );
     }
   } );
@@ -355,15 +280,17 @@
     var $clicked = event.target;
     ( $clicked.nextElementSibling || $clicked.previousElementSibling ).classList.remove( 'active' );
     $clicked.classList.add( 'active' );
+    var iso = '';
+    var locale = '';
 
     switch ( $clicked.textContent ) {
       case '🇯🇵':
+        iso = 'ja';
+        locale = iso + '-JP';
+
         if ( $japaneseFont.getAttribute( 'rel' ) !== 'stylesheet' ) {
           $japaneseFont.setAttribute( 'rel', 'stylesheet' );
         }
-
-        $html.setAttribute( 'lang', 'ja' );
-        $html.setAttribute( 'xml:lang', 'ja' );
 
         if ( $brand ) {
           $brand.textContent = lang.BRAND.ja;
@@ -387,8 +314,8 @@
       break;
 
       case '🇺🇸':
-        $html.setAttribute( 'lang', 'en' );
-        $html.setAttribute( 'xml:lang', 'en' );
+        iso = 'en';
+        locale = iso + '-US';
 
         if ( $brand ) {
           $brand.textContent = lang.BRAND.en;
@@ -411,5 +338,10 @@
         showElements( $englishText );
       break;
     }
+
+    $html.setAttribute( 'lang', locale );
+    $html.setAttribute( 'xml:lang', locale );
+
+    history.replaceState( {}, '', location.href.replace( /\/(\?language=\w{2})?$/, '/?language=' + iso ) );
   } );
 })();

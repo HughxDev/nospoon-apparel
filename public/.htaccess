@@ -1,0 +1,9 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+  RewriteCond %{QUERY_STRING} ^(.*)&?language=([^&]+)&?(.*)$ [NC]
+  RewriteRule ^(.*)$ "-" [E=before:%1,E=language:%2,E=after:%3]
+
+  RewriteCond %{QUERY_STRING} language=[^&]+ [NC]
+  RewriteCond %{HTTP_HOST} (local\.)?([a-z]{2}\.)?(apparel\.nospoon\.tv)
+  RewriteRule ^(.*)$ http://%1%{ENV:language}.%3%{REQUEST_URI}?%{ENV:before}%{ENV:after} [R=302,L]
+</IfModule>

@@ -1,22 +1,56 @@
 require 'sinatra/base'
+require 'sinatra/subdomain'
 require 'yaml'
 require 'hash_dot'
 require 'money'
 
+# set :tld_size, 2
 Hash.use_dot_syntax = true
 Money.locale_backend = :i18n
 I18n.config.available_locales = :en
 I18n.locale = :en
 
 class NoSpoonApparel < Sinatra::Base
+  register Sinatra::Subdomain
+
+  before do
+    @copy = YAML.load_file('data/language.yaml')
+    @lang = File.read('data/language.json', :encoding => 'utf-8')
+    @language = get_language(subdomain)
+    @locale = get_locale(@language)
+  end
+
   # https://stackoverflow.com/a/37891309/214325
   def strip_trailing_zero(n)
     n.to_s.sub(/\.?0+$/, '')
   end
 
-  get "/" do
-    erb :index
+  def get_locale(language)
+    case language
+    when 'en'
+      'en-US'
+    when 'ja'
+      'ja-JP'
+    else
+      language
+    end
   end
+
+  def get_language(subdomain)
+    language = subdomain.to_s.sub( 'local.', '' ).sub( '.apparel', '' )
+
+    if language == 'apparel'
+      'en'
+    else
+      language
+    end
+  end
+
+  # subdomain [ /(local\.)?ja/ ] do
+  #   get "/" do
+  #     erb :index
+  #   end
+  # end
 
   # get "/collection" do
   #   redirect "/collection/", 302
@@ -27,10 +61,17 @@ class NoSpoonApparel < Sinatra::Base
   # end
 
   get "/collection/" do
-    erb :collection
+    erb :collection, :locals => {
+      :language => @language,
+      :locale => @locale,
+      :lang => @lang
+    }
   end
 
   get "/collection/:product/" do
+    language = get_language(subdomain)
+    locale = get_locale(language)
+
     @data = YAML.load_file('data/products.yaml')[params['product']]
     @product = params['product']
     @default_colorways = @data['variants'][0]['colorways']
@@ -40,6 +81,19 @@ class NoSpoonApparel < Sinatra::Base
     @default_price = @data.variants[0].price.USD.amount
     @default_price_formatted = Money.from_amount(@default_price, "USD")
     @default_price_clean = strip_trailing_zero(@default_price)
-    erb :product
+
+    erb :product, :locals => {
+      :language => @language,
+      :locale => @locale,
+      :lang => @lang
+    }
+  end
+
+  get "/" do
+    erb :index, :locals => {
+      :language => @language,
+      :locale => @locale,
+      :lang => @lang
+    }
   end
 end

@@ -56,10 +56,10 @@ gulp.task( 'jsmin', ( cb ) => {
   ], cb );
 } );
 
-gulp.task( 'img', ( cb ) => {
+function processImages( source = 'src', cb ) {
   var imgSources = [
-    './src/**/*.{png,gif,jpg,jpeg,jxr,webp,bpg,bmp,svg}',
-    '!./src/img/source/**/*'
+    `./${source}/**/*.{png,gif,jpg,jpeg,jxr,webp,bpg,bmp,svg}`,
+    `!./${source}/img/source/**/*`
   ];
 
   // pump( [
@@ -83,6 +83,14 @@ gulp.task( 'img', ( cb ) => {
     } ),
     gulp.dest('./dist/')
   ], cb );
+}
+
+gulp.task( 'img', ( cb ) => {
+  processImages( 'src', cb );
+} );
+
+gulp.task( 'img-postprocess', ( cb ) => {
+  processImages( 'dist', cb );
 } );
 
 gulp.task( 'audio', ( cb ) => {
