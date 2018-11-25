@@ -16,7 +16,7 @@ body, .shading {
 
 body {
   background-color: rgb(16, 16, 16);
-  /* background-image: url('../img/osman-rana-332236-unsplash--hi-contrast-bw@0,1875x.jpg'); */
+  /* background-image: url('/img/osman-rana-332236-unsplash--hi-contrast-bw@0,1875x.jpg'); */
   /* background-position: center; */
   /* background-repeat: no-repeat; */
   padding: 0;
@@ -263,15 +263,14 @@ p, ul, ol, dl, address {
 
 .shading {
   /* background-color: rgba(0, 0, 0, 0.75); */
-  background:
-    repeat
+  background-image:
     linear-gradient(
       to right, rgba(16, 16, 16, 0.75),
       rgba(16, 16, 16, 0.75)
     ),
-    no-repeat
-    url('../img/osman-rana-332236-unsplash--hi-contrast-bw@0,1875x.jpg')
+    url('/img/osman-rana-332236-unsplash--hi-contrast-bw@0,1875x.jpg')
   ;
+  background-repeat: repeat, no-repeat;
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
@@ -287,64 +286,77 @@ p, ul, ol, dl, address {
   justify-content: center;
 }
 
-@media only screen and (min-width: 1351px) {
-  body {
+@media
+  only screen and (-webkit-min-device-pixel-ratio: 1.25),
+  only screen and (min-resolution: 200dpi),
+  only screen and (min-resolution: 1.25dppx),
+  only screen and (min-width: 1351px)
+{
+  .shading {
     background-image:
-      repeat
       linear-gradient(
         to right, rgba(16, 16, 16, 0.75),
         rgba(16, 16, 16, 0.75)
       ),
-      no-repeat
-      url('../img/osman-rana-332236-unsplash--hi-contrast-bw@0,25x.jpg')
+      url('/img/osman-rana-332236-unsplash--hi-contrast-bw@0,25x.jpg')
     ;
   }
 }
 
-@media only screen and (min-width: 2702px) {
-  body {
+@media
+  only screen and (min-width: 1351px) and (-webkit-min-device-pixel-ratio: 1.25),
+  only screen and (min-width: 1351px) and (min-resolution: 200dpi),
+  only screen and (min-width: 1351px) and (min-resolution: 1.25dppx),
+  only screen and (min-width: 2702px)
+{
+  .shading {
     background-image:
-      repeat
       linear-gradient(
         to right, rgba(16, 16, 16, 0.75),
         rgba(16, 16, 16, 0.75)
       ),
-      no-repeat
-      url('../img/osman-rana-332236-unsplash--hi-contrast-bw@0,5x.jpg')
+      url('/img/osman-rana-332236-unsplash--hi-contrast-bw@0,5x.jpg')
     ;
   }
 }
 
-@media only screen and (min-width: 4052px) {
-  body {
+@media
+  only screen and (min-width: 2702px) and (-webkit-min-device-pixel-ratio: 1.25),
+  only screen and (min-width: 2702px) and (min-resolution: 200dpi),
+  only screen and (min-width: 2702px) and (min-resolution: 1.25dppx),
+  only screen and (min-width: 4052px)
+{
+  .shading {
     background-image:
-      repeat
       linear-gradient(
         to right, rgba(16, 16, 16, 0.75),
         rgba(16, 16, 16, 0.75)
       ),
-      no-repeat
-      url('../img/osman-rana-332236-unsplash--hi-contrast-bw@0,75x.jpg')
+      url('/img/osman-rana-332236-unsplash--hi-contrast-bw@0,75x.jpg')
     ;
   }
 }
 
-@media only screen and (min-width: 5403px) {
-  body {
+@media
+  only screen and (min-width: 4052px) and (-webkit-min-device-pixel-ratio: 1.25),
+  only screen and (min-width: 4052px) and (min-resolution: 200dpi),
+  only screen and (min-width: 4052px) and (min-resolution: 1.25dppx),
+  only screen and (min-width: 5403px)
+{
+  .shading {
     background-image:
-      repeat
       linear-gradient(
         to right, rgba(16, 16, 16, 0.75),
         rgba(16, 16, 16, 0.75)
       ),
-      no-repeat
-      url('../img/osman-rana-332236-unsplash--hi-contrast-bw.jpg')
+      url('/img/osman-rana-332236-unsplash--hi-contrast-bw.jpg')
     ;
   }
 }
 
 .shading.shading--splash {
   height: 100%;
+  min-height: 30rem;
 }
 
 .shading.shading--splash > main {
@@ -459,7 +471,7 @@ nav, .hamburger, audio, .volume {
   position: absolute;
   top: 0;
   right: 0;
-  background: rgb(16, 16, 16) /*url('../img/concrete-black.png') repeat*/;
+  background: rgb(16, 16, 16) /*url('/img/concrete-black.png') repeat*/;
   color: rgb(235, 235, 235);
   padding: 2.1rem 0.75rem;
   width: 29rem;
@@ -1044,19 +1056,6 @@ fieldset {
   max-width: 90%;
   width: 20rem;
   margin: 0 auto;
-}
-
-@media only screen and (min-width: 32em) {
-  #your-order {
-    /* width: 66.666666%; */
-  }
-}
-
-@media only screen and (min-width: 34em) {
-  #your-order {
-    /* width: 50%; */
-
-  }
 }
 
 @media only screen and (min-width: 44em) {
