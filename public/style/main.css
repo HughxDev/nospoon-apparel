@@ -95,7 +95,7 @@ main > .content.content--collection {
   margin-top: 1.5rem;
 }
 
-@media only screen and (min-width: 44em) {
+@media only screen and (min-width: 42.6em) {
   .product-item + .product-item {
     margin-top: 0;
   }
