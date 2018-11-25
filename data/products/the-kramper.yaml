@@ -8,6 +8,7 @@ tagline:
 description_languages: [ en ]
 variants:
   - type: 't-shirt'
+    vendor_product_id: american-apparel-2001
     sizes:
       - XS
       - S

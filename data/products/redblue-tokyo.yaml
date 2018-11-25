@@ -2,3 +2,38 @@ id: redblue-tokyo
 name:
   en: Redblue Tokyo
   ja: レッドブルー・東京
+tagline:
+  en: Someday, this dream will become real.
+  ja: いつか、この夢は本当になるでしょうよ。
+description_languages: [ en ]
+variants:
+  - type: 't-shirt'
+    vendor_product_id: royal-apparel-5051org
+    sizes:
+      - XS
+      - S
+      - M
+      - L
+      - XL
+    colorways:
+      - id: natural
+        name: Natural
+        tags: [ white ]
+        hex: 0xf2ebdf
+      - id: scuba-blue
+        name: Scuba Blue
+        tags: [ blue ]
+        hex: 0x5aa6c6
+      - id: night
+        name: Night
+        tags: [ black ]
+        hex: 0x343838
+    price:
+      USD:
+        amount: 25.00
+        additional:
+          XL: 5.00
+      JPY:
+        amount: 250.00
+        additional:
+          XL: 50.00

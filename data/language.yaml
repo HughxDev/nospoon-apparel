@@ -94,8 +94,14 @@ AMERICAN_APPAREL_2001:
   ja: アメリカン・アパレルのファイン・ジャージー・クルーネックのTシャツ
   en: American Apparel Fine Jersey Crewneck T-Shirt
 AMERICAN_APPAREL_2001_FABRIC:
-  ja: 綿100％（ヘザーグレーにはポリエステル10％入り）
+  ja: 綿100%（ヘザーグレーにはポリエステル10%入り）
   en: 100% Cotton (Heather Grey contains 10% Polyester)
+ROYAL_APPAREL_5051ORG:
+  ja: ロイヤル・アパレルのユニセックス・ショートスリーブ・オーガニックのT
+  en: Royal Apparel Unisex Short Sleeve Organic Tee
+ROYAL_APPAREL_5051ORG_FABRIC:
+  ja: 極めつけの有機の綿100%
+  en: 100% Certified Organic Cotton
 RUNS_SMALL:
   ja: スリムフィット、小さなものになる傾向がある
   en: Slim fit – tends to run small
@@ -111,6 +117,9 @@ MADE_IN_USA:
 FABRIC_WEIGHT:
   ja: 織物の重量
   en: Fabric weight
+COLORWAYS:
+  ja: カラーウェイ
+  en: Colorways
 COLORWAY_NATURAL:
   ja: ナチュラル
   en: Natural
@@ -139,11 +148,17 @@ COLORWAY_TEAL:
   ja: 鴨の羽色
   en: Teal
 MISSING_DESCRIPTION_LANGUAGE:
-  ja: すみません、我々はまだこの製品の記述のために日本語の翻訳がありません。
-  en: Sorry, we don’t have an English translation for this product description yet.
+  ja: すみません、我々はまだこの製品の記述のために完全な日本語の翻訳がありません。
+  en: Sorry, we don’t have a complete English translation for this product description yet.
 PRICE:
   ja: 価格
   en: Price
 _PRICE_USD_:
   ja: Xドル
   en: X USD
+PRODUCT_SHOT:
+  ja: 製品の写真
+  en: Product shot
+PRODUCT_TYPE:
+  ja: 製品のタイプ
+  en: Product Type

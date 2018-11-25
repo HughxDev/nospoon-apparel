@@ -231,16 +231,25 @@
   var $japaneseText = document.querySelectorAll( '[lang="ja"]:not(html):not([data-translate-preserve])' );
   var $japaneseFont = document.getElementById( 'japanese-font' );
   var $japaneseLink = document.getElementById( 'japanese' );
+  var $main = document.querySelector( 'main' );
+  var isProductPage = $main.classList.contains( 'view--product' );
+  var isCollectionPage = $main.classList.contains( 'view--collection' );
 
   var lang = NoSpoonApparel.lang;
-  var defaultPrice = NoSpoonApparel.product.variants[0].price.USD.amount;
+  var defaultPrice;
 
-  lang._PRODUCT_NAME_ = NoSpoonApparel.product.name;
-  lang._PRODUCT_TAGLINE_ = NoSpoonApparel.product.tagline;
-  lang._PRODUCT_PRICE_ = {};
+  if ( isProductPage ) {
+    defaultPrice = NoSpoonApparel.product.variants[0].price.USD.amount;
 
-  for ( var priceFormat in lang._PRICE_USD_ ) {
-    lang._PRODUCT_PRICE_[priceFormat] = lang._PRICE_USD_[priceFormat].replace( 'X', defaultPrice )
+    lang._PRODUCT_NAME_ = NoSpoonApparel.product.name;
+    lang._PRODUCT_TAGLINE_ = NoSpoonApparel.product.tagline;
+    lang._PRODUCT_PRICE_ = {};
+
+    for ( var priceFormat in lang._PRICE_USD_ ) {
+      lang._PRODUCT_PRICE_[priceFormat] = lang._PRICE_USD_[priceFormat].replace( 'X', defaultPrice )
+    }
+  } else if ( isCollectionPage ) {
+
   }
 
   lang.TITLE = {
@@ -276,6 +285,27 @@
           }
         } else {
           current.textContent = lang[key][languageCode];
+        }
+      } else if ( isCollectionPage ) {
+        switch ( key ) {
+          case '_PRODUCT_NAME_':
+            var k = 0;
+            var node = current;
+            var productsLength = NoSpoonApparel.products.length;
+            var currentProduct;
+
+            while ( !node.hasAttribute( 'id' ) ) {
+              node = node.parentNode;
+            }
+
+            for ( ; k < productsLength; ++k ) {
+              currentProduct = NoSpoonApparel.products[k];
+              if ( currentProduct.id === node.id ) {
+                current.textContent = currentProduct.name[languageCode];
+                break;
+              }
+            }
+          break;
         }
       }
     }

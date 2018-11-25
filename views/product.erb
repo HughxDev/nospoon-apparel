@@ -5,7 +5,7 @@
             <h1 class="collection-heading product__name" data-translate="_PRODUCT_NAME_"><%= @data.name[@language] %></h1>
             <div class="product__tagline" data-translate="_PRODUCT_TAGLINE_"><%= @data.tagline[@language] %></div>
             <nav class="product__breadcrumbs" aria-label="Breadcrumbs" itemscope="itemscope" itemtype="http://schema.org/BreadcrumbList">
-              <h2 class="sr-only" data-translate="PRODUCT_TYPE">Product Type</h2>
+              <h2 class="sr-only" data-translate="PRODUCT_TYPE"><%= @copy.PRODUCT_TYPE[@language] %></h2>
               <span itemprop="itemListElement" itemscope="itemscope" itemtype="http://schema.org/ListItem">
                 <a itemprop="item" href="/collection/" rel="up up">
                   <span itemprop="name" data-translate="COLLECTION"><%= @copy.COLLECTION[@language] %></span>
@@ -25,7 +25,7 @@
             <div class="column column--image">
               <img
                 src="<%= @default_colorway_src %>"
-                srcset="<%= "#{@default_colorway_src} 1x, #{@default_colorway_src.sub '@2x.png', '-full.png'} 2x" %>"
+                srcset="<%= "#{@default_colorway_src} 1x, #{@default_colorway_src.sub '@2x.png', '@3x.png'} 2x" %>"
                 alt="Product shot"
                 data-translate="PRODUCT_SHOT"
                 data-translate-target="alt"
@@ -38,16 +38,16 @@
               <% @data.description_languages.each do |description_language| %>
                 <% if !@missing_description_languages.empty? && ( @data.description_languages.index(description_language) == 0 ) %>
                   <div lang="<%= description_language %>" class="product-description" data-translate-preserve>
-                    <%= erb :"_the-kramper.#{description_language}" %>
+                    <%= erb :"_#{@data.id}.#{description_language}" %>
                   </div>
                 <% else %>
                   <div lang="<%= description_language %>" class="product-description"<%= ( @language == description_language ) ? '' : 'hidden' %>>
-                    <%= erb :"_the-kramper.#{description_language}" %>
+                    <%= erb :"_#{@data.id}.#{description_language}" %>
                   </div>
                 <% end %>
               <% end %>
               <h2 data-translate="PRODUCT_DETAILS"><%= @copy.PRODUCT_DETAILS[@language] %></h2>
-              <%= erb :'_american-apparel-2001' %>
+              <%= erb :"_#{@data.variants[0].vendor_product_id}" %>
             </div><!-- /.column -->
           </div><!-- /.row -->
         </article>

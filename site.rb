@@ -62,9 +62,23 @@ class NoSpoonApparel < Sinatra::Base
   # end
 
   get "/collection/" do
-    # Dir["data/products/*.yaml"].each do |product|
-    #
-    # end
+    @products = []
+    @jsonData = '[';
+
+    product_files = Dir["data/products/*.json"]
+    product_count = product_files.count
+
+    Dir["data/products/*.yaml"].each do |product|
+      @products.push( YAML.load_file(product) )
+    end
+
+    product_files.each_with_index do |product, index|
+      @jsonData += File.read(product, :encoding => 'utf-8')
+      if index < ( product_files.count - 1 )
+        @jsonData += ','
+      end
+    end
+    @jsonData += ']'
 
     erb :collection, :locals => {
       :language => @language,
