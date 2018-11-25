@@ -18,6 +18,7 @@ class NoSpoonApparel < Sinatra::Base
     @lang = File.read('data/language.json', :encoding => 'utf-8')
     @language = get_language(subdomain)
     @locale = get_locale(@language)
+    @supported_languages = [ :en, :ja ]
   end
 
   # https://stackoverflow.com/a/37891309/214325
@@ -61,6 +62,10 @@ class NoSpoonApparel < Sinatra::Base
   # end
 
   get "/collection/" do
+    # Dir["data/products/*.yaml"].each do |product|
+    #
+    # end
+
     erb :collection, :locals => {
       :language => @language,
       :locale => @locale,
@@ -72,7 +77,8 @@ class NoSpoonApparel < Sinatra::Base
     language = get_language(subdomain)
     locale = get_locale(language)
 
-    @data = YAML.load_file('data/products.yaml')[params['product']]
+    @data = YAML.load_file("data/products/#{params['product']}.yaml")
+    @jsonData = File.read("data/products/#{params['product']}.json", :encoding => 'utf-8')
     @product = params['product']
     @default_colorways = @data['variants'][0]['colorways']
     @default_colorway = @data['variants'][0]['colorways'][0]['id']
@@ -81,6 +87,16 @@ class NoSpoonApparel < Sinatra::Base
     @default_price = @data.variants[0].price.USD.amount
     @default_price_formatted = Money.from_amount(@default_price, "USD")
     @default_price_clean = strip_trailing_zero(@default_price)
+    @default_currency_text = @copy._PRICE_USD_[@language].sub( 'X', @default_price_formatted.to_s )
+
+    @missing_description_languages = []
+
+    @supported_languages.each do |supported_language|
+      supported_language = supported_language.to_s
+      if !@data.description_languages.include?(supported_language)
+        @missing_description_languages.push(supported_language)
+      end
+    end
 
     erb :product, :locals => {
       :language => @language,

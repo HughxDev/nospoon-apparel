@@ -2,12 +2,12 @@
 <main class="view view--home">
   <div class="content">
     <h1 id="branding" class="branding">
-      <span id="brand" class="brand"><%= @copy.BRAND[language] %></span>
+      <span id="brand" class="brand" data-translate="BRAND"><%= @copy.BRAND[language] %></span>
       <picture>
         <source type="image/svg+xml" srcset="/img/no-spoon-logo.svg" />
         <img id="logo" class="logo" src="/img/no-spoon-logo.png" srcset="/img/no-spoon-logo.png 1x, /img/no-spoon-logo@2x.png 2x, /img/no-spoon-logo@3x.png 3x" width="211" alt="logo" />
       </picture>
-      <span id="sub-brand" class="sub-brand"><%= @copy.SUB_BRAND[language] %></span>
+      <span id="sub-brand" class="sub-brand" data-translate="SUB_BRAND"><%= @copy.SUB_BRAND[language] %></span>
     </h1>
     <div id="intro" class="intro">
       <p lang="en"<%= ( language == 'en' ) ? '' : ' hidden' %>>Escape the Matrix. Streetwear for the indie creative.</p>
@@ -16,8 +16,8 @@
       <p lang="ja"<%= ( language == 'ja' ) ? '' : ' hidden' %>><span><span class="ww">ヒュー・</span><span class="ww">ガイニーによる</span><span class="ww">サイド・</span><span class="ww">ハッスル。</span></span></p>
       <nav id="site-nav" class="site-nav">
         <div class="nav-content">
-          <a id="about-link" class="nav-link" href="#"><%= @copy.ABOUT[language] %></a>
-          <a id="collection-link" class="nav-link" href="/collection/"><%= @copy.COLLECTION[language] %></a>
+          <a id="about-link" class="nav-link" href="#" data-translate="ABOUT"><%= @copy.ABOUT[language] %></a>
+          <a id="collection-link" class="nav-link" href="/collection/" data-translate="COLLECTION"><%= @copy.COLLECTION[language] %></a>
         </div>
       </nav>
     </div>

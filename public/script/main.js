@@ -227,40 +227,59 @@
   }
 
   var $language = document.getElementById( 'language' );
-  var $brand = document.getElementById( 'brand' );
-  var $subBrand = document.getElementById( 'sub-brand' );
-  // var $motivationNihongo = document.getElementById( 'motivation-nihongo' );
-  // var $motivationEigo = document.getElementById( 'motivation-eigo' );
-  // var $currentTimeText = document.getElementById( 'current-time-text' );
-  // var $yearKanji = document.getElementById( 'year-kanji' );
-  // var $monthKanji = document.getElementById( 'month-kanji' );
-  // var $dayKanji = document.getElementById( 'day-kanji' );
-  // var $hourKanji = document.getElementById( 'hour-kanji' );
-  // var $minuteKanji = document.getElementById( 'minute-kanji' );
-  // var $secondsKanji = document.getElementById( 'seconds-kanji' );
-  // var $amNihongo = document.getElementById( 'am-nihongo' );
-  // var $pmNihongo = document.getElementById( 'pm-nihongo' );
-  // var $amEigo = document.getElementById( 'am-eigo' );
-  // var $pmEigo = document.getElementById( 'pm-eigo' );
-  // var $middleDot = document.getElementById( 'middle-dot' );
-  var $title = document.querySelector( 'title' );
-  // var $tagline = document.getElementById( 'tagline' );
-  // var $sideHustle = document.getElementById( 'side-hustle' );
-  var $cartEmpty = document.getElementById( 'cart-empty' );
-  var $checkout = document.getElementById( 'checkout' );
-  var $aboutLink = document.getElementById( 'about-link' );
-  var $collectionLink = document.getElementById( 'collection-link' );
-  var $englishText = document.querySelectorAll( 'p[lang="en"]' );
-  var $japaneseText = document.querySelectorAll( 'p[lang="ja"]' );
+  var $englishText = document.querySelectorAll( '[lang="en"]:not(html):not([data-translate-preserve])' );
+  var $japaneseText = document.querySelectorAll( '[lang="ja"]:not(html):not([data-translate-preserve])' );
   var $japaneseFont = document.getElementById( 'japanese-font' );
   var $japaneseLink = document.getElementById( 'japanese' );
 
   var lang = NoSpoonApparel.lang;
+  var defaultPrice = NoSpoonApparel.product.variants[0].price.USD.amount;
+
+  lang._PRODUCT_NAME_ = NoSpoonApparel.product.name;
+  lang._PRODUCT_TAGLINE_ = NoSpoonApparel.product.tagline;
+  lang._PRODUCT_PRICE_ = {};
+
+  for ( var priceFormat in lang._PRICE_USD_ ) {
+    lang._PRODUCT_PRICE_[priceFormat] = lang._PRICE_USD_[priceFormat].replace( 'X', defaultPrice )
+  }
 
   lang.TITLE = {
     "ja": lang.BRAND_NAME.ja,
     "en": lang.BRAND_NAME.en
   };
+
+  function translate( languageCode ) {
+    var $translatables = document.querySelectorAll( '[data-translate]' );
+    var current, key;
+    var i = 0;
+    var translatablesLength = $translatables.length;
+
+    for ( ; i < translatablesLength; ++i ) {
+      current = $translatables[i];
+      key = current.getAttribute( 'data-translate' );
+
+      if ( lang.hasOwnProperty( key ) && lang[key].hasOwnProperty( languageCode ) ) {
+        if ( current.hasAttribute( 'data-translate-target' ) ) {
+          var translateTargets = current.getAttribute( 'data-translate-target' ).replace( ' ', '' ).split( ',' );
+          var currentTranslateTarget;
+          var j = 0;
+          var translateTargetsLength = translateTargets.length
+
+          for ( ; j < translateTargetsLength; ++j ) {
+            currentTranslateTarget = translateTargets[j];
+
+            if ( current.hasAttribute( currentTranslateTarget ) ) {
+              current.setAttribute( currentTranslateTarget, lang[key][languageCode] );
+            } else if ( currentTranslateTarget === 'textContent' ) {
+              current.textContent = lang[key][languageCode];
+            }
+          }
+        } else {
+          current.textContent = lang[key][languageCode];
+        }
+      }
+    }
+  }
 
   $japaneseLink.addEventListener( 'mouseover', function ( event ) {
     // <link id="japanese-font" rel="preload" as="style" href="../style/fonts/noto-sans-japanese.css" />
@@ -280,6 +299,18 @@
     var $clicked = event.target;
     ( $clicked.nextElementSibling || $clicked.previousElementSibling ).classList.remove( 'active' );
     $clicked.classList.add( 'active' );
+
+    var base = document.querySelector( 'base' );
+    var appendBase = false;
+    if ( !base ) {
+      base = document.createElement( 'base' );
+      appendBase = true;
+    }
+    base.setAttribute( 'href', $clicked.getAttribute( 'href' ) );
+    if ( appendBase ) {
+      document.head.appendChild( base );
+    }
+
     var iso = '';
     var locale = '';
 
@@ -292,23 +323,7 @@
           $japaneseFont.setAttribute( 'rel', 'stylesheet' );
         }
 
-        if ( $brand ) {
-          $brand.textContent = lang.BRAND.ja;
-          $subBrand.textContent = lang.SUB_BRAND.ja;
-        }
-
-        $title.textContent = lang.TITLE.ja;
-        $cartEmpty.textContent = lang.CART_EMPTY.ja;
-        $checkout.textContent = lang.CHECKOUT.ja;
-
-        if ( $aboutLink ) {
-          $aboutLink.textContent = lang.ABOUT.ja;
-        }
-
-        if ( $collectionLink ) {
-          $collectionLink.textContent = lang.COLLECTION.ja;
-        }
-
+        translate( iso );
         hideElements( $englishText );
         showElements( $japaneseText );
       break;
@@ -317,23 +332,7 @@
         iso = 'en';
         locale = iso + '-US';
 
-        if ( $brand ) {
-          $brand.textContent = lang.BRAND.en;
-          $subBrand.textContent = lang.SUB_BRAND.en;
-        }
-
-        $title.textContent = lang.TITLE.en;
-        $cartEmpty.textContent = lang.CART_EMPTY.en;
-        $checkout.textContent = lang.CHECKOUT.en;
-
-        if ( $aboutLink ) {
-          $aboutLink.textContent = lang.ABOUT.en;
-        }
-
-        if ( $collectionLink ) {
-          $collectionLink.textContent = lang.COLLECTION.en;
-        }
-
+        translate( iso );
         hideElements( $japaneseText );
         showElements( $englishText );
       break;

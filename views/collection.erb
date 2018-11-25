@@ -1,7 +1,7 @@
 <%= erb :_top, :locals => { :locale => locale, :language => language } %>
 <main class="view view--collection">
   <div class="content content--collection">
-    <h1 class="collection-heading"><%= @copy.COLLECTION[@language] %></h1>
+    <h1 class="collection-heading" data-translate="COLLECTION"><%= @copy.COLLECTION[@language] %></h1>
     <div id="products" class="products">
       <article class="product-item">
         <a id="the-kramper" class="product-link" title="View product" href="/collection/the-kramper/">
@@ -77,19 +77,19 @@
             hidden="hidden"
           />
         </a>
-        <h2 class="product-heading">The Kramper</h2>
+        <h2 class="product-heading" data-data-translate="_PRODUCT_NAME_">The Kramper</h2>
         <!-- <p class="product-tagline">Kramer × Krampus</p> -->
         <div class="product-rundown">
-          <div class="product-category">T-shirt</div>
+          <div class="product-category" data-translate="T_SHIRT"><%= @copy.T_SHIRT[@language] %></div>
           <div class="product-price">$25</div>
         </div>
         <ul class="product-colors" aria-label="Colors">
-          <li><button class="color" style="background-color:#FFFFFF;" title="White" data-colorway="the-kramper--white">White</button></li>
-          <li><button class="color" style="background-color:#b0b0b2" title="Heather Grey" data-colorway="the-kramper--heather-grey">Heather Grey</button></li>
-          <li><button class="color" style="background-color:#000000;" title="Black" data-colorway="the-kramper--black">Black</button></li>
-          <li><button class="color" style="background-color:#990033" title="Cranberry" data-colorway="the-kramper--cranberry">Cranberry</button></li>
-          <li><button class="color" style="background-color:#1a8145" title="Kelly Green" data-colorway="the-kramper--kelly-green">Kelly Green</button></li>
-          <li><button class="color" style="background-color:#0092c1" title="Teal" data-colorway="the-kramper--teal">Teal</button></li>
+          <li><button class="color" style="background-color:#FFFFFF;" title="White" data-colorway="the-kramper--white"><%= @copy.COLORWAY_WHITE[@language] %></button></li>
+          <li><button class="color" style="background-color:#b0b0b2" title="Heather Grey" data-colorway="the-kramper--heather-grey"><%= @copy.COLORWAY_HEATHER_GREY[@language] %></button></li>
+          <li><button class="color" style="background-color:#000000;" title="Black" data-colorway="the-kramper--black"><%= @copy.COLORWAY_BLACK[@language] %></button></li>
+          <li><button class="color" style="background-color:#990033" title="Cranberry" data-colorway="the-kramper--cranberry"><%= @copy.COLORWAY_CRANBERRY[@language] %></button></li>
+          <li><button class="color" style="background-color:#1a8145" title="Kelly Green" data-colorway="the-kramper--kelly-green"><%= @copy.COLORWAY_KELLY_GREEN[@language] %></button></li>
+          <li><button class="color" style="background-color:#0092c1" title="Teal" data-colorway="the-kramper--teal"><%= @copy.COLORWAY_TEAL[@language] %></button></li>
         </ul>
       </article>
       <article class="product-item">
@@ -121,13 +121,13 @@
             hidden="hidden"
           />
         </a>
-        <h2 class="product-heading">RedBlue Tokyo</h2>
+        <h2 class="product-heading" data-data-translate="_PRODUCT_NAME_">RedBlue Tokyo</h2>
         <!-- <p class="product-tagline">Kramer × Krampus</p> -->
-        <div class="product-category">T-shirt</div>
+        <div class="product-category" data-translate="T_SHIRT"><%= @copy.T_SHIRT[@language] %></div>
         <ul class="product-colors" aria-label="Colors">
-          <li><button class="color" style="background-color:rgb(242, 235, 223);" title="Natural" data-colorway="redblue-tokyo--natural">Natural</button></li>
-          <li><button class="color" style="background-color:rgb(90, 166, 198);" title="Scuba Blue" data-colorway="redblue-tokyo--scuba-blue">Scuba Blue</button></li>
-          <li><button class="color" style="background-color:rgb(52, 56, 56);" title="Night" data-colorway="redblue-tokyo--night">Night</button></li>
+          <li><button class="color" style="background-color:rgb(242, 235, 223);" title="<%= @copy.COLORWAY_NATURAL[@language] %>" data-colorway="redblue-tokyo--natural" data-translate="COLORWAY_NATURAL" data-translate-target="title,textContent"><%= @copy.COLORWAY_NATURAL[@language] %></button></li>
+          <li><button class="color" style="background-color:rgb(90, 166, 198);" title="<%= @copy.COLORWAY_SCUBA_BLUE[@language] %>" data-colorway="redblue-tokyo--scuba-blue" data-translate="COLORWAY_SCUBA_BLUE" data-translate-target="title,textContent"><%= @copy.COLORWAY_SCUBA_BLUE[@language] %></button></li>
+          <li><button class="color" style="background-color:rgb(52, 56, 56);" title="<%= @copy.COLORWAY_NIGHT[@language] %>" data-colorway="redblue-tokyo--night" data-translate="COLORWAY_NIGHT" data-translate-target="title,textContent"><%= @copy.COLORWAY_NIGHT[@language] %></button></li>
         </ul>
       </article>
     </div>

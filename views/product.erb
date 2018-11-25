@@ -2,20 +2,20 @@
       <main class="view view--product">
         <article class="content content--collection content--product product">
           <header class="product__header">
-            <h1 class="collection-heading product__name"><%= @data.name[@language] %></h1>
-            <div class="product__tagline"><%= @data.tagline[@language] %></div>
+            <h1 class="collection-heading product__name" data-translate="_PRODUCT_NAME_"><%= @data.name[@language] %></h1>
+            <div class="product__tagline" data-translate="_PRODUCT_TAGLINE_"><%= @data.tagline[@language] %></div>
             <nav class="product__breadcrumbs" aria-label="Breadcrumbs" itemscope="itemscope" itemtype="http://schema.org/BreadcrumbList">
-              <h2 class="sr-only">Product Type</h2>
+              <h2 class="sr-only" data-translate="PRODUCT_TYPE">Product Type</h2>
               <span itemprop="itemListElement" itemscope="itemscope" itemtype="http://schema.org/ListItem">
                 <a itemprop="item" href="/collection/" rel="up up">
-                  <span itemprop="name"><%= @copy.COLLECTION[@language] %></span>
+                  <span itemprop="name" data-translate="COLLECTION"><%= @copy.COLLECTION[@language] %></span>
                 </a>
                 <meta itemprop="position" content="1" />
               </span
               > <span aria-hidden="true">&gt;</span
               > <span itemprop="itemListElement" itemscope="itemscope" itemtype="http://schema.org/ListItem">
                 <a itemprop="item" href="/collection/t-shirts/" rel="up">
-                  <span itemprop="name"><%= @copy.T_SHIRTS[@language] %></span>
+                  <span itemprop="name" data-translate="T_SHIRTS"><%= @copy.T_SHIRTS[@language] %></span>
                 </a>
                 <meta itemprop="position" content="2" />
               </span>
@@ -27,11 +27,26 @@
                 src="<%= @default_colorway_src %>"
                 srcset="<%= "#{@default_colorway_src} 1x, #{@default_colorway_src.sub '@2x.png', '-full.png'} 2x" %>"
                 alt="Product shot"
+                data-translate="PRODUCT_SHOT"
+                data-translate-target="alt"
               />
             </div>
             <div class="column">
-              <%= erb :'_the-kramper' %>
-              <h2><%= @copy.PRODUCT_DETAILS[@language] %></h2>
+              <% @missing_description_languages.each do |missing_description_language| %>
+                <p class="notice" lang="<%= missing_description_language %>"<%= ( @language == missing_description_language ) ? '' : ' hidden' %>><%= @copy.MISSING_DESCRIPTION_LANGUAGE[missing_description_language] %></p>
+              <% end %>
+              <% @data.description_languages.each do |description_language| %>
+                <% if !@missing_description_languages.empty? && ( @data.description_languages.index(description_language) == 0 ) %>
+                  <div lang="<%= description_language %>" class="product-description" data-translate-preserve>
+                    <%= erb :"_the-kramper.#{description_language}" %>
+                  </div>
+                <% else %>
+                  <div lang="<%= description_language %>" class="product-description"<%= ( @language == description_language ) ? '' : 'hidden' %>>
+                    <%= erb :"_the-kramper.#{description_language}" %>
+                  </div>
+                <% end %>
+              <% end %>
+              <h2 data-translate="PRODUCT_DETAILS"><%= @copy.PRODUCT_DETAILS[@language] %></h2>
               <%= erb :'_american-apparel-2001' %>
             </div><!-- /.column -->
           </div><!-- /.row -->

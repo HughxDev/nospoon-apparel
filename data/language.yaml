@@ -72,9 +72,78 @@ COLORWAY:
 ACTIONS:
   ja: 働き
   en: Actions
+T_SHIRT:
+  ja: Tシャツ
+  en: T-shirt
 T_SHIRTS:
   ja: Tシャツ
   en: T-shirts
 PRODUCT_DETAILS:
   ja: 製品の詳細
   en: Product Details
+MADE_TO_ORDER:
+  ja: オーダーメイド
+  en: Made to Order
+AVAILABILITY:
+  ja: 可用性
+  en: Availability
+ADD_TO_CART:
+  ja: カートに追加
+  en: Add to Cart
+AMERICAN_APPAREL_2001:
+  ja: アメリカン・アパレルのファイン・ジャージー・クルーネックのTシャツ
+  en: American Apparel Fine Jersey Crewneck T-Shirt
+AMERICAN_APPAREL_2001_FABRIC:
+  ja: 綿100％（ヘザーグレーにはポリエステル10％入り）
+  en: 100% Cotton (Heather Grey contains 10% Polyester)
+RUNS_SMALL:
+  ja: スリムフィット、小さなものになる傾向がある
+  en: Slim fit – tends to run small
+DOUBLE_STITCHED:
+  ja: ダブルステッチ
+  en: Double stitched
+DTG:
+  ja: 直ちに衣服の上に、写真の品質で、印刷
+  en: Direct-to-garment, photo quality printing
+MADE_IN_USA:
+  ja: 米国製、スウェットショップなし
+  en: Made in the USA, sweatshop-free
+FABRIC_WEIGHT:
+  ja: 織物の重量
+  en: Fabric weight
+COLORWAY_NATURAL:
+  ja: ナチュラル
+  en: Natural
+COLORWAY_SCUBA_BLUE:
+  ja: スキューバの青い
+  en: Scuba Blue
+COLORWAY_NIGHT:
+  ja: 夜
+  en: Night
+COLORWAY_WHITE:
+  ja: 白い
+  en: White
+COLORWAY_BLACK:
+  ja: 黒い
+  en: Black
+COLORWAY_HEATHER_GREY:
+  ja: ヘザーグレー
+  en: Heather Grey
+COLORWAY_CRANBERRY:
+  ja: クランベリー
+  en: Cranberry
+COLORWAY_KELLY_GREEN:
+  ja: ケリーの緑
+  en: Kelly Green
+COLORWAY_TEAL:
+  ja: 鴨の羽色
+  en: Teal
+MISSING_DESCRIPTION_LANGUAGE:
+  ja: すみません、我々はまだこの製品の記述のために日本語の翻訳がありません。
+  en: Sorry, we don’t have an English translation for this product description yet.
+PRICE:
+  ja: 価格
+  en: Price
+_PRICE_USD_:
+  ja: Xドル
+  en: X USD

@@ -3,4 +3,4 @@ img/png/
 node_modules/
 dist/
 local.apparel.nospoon.tv/
-data/*.json
+data/**/*.json

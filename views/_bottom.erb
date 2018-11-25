@@ -6,6 +6,9 @@
     <script>
       var NoSpoonApparel = {};
       NoSpoonApparel.lang = <%= lang %>;
+      <% if defined?(@product) %>
+      NoSpoonApparel.product = <%= @jsonData %>;
+      <% end %>
     </script>
     <script src="/script/main.js"></script>
     <% if defined?(jquery) %>
