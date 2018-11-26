@@ -86,7 +86,7 @@ function processImages( source = 'src', cb ) {
 }
 
 gulp.task( 'img', ( cb ) => {
-  processImages( 'src', cb );
+  processImages( 'public', cb );
 } );
 
 gulp.task( 'img-postprocess', ( cb ) => {
