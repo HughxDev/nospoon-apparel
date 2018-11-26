@@ -23,19 +23,22 @@
       // $row.slideDown( rowSlideSpeed, function () {
       //   console.log('shit');
       // } );
+      var $wrappers = $row.find( '.table-cell-wrapper' );
+
       $row.show();
-      $row.css({
-        "height": "2.5rem",
+      $wrappers.css({
+        "height": "1.9rem",
         "opacity": "1"
       })
     },
     // hide: slideUpRepeaterRow,
     "hide": function hideRepeaterRow() {
       var $row = $( this );
+      var $wrappers = $row.find( '.table-cell-wrapper' );
 
       // $addToCartForm.height( $addToCartForm.height() - $row.height() );
 
-      $row.css({
+      $wrappers.css({
         "height": "0",
         "opacity": "0"
       });
