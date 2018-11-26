@@ -1,4 +1,4 @@
-<%= erb :_top, :locals => { :splash => true, :page => 'home', :locale => locale, :language => language } %>
+<%= erb :_top, :locals => { :splash => true, :page => 'home' } %>
 <main class="view view--home">
   <div class="content">
     <h1 id="branding" class="branding">
@@ -16,11 +16,11 @@
       <p lang="ja"<%= ( language == 'ja' ) ? '' : ' hidden' %>><span><span class="ww">ヒュー・</span><span class="ww">ガイニーによる</span><span class="ww">サイド・</span><span class="ww">ハッスル。</span></span></p>
       <nav id="site-nav" class="site-nav">
         <div class="nav-content">
-          <a id="about-link" class="nav-link" href="#" data-translate="ABOUT"><%= @copy.ABOUT[language] %></a>
+          <a id="about-link" class="nav-link" href="/about/" data-translate="ABOUT"><%= @copy.ABOUT[language] %></a>
           <a id="collection-link" class="nav-link" href="/collection/" data-translate="COLLECTION"><%= @copy.COLLECTION[language] %></a>
         </div>
       </nav>
     </div>
   </div>
 </main>
-<%= erb :_bottom, :locals => { :lang => lang } %>
+<%= erb :_bottom %>

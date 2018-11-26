@@ -1,4 +1,4 @@
-<%= erb :_top, :locals => { :locale => locale, :language => language } %>
+<%= erb :_top %>
 <main class="view view--collection">
   <div class="content content--collection">
     <h1 class="collection-heading" data-translate="COLLECTION"><%= @copy.COLLECTION[@language] %></h1>
@@ -53,4 +53,4 @@
     </div>
   </div>
 </main>
-<%= erb :_bottom, :locals => { :scripts => 'products', :lang => lang } %>
+<%= erb :_bottom, :locals => { :scripts => 'products' } %>

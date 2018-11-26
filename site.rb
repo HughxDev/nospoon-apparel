@@ -119,6 +119,10 @@ class NoSpoonApparel < Sinatra::Base
     }
   end
 
+  get "/:view/" do
+    erb :"#{params['view']}"
+  end
+
   get "/" do
     erb :index, :locals => {
       :language => @language,

@@ -5,7 +5,7 @@
     </div><!--/#shading-->
     <script>
       var NoSpoonApparel = {};
-      NoSpoonApparel.lang = <%= lang %>;
+      NoSpoonApparel.lang = <%= @lang %>;
       <% if defined?(@product) %>
       NoSpoonApparel.product = <%= @jsonData %>;
       <% elsif defined?(@products) %>
