@@ -162,3 +162,6 @@ PRODUCT_SHOT:
 PRODUCT_TYPE:
   ja: 製品のタイプ
   en: Product Type
+JAVASCRIPT_CC:
+  ja: 私たちからアイテムを購入するには、JavaScriptを有効にする必要があります。 これにより、お客様のクレジットカードデータを安全に処理することができます。 ご迷惑をおかけして申し訳ございません。
+  en: JavaScript must be enabled to purchase items from us. This allows us to handle your credit card data safely. Our apologies for the inconvenience.

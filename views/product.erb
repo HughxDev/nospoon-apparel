@@ -52,6 +52,10 @@
           </div><!-- /.row -->
           <div class="row">
             <div class="column">
+              <noscript>
+                <p lang="en"<%= ( language == 'en' ) ? '' : ' hidden' %>><%= @copy.JAVASCRIPT_CC.en %></p>
+                <p lang="ja"<%= ( language == 'ja' ) ? '' : ' hidden' %>><%= @copy.JAVASCRIPT_CC.ja %></p>
+              </noscript>
               <form
                 role="form"
                 id="add-to-cart"
@@ -154,7 +158,8 @@
                       id="add-to-cart-cta"
                       type="button"
                       class=""
-                      data-translate="ADD_TO_CART"><%= @copy.ADD_TO_CART[@language] %></button>
+                      data-translate="ADD_TO_CART"
+                      disabled><%= @copy.ADD_TO_CART[@language] %></button>
                     <!-- <button
                       id="your-order-complete"
                       type="button"

@@ -239,6 +239,7 @@
   var defaultPrice;
 
   if ( isProductPage ) {
+    document.getElementById( 'add-to-cart-cta' ).disabled = false;
     defaultPrice = NoSpoonApparel.product.variants[0].price.USD.amount;
 
     lang._PRODUCT_NAME_ = NoSpoonApparel.product.name;

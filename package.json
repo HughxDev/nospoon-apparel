@@ -7,7 +7,7 @@
     "static": "rm -rf dist/ & wget -r http://local.apparel.nospoon.tv && mv local.apparel.nospoon.tv/ dist/ && gulp img-postprocess",
     "sync": "scp -r dist/ nospoon@hughguiney.com:/srv/www/nospoon-apparel/public/dist/",
     "yaml2json": "yaml2json data/ --pretty --save --recursive",
-    "log": "atom /usr/local/var/log/httpd/error_log"
+    "log": "subl /usr/local/var/log/httpd/error_log"
   },
   "dependencies": {
     "apache-server-configs": "^3.0.0",

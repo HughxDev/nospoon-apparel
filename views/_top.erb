@@ -29,6 +29,7 @@
 
     <link rel="icon" type="image/x-icon" sizes="16x16 32x32 64x64 128x128 256x256" href="/favicon.ico" />
     <link rel="stylesheet" href="/style/main.css" />
+    <link rel="stylesheet" href="/style/checkout.css" />
     <link rel="preload" as="style" href="/style/fonts/noto-sans-latin-ext.css" onload="this.rel = 'stylesheet'" />
     <noscript>
       <link rel="stylesheet" href="/style/fonts/noto-sans-latin-ext.css" />
@@ -74,9 +75,9 @@
             </label>
             <div id="cart" class="cart" aria-hidden="true">
               <h2 class="cart-heading sr-only" data-translate="CART">Cart</h2>
-              <p id="cart-empty" class="cart-text" data-translate="CART_EMPTY"><%= @copy.CART_EMPTY[@language] %></p>
-              <form>
-                <button id="checkout" class="cart-action" data-translate="CHECKOUT" disabled><%= @copy.CHECKOUT[@language] %></button>
+              <!-- <p id="cart-empty" class="cart-text" data-translate="CART_EMPTY"><%= @copy.CART_EMPTY[@language] %></p> -->
+              <form id="checkout" action="/purchase/">
+                <button id="checkout-cta">Checkout</button>
               </form>
             </div><!--/#cart-->
           </div><!-- /#cart-toggle -->

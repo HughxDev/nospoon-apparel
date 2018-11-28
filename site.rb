@@ -3,12 +3,16 @@ require 'sinatra/subdomain'
 require 'yaml'
 require 'hash_dot'
 require 'money'
+require 'stripe'
+require 'dotenv/load'
+require 'yaml/store'
 
 # set :tld_size, 2
 Hash.use_dot_syntax = true
 Money.locale_backend = :i18n
 I18n.config.available_locales = :en
 I18n.locale = :en
+Stripe.api_key = ENV['STRIPE_TEST_SK']
 
 class NoSpoonApparel < Sinatra::Base
   register Sinatra::Subdomain
@@ -60,6 +64,247 @@ class NoSpoonApparel < Sinatra::Base
   # get "/collection/:product/" do
   #   redirect "/collection/#{params['product']}", 302
   # end
+
+  post "/echo/" do
+    request.body.rewind
+    request.body.read
+  end
+
+  post "/purchase/" do
+    request.body.rewind  # in case someone already read it
+    data = JSON.parse request.body.read
+
+    # Sample data
+    # {
+    #   "amount":2000,
+    #   "currency":"usd",
+    #   "description":"2 widgets",
+    #   "stripeSource":{
+    #     "id":"src_1DbbqIHLfc0mJZQd9YMgmwTN",
+    #     "object":"source",
+    #     "amount":null,
+    #     "card":{
+    #       "exp_month":11,
+    #       "exp_year":2018,
+    #       "address_line1_check":"pass",
+    #       "address_zip_check":"pass",
+    #       "brand":"Visa",
+    #       "country":"CA",
+    #       "cvc_check":"pass",
+    #       "funding":"credit",
+    #       "last4":"1881",
+    #       "three_d_secure":"optional",
+    #       "name":null,
+    #       "tokenization_method":null,
+    #       "dynamic_last4":null
+    #     },
+    #     "client_secret":"src_client_secret_E3jIOyT1O2u1NC7CAFR3gKVe",
+    #     "created":1543445354,
+    #     "currency":null,
+    #     "flow":"none",
+    #     "livemode":false,
+    #     "metadata":{
+    #
+    #     },
+    #     "owner":{
+    #       "address":{
+    #         "city":"Dorchester Center",
+    #         "country":"United States",
+    #         "line1":"1 Larchmont Street",
+    #         "line2":null,
+    #         "postal_code":"02124",
+    #         "state":"MA"
+    #       },
+    #       "email":"hugh@hughguiney.com",
+    #       "name":"Hugh Guiney",
+    #       "phone":null,
+    #       "verified_address":{
+    #         "city":null,
+    #         "country":null,
+    #         "line1":"1 Larchmont Street",
+    #         "line2":null,
+    #         "postal_code":"02124",
+    #         "state":null
+    #       },
+    #       "verified_email":null,
+    #       "verified_name":null,
+    #       "verified_phone":null
+    #     },
+    #     "statement_descriptor":null,
+    #     "status":"chargeable",
+    #     "type":"card",
+    #     "usage":"reusable"
+    #   },
+    #   "billing_name":"Hugh Guiney",
+    #   "billing_address_country":"United States",
+    #   "billing_address_country_code":"US",
+    #   "billing_address_zip":"02124",
+    #   "billing_address_line1":"1 Larchmont Street",
+    #   "billing_address_city":"Dorchester Center",
+    #   "billing_address_state":"MA",
+    #   "shipping_name":"Hugh Guiney",
+    #   "shipping_address_country":"United States",
+    #   "shipping_address_country_code":"US",
+    #   "shipping_address_zip":"02124",
+    #   "shipping_address_line1":"1 Larchmont Street",
+    #   "shipping_address_city":"Dorchester Center",
+    #   "shipping_address_state":"MA"
+    # }
+
+    store = YAML::Store.new( 'customers.yaml' )
+    store.transaction do
+      existing_customer = store[data.stripeSource.owner.email]
+
+      if existing_customer.nil?
+        @customer = Stripe::Customer.create(
+          :email => data.stripeSource.owner.email,
+          :source => data.stripeSource.id
+        )
+        store[@customer.email] = @customer.id
+        store.commit
+      else
+        @customer = {
+          :email => data.stripeSource.owner.email,
+          :id => existing_customer
+        }
+      end
+    end
+
+    # token = params[:stripeSource]
+
+    Stripe::Charge.create(
+      # A positive integer representing how much to charge,
+      # in the smallest currency unit (e.g., 100 cents to charge $1.00,
+      # or 100 to charge ¥100, a zero-decimal currency).
+      # The minimum amount is $0.50 USD or equivalent in charge currency.
+      :amount => data.amount, # required
+
+      # Three-letter ISO currency code, in lowercase.
+      # Must be a supported currency.
+      :currency => data.currency, # required
+
+      # A fee in cents that will be applied to the charge and
+      # transferred to the application owner’s Stripe account.
+      # The request must be made with an OAuth key
+      # or the Stripe-Account header in order to take an application fee.
+      # For more information, see the application fees documentation.
+      # :application_fee => 0,
+
+      # Whether to immediately capture the charge.
+      # When false, the charge issues an authorization (or pre-authorization),
+      # and will need to be captured later.
+      # Uncaptured charges expire in seven days.
+      # For more information, see the authorizing charges
+      # and settling later documentation.
+      :capture => true,
+
+      # The ID of an existing customer that will be charged in this request.
+      :customer => @customer.id,
+
+      # An arbitrary string which you can attach to a Charge object.
+      # It is displayed when in the web interface alongside the charge.
+      # Note that if you use Stripe to send automatic email receipts
+      # to your customers, your receipt emails will include
+      # the description of the charge(s) that they are describing.
+      # This can be unset by updating the value to nil and then saving.
+      :description => data.description,
+
+      # If specified, the charge will be attributed
+      # to the destination account for tax reporting,
+      # and the funds from the charge will be transferred
+      # to the destination account.
+      # The ID of the resulting transfer will be returned
+      # in the response’s transfer field.
+      # For details, see Creating Destination Charges on Your Platform.
+      # :destination => {}
+
+      # Set of key-value pairs that you can attach to an object.
+      # This can be useful for storing additional information
+      # about the object in a structured format.
+      # :metadata => {}
+
+      # The Stripe account ID for which these funds are intended.
+      # Automatically set if you use the destination parameter.
+      # For details, see Creating Separate Charges and Transfers.
+      # :on_behalf_of => "",
+
+      # The email address to which this charge’s receipt will be sent.
+      # The receipt will not be sent until the charge is paid,
+      # and no receipts will be sent for test mode charges.
+      # If this charge is for a customer, the email address specified here
+      # will override the customer’s email address.
+      # If receipt_email is specified for a charge in live mode,
+      # a receipt will be sent regardless of your email settings.
+      # :receipt_email => "",
+
+      # Shipping information for the charge.
+      # Helps prevent fraud on charges for physical goods.
+      #   "shipping_name":"Hugh Guiney",
+      #   "shipping_address_country":"United States",
+      #   "shipping_address_country_code":"US",
+      #   "shipping_address_zip":"02124",
+      #   "shipping_address_line1":"1 Larchmont Street",
+      #   "shipping_address_city":"Dorchester Center",
+      #   "shipping_address_state":"MA"
+      :shipping => { #optional
+        :name => data.shipping_name,
+        :address => {
+          :line1 => data.shipping_address_line1, # required
+          :line2 => defined?(data.shipping_address_line2) ? data.shipping_address_line2 : nil,
+          :city => data.shipping_address_city,
+          :country => data.shipping_address_country,
+          :postal_code => data.shipping_address_zip,
+          :state => data.shipping_address_state
+        }
+      },
+
+      # Recipient name.
+      # This can be unset by updating the value to nil and then saving.
+      # :name => data.shipping_name, #required
+
+      # The delivery service that shipped a physical product,
+      # such as Fedex, UPS, USPS, etc.
+      # This can be unset by updating the value to nil and then saving.
+      # :carrier => "",
+
+      # Recipient phone (including extension).
+      # This can be unset by updating the value to nil and then saving.
+      # :phone => "",
+
+      # The tracking number for a physical product,
+      # obtained from the delivery service.
+      # If multiple tracking numbers were generated for this purchase,
+      # please separate them with commas.
+      # This can be unset by updating the value to nil and then saving.
+      # :tracking_number => "",
+
+      # A payment source to be charged.
+      # This can be the ID of a card (i.e., credit or debit card),
+      # a bank account, a source, a token, or a connected account.
+      # For certain sources—namely, cards, bank accounts, and attached sources
+      # —you must also pass the ID of the associated customer.
+      :source => data.stripeSource.id, # obtained with Stripe.js
+
+      # An arbitrary string to be displayed
+      # on your customer’s credit card statement.
+      # This can be up to 22 characters.
+      # As an example, if your website is RunClub
+      # and the item you’re charging for is a race ticket,
+      # you might want to specify a statement_descriptor of
+      # RunClub 5K race ticket.
+      # The statement description must contain at least one letter,
+      # must not contain <>"' characters,
+      # and will appear on your customer’s statement in capital letters.
+      # Non-ASCII characters are automatically stripped.
+      # While most banks and card issuers display this information consistently,
+      # some might display it incorrectly or not at all.
+      :statement_descriptor => "No Spoon Apparel",
+
+      # A string that identifies this transaction as part of a group.
+      # For details, see Grouping transactions.
+      # :transfer_group => ""
+    ) # Stripe::Charge.create
+  end
 
   get "/collection/" do
     @products = []
