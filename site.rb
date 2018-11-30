@@ -65,6 +65,114 @@ class NoSpoonApparel < Sinatra::Base
   #   redirect "/collection/#{params['product']}", 302
   # end
 
+  def cache_expired?( cache )
+    cache_time = ( 30 * 24 * 60 * 60 ) # 1 month
+    # cache_time = ( 2 * 7 * 24 * 60 * 60 ) # 2 weeks
+    !FileTest.exist?( cache ) || ( Time.now >= ( File.mtime( cache ) + cache_time ) )
+  end
+
+  def print_aura_api_call( method, cache, params={} )
+    post_params = []
+    params.map do |param|
+      # Curl::PostField.content(  )
+      post_params.push( Curl::PostField.content( param[0].to_s, param[1] ) )
+    end
+
+    @curl = Curl::Easy.http_post(
+      "https://api.printaura.com/api.php",
+      Curl::PostField.content( 'key', ENV['PRINT_AURA_API_KEY'] ),
+      Curl::PostField.content( 'hash', ENV['PRINT_AURA_API_HASH'] ),
+      Curl::PostField.content( 'method', method ),
+      *post_params
+    )
+    @curl.perform
+
+    if cache
+      dirname = File.dirname( cache )
+      unless File.directory?( dirname )
+        FileUtils.mkdir_p( dirname )
+      end
+
+      File.open( cache, 'w' ) do |file|
+        file.write( @curl.body_str )
+      end
+    end
+
+    @curl.body_str
+  end
+
+  subdomain /(local\.)?api/ do
+    get "/prices/:vendor" do
+      # Name: key Description: API Key Format: STRING – REQUIRED
+      # Name: hash Description: API Hash Format: STRING – REQUIRED
+      # ---
+      # Name: method Description: Method Name (getprintingprice) Format: STRING – REQUIRED
+      # Name: product_id Description: Product ID – Can be retrieved using method listproducts Format: INTEGER – REQUIRED
+      # Name: brand_id Description: Brand ID – Can be retrieved using method listbrands Format: INTEGER – REQUIRED
+      # Name: color_id Description: Color ID – Can be retrieved using method listcolors Format: INTEGER – REQUIRED
+      # Name: size_id Description: Size ID – Can be retrieved using method listsizes Format: INTEGER – REQUIRED
+      # ---
+      # Name: front_print Description: If set indicates a front print is to be done Format: BOOLEAN – OPTIONAL
+      # Name: back_print Description: if set indicates a back print is to be done Format: BOOLEAN – OPTIONAL
+      # Name: quantity Description: If not set, 1 is assumed Format: INTEGER – OPTIONAL
+
+      # Not caching this one because it’s price per-product, not a list of prices
+      # cache = "data/prices/#{params['vendor']}.json"
+
+      case params['vendor']
+      when 'print-aura'
+        print_aura_api_call( 'getprintingprice', false, {
+          :product_id => 1,
+          :brand_id => 1,
+          :color_id => 1,
+          :size_id => 1,
+          :front_print => 'true',
+          :back_print => 'false',
+          :quantity => 1
+        } )
+      end
+    end
+
+    get "/brands/:vendor" do
+      cache = "data/brands/#{params['vendor']}.json"
+
+      if cache_expired?( cache )
+        case params['vendor']
+        when 'print-aura'
+          print_aura_api_call( 'listbrands', cache )
+        end
+      else
+        File.open( cache, 'r' )
+      end
+    end # /brands/:vendor
+
+    get "/products/:vendor" do
+      cache = "data/products/#{params['vendor']}.json"
+
+      if cache_expired?( cache )
+        case params['vendor']
+        when 'print-aura'
+          print_aura_api_call( 'listproducts', cache )
+        end
+      else
+        File.open( cache, 'r' )
+      end
+    end # /products/:vendor
+
+    get "/shipping/:vendor" do
+      cache = "data/shipping/#{params['vendor']}.json"
+
+      if cache_expired?( cache )
+        case params['vendor']
+        when 'print-aura'
+          print_aura_api_call( 'listshipping', cache )
+        end
+      else
+        File.open( cache, 'r' )
+      end
+    end
+  end
+
   post "/echo/" do
     request.body.rewind
     request.body.read
