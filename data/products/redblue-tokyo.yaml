@@ -8,6 +8,8 @@ tagline:
 description_languages: [ en ]
 variants:
   - type: 't-shirt'
+    is_dropshipped: true
+    vendor: print-aura
     vendor_product_id: royal-apparel-5051org
     sizes:
       - XS
@@ -17,14 +19,17 @@ variants:
       - XL
     colorways:
       - id: natural
+        vendor_id: '40'
         name: Natural
         tags: [ white ]
         hex: 0xf2ebdf
       - id: scuba-blue
+        vendor_id: '422'
         name: Scuba Blue
         tags: [ blue ]
         hex: 0x5aa6c6
       - id: night
+        vendor_id: '432'
         name: Night
         tags: [ black ]
         hex: 0x343838

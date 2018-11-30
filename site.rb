@@ -13,6 +13,7 @@ Money.locale_backend = :i18n
 I18n.config.available_locales = :en
 I18n.locale = :en
 Stripe.api_key = ENV['STRIPE_TEST_SK']
+set :show_exceptions, :after_handler
 
 class NoSpoonApparel < Sinatra::Base
   register Sinatra::Subdomain
@@ -75,7 +76,9 @@ class NoSpoonApparel < Sinatra::Base
     post_params = []
     params.map do |param|
       # Curl::PostField.content(  )
-      post_params.push( Curl::PostField.content( param[0].to_s, param[1] ) )
+      if !param[1].nil?
+        post_params.push( Curl::PostField.content( param[0].to_s, param[1] ) )
+      end
     end
 
     @curl = Curl::Easy.http_post(
@@ -87,6 +90,8 @@ class NoSpoonApparel < Sinatra::Base
     )
     @curl.perform
 
+    response = @curl.body_str.strip!
+
     if cache
       dirname = File.dirname( cache )
       unless File.directory?( dirname )
@@ -94,43 +99,41 @@ class NoSpoonApparel < Sinatra::Base
       end
 
       File.open( cache, 'w' ) do |file|
-        file.write( @curl.body_str )
+        file.write( response )
       end
     end
 
-    @curl.body_str
+    status = ( JSON.parse response ).status
+
+    if !status
+      halt 400, response
+    else
+      response
+    end
+  end
+
+  def get_color_id( vendor, color_name )
+    File.open( "data/colors/#{vendor}.json", 'r' ) do |file|
+      found = ''
+
+      colors = JSON.parse file.read
+      colors.results.each_with_index do |entry, index|
+        if entry.color_name == color_name
+          found = entry.color_id.to_s
+        end
+      end
+
+      if !found.empty?
+        found
+      else
+        halt 404, "Vendor “#{vendor}” has no color by the name “#{color_name}”."
+      end
+    end
   end
 
   subdomain /(local\.)?api/ do
-    get "/prices/:vendor" do
-      # Name: key Description: API Key Format: STRING – REQUIRED
-      # Name: hash Description: API Hash Format: STRING – REQUIRED
-      # ---
-      # Name: method Description: Method Name (getprintingprice) Format: STRING – REQUIRED
-      # Name: product_id Description: Product ID – Can be retrieved using method listproducts Format: INTEGER – REQUIRED
-      # Name: brand_id Description: Brand ID – Can be retrieved using method listbrands Format: INTEGER – REQUIRED
-      # Name: color_id Description: Color ID – Can be retrieved using method listcolors Format: INTEGER – REQUIRED
-      # Name: size_id Description: Size ID – Can be retrieved using method listsizes Format: INTEGER – REQUIRED
-      # ---
-      # Name: front_print Description: If set indicates a front print is to be done Format: BOOLEAN – OPTIONAL
-      # Name: back_print Description: if set indicates a back print is to be done Format: BOOLEAN – OPTIONAL
-      # Name: quantity Description: If not set, 1 is assumed Format: INTEGER – OPTIONAL
-
-      # Not caching this one because it’s price per-product, not a list of prices
-      # cache = "data/prices/#{params['vendor']}.json"
-
-      case params['vendor']
-      when 'print-aura'
-        print_aura_api_call( 'getprintingprice', false, {
-          :product_id => 1,
-          :brand_id => 1,
-          :color_id => 1,
-          :size_id => 1,
-          :front_print => 'true',
-          :back_print => 'false',
-          :quantity => 1
-        } )
-      end
+    get "/color/:vendor" do
+      get_color_id( params['vendor'], params['name'] )
     end
 
     get "/brands/:vendor" do
@@ -169,6 +172,99 @@ class NoSpoonApparel < Sinatra::Base
         end
       else
         File.open( cache, 'r' )
+      end
+    end
+  end
+
+  get "/sizes/:vendor" do
+    cache = "data/sizes/#{params['vendor']}.json"
+
+    if cache_expired?( cache )
+      case params['vendor']
+      when 'print-aura'
+        print_aura_api_call( 'listsizes', cache )
+      end
+    else
+      File.open( cache, 'r' )
+    end
+  end
+
+  get "/colors/:vendor" do
+    cache = "data/colors/#{params['vendor']}.json"
+
+    if cache_expired?( cache )
+      case params['vendor']
+      when 'print-aura'
+        print_aura_api_call( 'listcolors', cache )
+      end
+    else
+      File.open( cache, 'r' )
+    end
+  end
+
+  get "/fees/:vendor" do
+    cache = "data/fees/#{params['vendor']}.json"
+
+    if cache_expired?( cache )
+      case params['vendor']
+      when 'print-aura'
+        print_aura_api_call( 'listadditionalsettings', cache )
+      end
+    else
+      File.open( cache, 'r' )
+    end
+  end
+
+  get "/prices/:vendor" do
+    # Not caching this one because it’s price per-product, not a list of prices
+    # cache = "data/prices/#{params['vendor']}.json"
+    case params['vendor']
+    when 'print-aura'
+      case params['for']
+      when 'all'
+        # Paramaters
+        # Name: key Description: API Key Format: STRING – REQUIRED
+        # Name: hash Description: API Hash Format: STRING – REQUIRED
+        # Name: method Description: Method Name (getallpricing) Format: STRING – REQUIRED
+        # ---
+        # Name: product_id Description: Product ID – Can be retrieved using method listproducts Format: INTEGER – REQUIRED
+        # Name: brand_id Description: Brand ID – Can be retrieved using method listbrands Format: INTEGER – REQUIRED
+        # Name: color_id Description: Color ID – Can be retrieved using method listcolors Format: INTEGER – REQUIRED
+        # Name: size_id Description: Size ID – Can be retrieved using method listsizes Format: INTEGER – REQUIRED
+        # ---
+        # Name: front_print Description: If set indicates a front print is to be done Format: BOOLEAN – OPTIONAL
+        # Name: back_print Description: if set indicates a back print is to be done Format: BOOLEAN – OPTIONAL
+        # Name: quantity Description: If not set, 1 is assumed Format: INTEGER – OPTIONAL
+        print_aura_api_call( 'getallpricing', false, {
+          :product_id => params['product'],
+          :brand_id => params['brand'],
+          :color_id => params['color'],
+          :size_id => params['size'],
+          :front_print => 'true',
+          :back_print => 'false',
+          :quantity => params['qty']
+        } )
+      when 'printing'
+        print_aura_api_call( 'getprintingprice', false, {
+          :product_id => params['product'],
+          :brand_id => params['brand'],
+          :color_id => params['color'],
+          :size_id => params['size'],
+          :front_print => 'true',
+          :back_print => 'false',
+          :quantity => params['qty']
+        } )
+      else
+        print_aura_api_call( 'getpricing', false, {
+          :product_id => params['product'],
+          :brand_id => params['brand'],
+          :color_id => params['color'],
+          :size_id => params['size'],
+          :shipping_id => params['shipping'],
+          :front_print => 'true',
+          :back_print => 'false',
+          :quantity => params['qty']
+        } )
       end
     end
   end

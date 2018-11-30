@@ -8,6 +8,8 @@ tagline:
 description_languages: [ en ]
 variants:
   - type: 't-shirt'
+    is_dropshipped: true
+    vendor: printful
     vendor_product_id: american-apparel-2001
     sizes:
       - XS
