@@ -36,6 +36,11 @@ variants:
         name: Black
         tags: [ black ]
         hex: 0x000000
+      - id: black-red
+        vendor_id: '7'
+        name: 'Black/Red'
+        tags: [ black ]
+        hex: 0x000000
       - id: white
         vendor_id: '1'
         name: White
@@ -44,5 +49,10 @@ variants:
       - id: white-red
         vendor_id: '1'
         name: White/Red
-        tags: [ white, red ]
+        tags: [ white ]
         hex: 0xcc0026
+      - id: red
+        vendor_id: '52'
+        name: Red
+        tags: [ red ]
+        hex: 0xe30909

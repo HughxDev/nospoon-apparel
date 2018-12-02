@@ -139,11 +139,17 @@ COLORWAY_WHITE:
   ja: 白い
   en: White
 COLORWAY_WHITE_RED:
-  ja: 白いと赤い
+  ja: 白と赤い
   en: White/Red
+COLORWAY_RED:
+  ja: 赤い
+  en: Red
 COLORWAY_BLACK:
   ja: 黒い
   en: Black
+COLORWAY_BLACK_RED:
+  ja: 黒と赤い
+  en: Black/Red
 COLORWAY_HEATHER_GREY:
   ja: ヘザーグレー
   en: Heather Grey

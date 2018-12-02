@@ -1289,3 +1289,10 @@ fieldset {
   border-left: 0;
   border-top: 0;
 }
+
+[title="Black/Red"] { /* @todo */
+  border-bottom: 1.5rem solid black;
+  border-right: 1.5rem solid #cc0026;
+  border-left: 0;
+  border-top: 0;
+}
