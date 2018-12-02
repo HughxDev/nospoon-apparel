@@ -95,7 +95,7 @@
                             <div class="table-cell-wrapper">
                               <select id="color-select-button">
                                 <% @default_colorways.each do |colorway|
-                                   colorway_name = 'COLORWAY_' << colorway.name.upcase.sub( ' ', '_' )
+                                   colorway_name = 'COLORWAY_' << colorway.name.upcase.sub( ' ', '_' ).sub( '-', '_' ).sub( '/', '_' )
                                 %>
                                   <option data-translate="<%= colorway_name %>"><%= @copy[colorway_name][@language] %></option>
                                 <% end %>
