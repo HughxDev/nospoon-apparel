@@ -138,6 +138,9 @@ COLORWAY_NIGHT:
 COLORWAY_WHITE:
   ja: 白い
   en: White
+COLORWAY_WHITE_RED:
+  ja: 白いと赤い
+  en: White/Red
 COLORWAY_BLACK:
   ja: 黒い
   en: Black

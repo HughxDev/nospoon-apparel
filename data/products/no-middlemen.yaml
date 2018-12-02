@@ -41,3 +41,8 @@ variants:
         name: White
         tags: [ white ]
         hex: 0xFFFFFF
+      - id: white-red
+        vendor_id: '1'
+        name: White/Red
+        tags: [ white, red ]
+        hex: 0xcc0026

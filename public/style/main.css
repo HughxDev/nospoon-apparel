@@ -1277,3 +1277,15 @@ fieldset {
   background-color: hsla( 270, 33.333333%, 50%, .8 );
   border: none;
 }
+
+.product-colors > li {
+  vertical-align: top;
+}
+
+/* Duochromatic Colorways */
+[title="White/Red"] { /* @todo */
+  border-bottom: 1.5rem solid white;
+  border-right: 1.5rem solid #cc0026;
+  border-left: 0;
+  border-top: 0;
+}
