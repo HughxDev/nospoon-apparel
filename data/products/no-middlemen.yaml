@@ -1,0 +1,43 @@
+id: no-middlemen
+name:
+  en: No Middlemen
+  ja: 仲介者なし
+tagline:
+  en: Self-publish. Self-promote. Self-actualize.
+  ja: 自費出版して。自己宣伝して。自己実現して。
+description_languages: [ en ]
+variants:
+  - type: 't-shirt'
+    is_dropshipped: true
+    vendor: print-aura
+    vendor_product_id: royal-apparel-5051
+    is_jumbo_print: true
+    cost:
+      amount: 17.70
+      unit: USD
+    price:
+      USD:
+        amount: 25.00
+        additional:
+          XL: 5.00
+      JPY:
+        amount: 250.00
+        additional:
+          XL: 50.00
+    sizes:
+      - XS
+      - S
+      - M
+      - L
+      - XL
+    colorways:
+      - id: black
+        vendor_id: '7'
+        name: Black
+        tags: [ black ]
+        hex: 0x000000
+      - id: white
+        vendor_id: '1'
+        name: White
+        tags: [ white ]
+        hex: 0xFFFFFF

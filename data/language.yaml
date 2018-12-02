@@ -96,12 +96,18 @@ AMERICAN_APPAREL_2001:
 AMERICAN_APPAREL_2001_FABRIC:
   ja: 綿100%（ヘザーグレーにはポリエステル10%入り）
   en: 100% Cotton (Heather Grey contains 10% Polyester)
+ROYAL_APPAREL_5051:
+  ja: ロイヤル・アパレルのユニセックス・ショートスリーブ・ファイン・ジャージーのT
+  en: Royal Apparel Unisex Short Sleeve Fine Jersey Tee
 ROYAL_APPAREL_5051ORG:
   ja: ロイヤル・アパレルのユニセックス・ショートスリーブ・オーガニックのT
   en: Royal Apparel Unisex Short Sleeve Organic Tee
 ROYAL_APPAREL_5051ORG_FABRIC:
   ja: 極めつけの有機の綿100%
   en: 100% Certified Organic Cotton
+ROYAL_APPAREL_5051_FABRIC:
+  ja: 綿100%
+  en: 100% Cotton
 RUNS_SMALL:
   ja: スリムフィット、小さなものになる傾向がある
   en: Slim fit – tends to run small
