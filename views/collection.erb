@@ -34,10 +34,22 @@
           </div>
           <ul class="product-colors" aria-label="Colorways" data-translate="COLORWAYS" data-translate-target="aria-label">
             <% product.variants[0].colorways.each do |colorway| %>
+            <% sub_colorways = '' %>
             <% colorway_translation_key = 'COLORWAY_' << colorway.id.upcase.sub( '-', '_' ) %>
+            <% if colorway.key?( 'is_duochrome' ) && colorway.is_duochrome
+                colorway.id.split( '-' ).each_with_index do |sub_colorway, index|
+                  sub_colorways += " color--#{sub_colorway}"
+                  if index == 0
+                    sub_colorways += '-base'
+                  else
+                    sub_colorways += '-accent'
+                  end
+                end
+              end
+            %>
             <li>
               <button
-                class="color"
+                class="color<%= sub_colorways %>"
                 style="background-color:#<%= colorway.hex.to_s(16).rjust(6, '0') %>;"
                 title="<%= colorway.name %>"
                 data-colorway="<%= product.id %>--<%= colorway.id %>"

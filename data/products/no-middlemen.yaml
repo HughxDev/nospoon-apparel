@@ -13,7 +13,9 @@ variants:
     vendor_product_id: royal-apparel-5051
     is_jumbo_print: true
     cost:
-      amount: 17.70
+      materials: 6.45
+      printing: 11.25
+      # total: 17.70
       unit: USD
     price:
       USD:
@@ -36,23 +38,25 @@ variants:
         name: Black
         tags: [ black ]
         hex: 0x000000
-      - id: black-red
-        vendor_id: '7'
-        name: 'Black/Red'
-        tags: [ black ]
-        hex: 0x000000
+      # - id: black-red
+      #   is_duochrome: true
+      #   vendor_id: '7'
+      #   name: 'Black/Red'
+      #   tags: [ black ]
+      #   hex: 0x000000
       - id: white
         vendor_id: '1'
         name: White
         tags: [ white ]
         hex: 0xFFFFFF
       - id: white-red
+        is_duochrome: true
         vendor_id: '1'
         name: White/Red
         tags: [ white ]
         hex: 0xcc0026
-      - id: red
-        vendor_id: '52'
-        name: Red
-        tags: [ red ]
-        hex: 0xe30909
+      # - id: red
+      #   vendor_id: '52'
+      #   name: Red
+      #   tags: [ red ]
+      #   hex: 0xe30909

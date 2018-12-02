@@ -1283,16 +1283,16 @@ fieldset {
 }
 
 /* Duochromatic Colorways */
-[title="White/Red"] { /* @todo */
-  border-bottom: 1.5rem solid white;
-  border-right: 1.5rem solid #cc0026;
+.color {
   border-left: 0;
   border-top: 0;
 }
 
-[title="Black/Red"] { /* @todo */
-  border-bottom: 1.5rem solid black;
+.color.color--white-base {
+  border-bottom: 1.5rem solid white;
+}
+
+
+.color.color--red-accent {
   border-right: 1.5rem solid #cc0026;
-  border-left: 0;
-  border-top: 0;
 }
