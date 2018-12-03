@@ -43,7 +43,7 @@ class NoSpoonApparel < Sinatra::Base
   end
 
   def get_language(subdomain)
-    language = subdomain.to_s.sub( 'local.', '' ).sub( '.apparel', '' )
+    language = subdomain.to_s.sub( 'local.', '' ).sub( 'staging.', '' ).sub( '.apparel', '' )
 
     if language == 'apparel'
       'en'
