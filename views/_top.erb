@@ -41,8 +41,8 @@
       <div id="controls" class="controls">
         <div id="controls-left" class="controls__left">
           <div id="language" class="language">
-            <a id="japanese"<%= ( @language == 'ja' ) ? ' class="active"' : '' %> title="Japanese" href="<%= '//' << request.host.gsub( /(local\.)?([^\.]{2}\.)?(apparel.nospoon.tv)/, '\1ja.\3' ) << request.path_info %>">🇯🇵</a>
-            <a id="english"<%= ( @language == 'en' ) ? ' class="active"' : '' %> title="English" href="<%= '//' << request.host.gsub( /(local\.)?([^\.]{2}\.)?(apparel.nospoon.tv)/, '\1en.\3' ) << request.path_info %>">🇺🇸</a>
+            <a id="japanese"<%= ( @language == 'ja' ) ? ' class="active"' : '' %> title="Japanese" href="<%= '//' << request.host.gsub( /(local\.|staging\.)?([^\.]{2}\.)?(apparel.nospoon.tv)/, '\1ja.\3' ) << request.path_info %>">🇯🇵</a>
+            <a id="english"<%= ( @language == 'en' ) ? ' class="active"' : '' %> title="English" href="<%= '//' << request.host.gsub( /(local\.|staging\.)?([^\.]{2}\.)?(apparel.nospoon.tv)/, '\1en.\3' ) << request.path_info %>">🇺🇸</a>
           </div>
         </div>
         <div id="controls-right" class="controls__right">
