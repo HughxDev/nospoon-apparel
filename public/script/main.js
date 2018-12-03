@@ -226,6 +226,29 @@
     }
   }
 
+  function changeProductShot( event ) {
+    var $clicked = event.target;
+
+    if (
+      // ( $clicked.nodeName.toLowerCase() === 'button' )
+      // && ( $clicked.getAttribute( 'class' ).match( /\bcolor\b/i ) !== null )
+      $clicked.hasAttribute( 'data-colorway' ) || !!$clicked.value
+    ) {
+      var colorway = $clicked.getAttribute( 'data-colorway' ) || $clicked.value;
+      var product = colorway.split( '--' ); product = product[0];
+      var colorways = document.getElementById( product ).querySelectorAll( 'img' );
+
+      for ( var i = 0; i < colorways.length; i++ ) {
+        var current = colorways[i];
+        if ( current.id === colorway ) {
+          current.hidden = false;
+        } else {
+          current.hidden = true;
+        }
+      }
+    }
+  }
+
   var $language = document.getElementById( 'language' );
   var $englishText = document.querySelectorAll( '[lang="en"]:not(html):not([data-translate-preserve])' );
   var $japaneseText = document.querySelectorAll( '[lang="ja"]:not(html):not([data-translate-preserve])' );
@@ -234,12 +257,20 @@
   var $main = document.querySelector( 'main' );
   var isProductPage = $main.classList.contains( 'view--product' );
   var isCollectionPage = $main.classList.contains( 'view--collection' );
+  var $addToCartCta, $yourOrder, $products;
 
   var lang = NoSpoonApparel.lang;
   var defaultPrice;
 
+  var $addToCartForm;
+  var rowSlideSpeed = 250;
+
   if ( isProductPage ) {
-    document.getElementById( 'add-to-cart-cta' ).disabled = false;
+    $addToCartForm = $( '#checkout' );
+    $yourOrder = document.getElementById( 'your-order' );
+    // $colorSelectButton = document.getElementById( 'color-select-button' );
+    $addToCartCta = document.getElementById( 'add-to-cart-cta' );
+    $addToCartCta.disabled = false;
     defaultPrice = NoSpoonApparel.product.variants[0].price.USD.amount;
 
     lang._PRODUCT_NAME_ = NoSpoonApparel.product.name;
@@ -249,8 +280,80 @@
     for ( var priceFormat in lang._PRICE_USD_ ) {
       lang._PRODUCT_PRICE_[priceFormat] = lang._PRICE_USD_[priceFormat].replace( 'X', defaultPrice )
     }
-  } else if ( isCollectionPage ) {
 
+    $addToCartCta.addEventListener( 'click', function ( event ) {
+
+    } );
+
+    $yourOrder.addEventListener( 'change', function ( event ) {
+      if ( event.target.id === 'color-select-button' ) {
+        changeProductShot( event );
+      }
+    } );
+
+    // $(document).ready(function () {
+    $( '.repeater' ).repeater( {
+      "defaultValues": {
+        "size": "S",
+        // "qty": "1"
+        // "color-select": "#ffffff"
+      },
+      // show: slideDownRepeaterRow,
+      "show": function showRepeaterRow() {
+        var $row = $( this );
+
+        // $addToCartForm.height( $addToCartForm.height() + $row.height() );
+
+        $row.find( '.qty' ).eq( 0 ).val( 1 );
+        // $row.find( '.color-select-value' ).eq( 0 ).val( '#ffffff' );
+
+        // $row.slideDown( rowSlideSpeed, function () {
+        //   console.log('shit');
+        // } );
+        var $wrappers = $row.find( '.table-cell-wrapper' );
+
+        $row.show();
+        $wrappers.css({
+          "height": "1.9rem",
+          "opacity": "1"
+        })
+
+        changeProductShot( {
+          "target": $row.find( '#color-select-button' ).get( 0 )
+        } );
+      },
+      // hide: slideUpRepeaterRow,
+      "hide": function hideRepeaterRow() {
+        var $row = $( this );
+        var $wrappers = $row.find( '.table-cell-wrapper' );
+
+        // $addToCartForm.height( $addToCartForm.height() - $row.height() );
+
+        $wrappers.css({
+          "height": "0",
+          "opacity": "0"
+        });
+
+        changeProductShot( {
+          "target": $row.prev().find( '#color-select-button' ).get( 0 )
+        } );
+
+        setTimeout( function () {
+          $row.remove();
+        }, 250 );
+
+        // $row.slideUp( rowSlideSpeed, function () {
+          // console.log('fuck');
+        // } );
+      },
+      "isFirstItemUndeletable": true
+    } );
+    // });
+  } else if ( isCollectionPage ) {
+    $products = document.getElementById( 'products' );
+
+    $products.addEventListener( 'click', changeProductShot );
+    $products.addEventListener( 'mouseover', changeProductShot );
   }
 
   lang.TITLE = {

@@ -22,14 +22,23 @@
             </nav>
           </header>
           <div class="row">
-            <div class="column column--image">
+            <div id="<%= @data.id %>" class="column column--image">
+              <% if @data.key?('variants') %>
+              <% @data.variants[0].colorways.each do |colorway| %>
               <img
-                src="<%= @default_colorway_src %>"
-                srcset="<%= "#{@default_colorway_src} 1x, #{@default_colorway_src.sub '@2x.png', '@3x.png'} 2x" %>"
+                id="<%= @data.id %>--<%= colorway.id %>"
+                src="/collection/<%= @data.id %>/product--<%= colorway.id %>@2x.png"
+                srcset="
+                  /collection/<%= @data.id %>/product--<%= colorway.id %>@2x.png 1x,
+                  /collection/<%= @data.id %>/product--<%= colorway.id %>@3x.png 2x
+                "
                 alt="Product shot"
                 data-translate="PRODUCT_SHOT"
                 data-translate-target="alt"
+                <%= ( @data.variants[0].colorways.index(colorway) == 0 ) ? '' : ' hidden' %>
               />
+              <% end %>
+              <% end %>
             </div>
             <div class="column column--description">
               <% @missing_description_languages.each do |missing_description_language| %>
@@ -97,7 +106,7 @@
                                 <% @default_colorways.each do |colorway|
                                    colorway_name = 'COLORWAY_' << colorway.name.upcase.sub( ' ', '_' ).sub( '-', '_' ).sub( '/', '_' )
                                 %>
-                                  <option data-translate="<%= colorway_name %>"><%= @copy[colorway_name][@language] %></option>
+                                  <option data-translate="<%= colorway_name %>" value="<%= "#{@data.id}--#{colorway.id}" %>"><%= @copy[colorway_name][@language] %></option>
                                 <% end %>
                               </select>
                             </div><!--/.table-cell-wrapper-->
@@ -171,4 +180,4 @@
           </div>
         </article>
       </main>
-<%= erb :_bottom, :locals => { :jquery => true, :scripts => 'product', :lang => lang } %>
+<%= erb :_bottom, :locals => { :jquery => true, :lang => lang } %>
