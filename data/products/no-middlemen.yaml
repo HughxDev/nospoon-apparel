@@ -10,7 +10,9 @@ variants:
   - type: 't-shirt'
     is_dropshipped: true
     vendor: print-aura
-    vendor_product_id: royal-apparel-5051
+    apparel_id: royal-apparel-5051
+    vendor_brand_id: '33'
+    vendor_product_id: '1'
     is_jumbo_print: true
     cost:
       materials: 6.45
@@ -21,17 +23,22 @@ variants:
       USD:
         amount: 25.00
         additional:
-          XL: 5.00
+          XXL: 1.50
       JPY:
-        amount: 250.00
+        amount: 250
         additional:
-          XL: 50.00
+          XXL: 15
     sizes:
-      - XS
-      - S
-      - M
-      - L
-      - XL
+      - id: XS
+        vendor_id: '2'
+      - id: S
+        vendor_id: '1'
+      - id: M
+        vendor_id: '3'
+      - id: L
+        vendor_id: '4'
+      - id: XL
+        vendor_id: '5'
     colorways:
       - id: black
         vendor_id: '7'

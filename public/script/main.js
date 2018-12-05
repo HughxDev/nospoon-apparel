@@ -75,6 +75,8 @@
   var $hamburger = document.getElementById( 'hamburger' );
   var $hamburgerTarget = document.getElementById( $hamburger.getAttribute( 'aria-controls' ) );
   var $cart = document.getElementById( 'cart' );
+  var $cartContents = document.getElementById( 'cart-contents' );
+  var $cartEmpty = document.getElementById( 'cart-empty' );
   var $cartLinks = document.querySelectorAll( '.cart-link, .cart-action' );
   var $nav = document.getElementById( 'site-nav' );
 
@@ -249,6 +251,75 @@
     }
   }
 
+  function populateCart( cart ) {
+    var i = 0, j = 0;
+    var cartLength = cart.length;
+    var current;
+    var $tr;
+    var $td;
+    var order = [ 'id', 'size', 'colorway', 'quantity', 'actions' ];
+    var $img;
+    var orderLength = order.length;
+    // var map = [];
+    // var mapItem = {};
+    var $remove;
+    var $removeIcon;
+
+    for ( ; i < cartLength; ++i ) {
+      current = cart[i];
+      console.log( current );
+
+      $tr = document.createElement( 'tr' );
+
+      for ( ; j < orderLength; ++j ) {
+        $td = document.createElement( 'td' );
+
+        if ( order[j] === 'id' ) {
+          $img = document.createElement( 'img' );
+          $img.src = '/collection/' + current[order[j]] + '/product--' + current.colorway.id + '.png';
+          $img.width = 128;
+          $img.height = 128;
+          $td.appendChild( $img );
+        } else if ( order[j] === 'size' ) {
+          $td.textContent = current.size.id
+        } else if ( order[j] === 'colorway' ) {
+          $td.textContent = current.colorway.name;
+        } else if ( order[j] === 'actions' ) {
+        /*
+          <button data-repeater-delete="" type="button" class="table-action table-action--remove" title="Remove" aria-label="Remove" data-translate="REMOVE" data-translate-target="title,aria-label">
+            <span aria-hidden="true">-</span>
+          </button>
+        */
+          $remove = document.createElement( 'button' );
+          $removeIcon = document.createElement( 'span' );
+          $removeIcon.textContent = '-';
+          $removeIcon.setAttribute( 'aria-hidden', 'true' );
+
+          $remove.setAttribute( 'data-repeater-delete', '' );
+          $remove.setAttribute( 'type', 'button' );
+          $remove.setAttribute( 'class', 'table-action table-action--remove' );
+          $remove.setAttribute( 'title', 'Remove' );
+          $remove.setAttribute( 'aria-label', 'Remove' );
+          $remove.setAttribute( 'data-translate', 'REMOVE' );
+          $remove.setAttribute( 'data-translate-target', 'title,aria-label' );
+
+          $remove.appendChild( $removeIcon );
+          $td.appendChild( $remove )
+        } else {
+          $td.textContent = current[order[j]];
+        }
+
+        $tr.appendChild( $td );
+      }
+      j = 0;
+
+      $cartContents.children[1].appendChild( $tr );
+    }
+
+    $cartContents.hidden = false;
+    $cartEmpty.hidden = true;
+  }
+
   var $language = document.getElementById( 'language' );
   var $englishText = document.querySelectorAll( '[lang="en"]:not(html):not([data-translate-preserve])' );
   var $japaneseText = document.querySelectorAll( '[lang="ja"]:not(html):not([data-translate-preserve])' );
@@ -266,7 +337,7 @@
   var rowSlideSpeed = 250;
 
   if ( isProductPage ) {
-    $addToCartForm = $( '#checkout' );
+    $addToCartForm = $( '#add-to-cart' );
     $yourOrder = document.getElementById( 'your-order' );
     // $colorSelectButton = document.getElementById( 'color-select-button' );
     $addToCartCta = document.getElementById( 'add-to-cart-cta' );
@@ -282,7 +353,60 @@
     }
 
     $addToCartCta.addEventListener( 'click', function ( event ) {
+      var formElements = $addToCartForm.get( 0 ).elements;
+      var formElementsLength = formElements.length;
+      var i = 0, j = 0;
+      var current;
+      var cart = [];
+      var currentOrder = {};
+      var colorway;
+      var currentChildrenLength;
 
+      for ( ; i < formElementsLength; ++i ) {
+        current = formElements[i];
+
+        if ( /[a-z]+\[[0-9]+\]\[size\]/.test( current.name ) ) {
+          currentOrder.size = {
+            "id": current.value
+          };
+
+          currentChildrenLength = current.children.length;
+          for ( j = 0; j < currentChildrenLength; ++j ) {
+            // console.log( 'current.children[j]', current.children[j], current.children[j].selected );
+            if ( current.children[j].selected ) {
+              currentOrder.size.vendorId = current.children[j].getAttribute( 'data-vendor-id' );
+            }
+          }
+        }
+
+        if ( /[a-z]+\[[0-9]+\]\[colorway\]/.test( current.name ) ) {
+          colorway = current.value.split( '--' );
+          currentOrder.id = colorway[0];
+          currentOrder.colorway = {
+            "id": colorway[1]
+          };
+
+          currentChildrenLength = current.children.length;
+          for ( j = 0; j < currentChildrenLength; ++j ) {
+            // console.log( 'current.children[j]', current.children[j], current.children[j].selected );
+            if ( current.children[j].selected ) {
+              currentOrder.colorway.vendorId = current.children[j].getAttribute( 'data-vendor-id' );
+              currentOrder.colorway.name = current.children[j].textContent;
+            }
+          }
+        }
+
+        if ( /[a-z]+\[[0-9]+\]\[quantity\]/.test( current.name ) ) {
+          currentOrder.quantity = parseInt( current.value, 10 );
+          cart.push( currentOrder );
+          currentOrder = {};
+        }
+      }
+      i = 0;
+
+      localStorage.setItem( 'cart', JSON.stringify( cart ) );
+      console.log( cart );
+      populateCart( cart );
     } );
 
     $yourOrder.addEventListener( 'change', function ( event ) {
@@ -296,7 +420,7 @@
       "defaultValues": {
         "size": "S",
         // "qty": "1"
-        // "color-select": "#ffffff"
+        "colorway": $( "#color-select-button" ).val()
       },
       // show: slideDownRepeaterRow,
       "show": function showRepeaterRow() {
@@ -305,7 +429,7 @@
         // $addToCartForm.height( $addToCartForm.height() + $row.height() );
 
         $row.find( '.qty' ).eq( 0 ).val( 1 );
-        // $row.find( '.color-select-value' ).eq( 0 ).val( '#ffffff' );
+        // $row.find( '#color-select-button' ).eq( 0 ).val(  );
 
         // $row.slideDown( rowSlideSpeed, function () {
         //   console.log('shit');

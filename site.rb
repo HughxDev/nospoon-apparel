@@ -131,9 +131,32 @@ class NoSpoonApparel < Sinatra::Base
     end
   end
 
+  def get_brand_id( vendor, brand_name )
+    File.open( "data/brands/#{vendor}.json", 'r' ) do |file|
+      found = ''
+
+      brands = JSON.parse file.read
+      brands.results.each_with_index do |entry, index|
+        if entry.brand_name == brand_name
+          found = entry.brand_id.to_s
+        end
+      end
+
+      if !found.empty?
+        found
+      else
+        halt 404, "Vendor “#{vendor}” has no brand by the name “#{color_name}”."
+      end
+    end
+  end
+
   subdomain /(local\.)?api/ do
     get "/color/:vendor" do
       get_color_id( params['vendor'], params['name'] )
+    end
+
+    get "/brand/:vendor" do
+      get_brand_id( params['vendor'], params['name'] )
     end
 
     get "/brands/:vendor" do

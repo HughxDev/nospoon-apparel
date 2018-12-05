@@ -56,7 +56,7 @@
                 <% end %>
               <% end %>
               <h2 data-translate="PRODUCT_DETAILS"><%= @copy.PRODUCT_DETAILS[@language] %></h2>
-              <%= erb :"_#{@data.variants[0].vendor_product_id}" %>
+              <%= erb :"_#{@data.variants[0].apparel_id}" %>
             </div><!-- /.column -->
           </div><!-- /.row -->
           <div class="row">
@@ -72,6 +72,8 @@
                 action=""
                 method="POST"
               >
+                <input type="hidden" name="productId" value="<%= @data.id %>" />
+                <input type="hidden" name="vendorProductId" value="<%= @data.variants[0].apparel_id %>" />
                 <div id="your-order" class="repeater hpg-wizard__step hpg-wizard__step--active">
                   <fieldset class="button-holder button-holder--order">
                     <legend class="sr-only" data-translate="YOUR_ORDER"><%= @copy.YOUR_ORDER[@language] %></legend>
@@ -92,21 +94,19 @@
                           <td class="table-column table-column--size">
                             <div class="table-cell-wrapper">
                               <select id="sizes" class="clothing-sizes" name="batches[0][size]">
-                                <option>XS</option>
-                                <option selected="selected">S</option>
-                                <option>M</option>
-                                <option>L</option>
-                                <option>XL</option>
+                                <% @data.variants[0].sizes.each do |size| %>
+                                <option data-vendor-id="<%= size.vendor_id %>"<%= size.id == 'S' ? ' selected="selected"' : '' %>><%= size.id %></option>
+                                <% end %>
                               </select>
                             </div><!--/.table-cell-wrapper-->
                           </td>
                           <td class="table-column table-column--colorway">
                             <div class="table-cell-wrapper">
-                              <select id="color-select-button">
+                              <select id="color-select-button" name="colorway">
                                 <% @default_colorways.each do |colorway|
                                    colorway_name = 'COLORWAY_' << colorway.name.upcase.sub( ' ', '_' ).sub( '-', '_' ).sub( '/', '_' )
                                 %>
-                                  <option data-translate="<%= colorway_name %>" value="<%= "#{@data.id}--#{colorway.id}" %>"><%= @copy[colorway_name][@language] %></option>
+                                  <option data-translate="<%= colorway_name %>" data-vendor-id="<%= colorway.vendor_id %>" value="<%= "#{@data.id}--#{colorway.id}" %>"><%= @copy[colorway_name][@language] %></option>
                                 <% end %>
                               </select>
                             </div><!--/.table-cell-wrapper-->

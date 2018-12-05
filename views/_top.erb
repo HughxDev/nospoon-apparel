@@ -75,9 +75,23 @@
             </label>
             <div id="cart" class="cart" aria-hidden="true">
               <h2 class="cart-heading sr-only" data-translate="CART">Cart</h2>
-              <!-- <p id="cart-empty" class="cart-text" data-translate="CART_EMPTY"><%= @copy.CART_EMPTY[@language] %></p> -->
+              <p id="cart-empty" class="cart-text" data-translate="CART_EMPTY"><%= @copy.CART_EMPTY[@language] %></p>
+              <table id="cart-contents" class="cart-contents" hidden>
+                <thead>
+                  <th scope="col">Product</th>
+                  <th scope="col">Size</th>
+                  <th scope="col">Colorway</th>
+                  <th scope="col">
+                    <abbr title="Quantity" aria-label="Quantity">Qty</abbr>
+                  </th>
+                  <th scope="col" style="color:transparent;text-shadow:none;">Actions</th>
+                </thead>
+                <tbody>
+
+                </tbody>
+              </table>
               <form id="checkout" action="/purchase/">
-                <button id="checkout-cta">Checkout</button>
+                <button id="checkout-cta" disabled>Checkout</button>
               </form>
             </div><!--/#cart-->
           </div><!-- /#cart-toggle -->
