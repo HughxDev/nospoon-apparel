@@ -500,8 +500,12 @@ nav, .hamburger, audio, .volume {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+}
+
+.cart[data-empty] {
+  justify-content: center;
 }
 
 .cart-heading:first-child {
@@ -515,6 +519,25 @@ nav, .hamburger, audio, .volume {
   margin-top: 0;
 }
 
+.cart-contents {
+  transition: 0.25s ease height, 0.75s ease opacity;
+  width: 100%;
+  text-align: center;
+}
+
+.cart-contents img {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#cart-empty {
+  transition: 0.75s ease opacity;
+}
+
+#cart-empty[hidden] {
+  opacity: 0;
+}
+
 button, .button {
   background: rgb(235, 235, 235);
   color: rgb(16, 16, 16);
@@ -525,6 +548,7 @@ button, .button {
   border-bottom: 0.25rem solid hsla(0, 0%, 40%, 0.5);
   border-right: 0.125rem solid hsla(0, 0%, 50%, 0.5);
   position: relative;
+  transition: 0.25s ease height, 0.25s ease opacity;
 }
 
 button, .button, [type="text"], [type="number"] {
@@ -984,6 +1008,11 @@ tbody > tr {
   align-items: center;
 }
 
+.table-cell-wrapper.table-cell-wrapper--cart {
+  height: 8rem;
+  justify-content: center;
+}
+
 .table-column.table-column--actions > .table-cell-wrapper {
   width: 1.5rem;
 }
@@ -992,7 +1021,7 @@ td:first-child > .table-cell-wrapper {
   margin-left: 0;
 }
 
-[data-repeater-item]:not(:first-child) > td > .table-cell-wrapper {
+.repeater [data-repeater-item]:not(:first-child) > td > .table-cell-wrapper {
   height: 0;
   opacity: 0;
 }

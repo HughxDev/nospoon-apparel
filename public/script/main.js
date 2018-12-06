@@ -197,9 +197,9 @@
 
   // displayBostonTime();
 
-  setTimeout( function () {
-    // $currentTime.style.opacity = 1;
-  }, 1000 );
+  // setTimeout( function () {
+  //   // $currentTime.style.opacity = 1;
+  // }, 1000 );
 
   // setInterval( displayBostonTime, 1000 );
 
@@ -252,11 +252,16 @@
   }
 
   function populateCart( cart ) {
+    if ( !cart ) {
+      cart = JSON.parse( localStorage.getItem( 'cart' ) );
+    }
+
     var i = 0, j = 0;
-    var cartLength = cart.length;
+    // var cartLength = ( cart ? cart.length : 0 );
     var current;
     var $tr;
     var $td;
+    var $div;
     var order = [ 'id', 'size', 'colorway', 'quantity', 'actions' ];
     var $img;
     var orderLength = order.length;
@@ -264,60 +269,89 @@
     // var mapItem = {};
     var $remove;
     var $removeIcon;
+    var $tbody = $cartContents.children[1];
+    var cartItems = Object.keys( cart );
+    var cartLength = cartItems.length;
 
-    for ( ; i < cartLength; ++i ) {
-      current = cart[i];
-      console.log( current );
-
-      $tr = document.createElement( 'tr' );
-
-      for ( ; j < orderLength; ++j ) {
-        $td = document.createElement( 'td' );
-
-        if ( order[j] === 'id' ) {
-          $img = document.createElement( 'img' );
-          $img.src = '/collection/' + current[order[j]] + '/product--' + current.colorway.id + '.png';
-          $img.width = 128;
-          $img.height = 128;
-          $td.appendChild( $img );
-        } else if ( order[j] === 'size' ) {
-          $td.textContent = current.size.id
-        } else if ( order[j] === 'colorway' ) {
-          $td.textContent = current.colorway.name;
-        } else if ( order[j] === 'actions' ) {
-        /*
-          <button data-repeater-delete="" type="button" class="table-action table-action--remove" title="Remove" aria-label="Remove" data-translate="REMOVE" data-translate-target="title,aria-label">
-            <span aria-hidden="true">-</span>
-          </button>
-        */
-          $remove = document.createElement( 'button' );
-          $removeIcon = document.createElement( 'span' );
-          $removeIcon.textContent = '-';
-          $removeIcon.setAttribute( 'aria-hidden', 'true' );
-
-          $remove.setAttribute( 'data-repeater-delete', '' );
-          $remove.setAttribute( 'type', 'button' );
-          $remove.setAttribute( 'class', 'table-action table-action--remove' );
-          $remove.setAttribute( 'title', 'Remove' );
-          $remove.setAttribute( 'aria-label', 'Remove' );
-          $remove.setAttribute( 'data-translate', 'REMOVE' );
-          $remove.setAttribute( 'data-translate-target', 'title,aria-label' );
-
-          $remove.appendChild( $removeIcon );
-          $td.appendChild( $remove )
-        } else {
-          $td.textContent = current[order[j]];
-        }
-
-        $tr.appendChild( $td );
-      }
-      j = 0;
-
-      $cartContents.children[1].appendChild( $tr );
+    while ( $tbody.firstChild ) {
+      $tbody.removeChild( $tbody.firstChild );
     }
 
-    $cartContents.hidden = false;
-    $cartEmpty.hidden = true;
+    if ( cartLength > 0 ) {
+      for ( ; i < cartLength; ++i ) {
+        current = cartItems[i];
+        // console.log( current );
+
+        $tr = document.createElement( 'tr' );
+        $tr.setAttribute( 'data-repeater-item', '' );
+
+        for ( ; j < orderLength; ++j ) {
+          $td = document.createElement( 'td' );
+          $div = document.createElement( 'div' );
+          $div.setAttribute( 'class', 'table-cell-wrapper table-cell-wrapper--cart' );
+
+          if ( order[j] === 'id' ) {
+            $img = document.createElement( 'img' );
+            $img.src = '/collection/' + cart[current][order[j]] + '/product--' + cart[current].colorway.id + '.png';
+            $img.width = 128;
+            $img.height = 128;
+            $div.appendChild( $img );
+          } else if ( order[j] === 'size' ) {
+            $div.textContent = cart[current].size.id;
+          } else if ( order[j] === 'colorway' ) {
+            $div.textContent = cart[current].colorway.name;
+          } else if ( order[j] === 'actions' ) {
+          /*
+            <button data-repeater-delete="" type="button" class="table-action table-action--remove" title="Remove" aria-label="Remove" data-translate="REMOVE" data-translate-target="title,aria-label">
+              <span aria-hidden="true">-</span>
+            </button>
+          */
+            $remove = document.createElement( 'button' );
+            $removeIcon = document.createElement( 'span' );
+            $removeIcon.textContent = '-';
+            $removeIcon.setAttribute( 'aria-hidden', 'true' );
+
+            $remove.setAttribute( 'data-repeater-delete', '' );
+            $remove.setAttribute( 'type', 'button' );
+            $remove.setAttribute( 'class', 'table-action table-action--remove' );
+            $remove.setAttribute( 'title', 'Remove' );
+            $remove.setAttribute( 'aria-label', 'Remove' );
+            $remove.setAttribute( 'data-translate', 'REMOVE' );
+            $remove.setAttribute( 'data-translate-target', 'title,aria-label' );
+
+            $remove.appendChild( $removeIcon );
+            $div.appendChild( $remove )
+          } else {
+            $div.textContent = cart[current][order[j]];
+          }
+
+          $td.appendChild( $div );
+          $tr.appendChild( $td );
+        }
+        j = 0;
+
+        $tbody.appendChild( $tr );
+      }
+
+      $cartContents.hidden = false;
+      $cartEmpty.hidden = true;
+      $checkoutCta.disabled = false;
+      $cart.removeAttribute( 'data-empty' );
+    } else {
+      $cart.setAttribute( 'data-empty', '' );
+    }
+  }
+
+  function emptyCart() {
+    $cart.setAttribute( 'data-empty', '' );
+    $cartContents.hidden = true;
+    $cartEmpty.hidden = false;
+    $checkoutCta.disabled = true;
+    localStorage.removeItem( 'cart' );
+  }
+
+  function getCartData() {
+    return localStorage.getItem( 'cart' );
   }
 
   var $language = document.getElementById( 'language' );
@@ -326,6 +360,7 @@
   var $japaneseFont = document.getElementById( 'japanese-font' );
   var $japaneseLink = document.getElementById( 'japanese' );
   var $main = document.querySelector( 'main' );
+  var $checkoutCta = document.getElementById( 'checkout-cta' );
   var isProductPage = $main.classList.contains( 'view--product' );
   var isCollectionPage = $main.classList.contains( 'view--collection' );
   var $addToCartCta, $yourOrder, $products;
@@ -335,6 +370,8 @@
 
   var $addToCartForm;
   var rowSlideSpeed = 250;
+
+  populateCart();
 
   if ( isProductPage ) {
     $addToCartForm = $( '#add-to-cart' );
@@ -352,18 +389,55 @@
       lang._PRODUCT_PRICE_[priceFormat] = lang._PRICE_USD_[priceFormat].replace( 'X', defaultPrice )
     }
 
-    $addToCartCta.addEventListener( 'click', function ( event ) {
+    var existingCart = getCartData();
+
+    function getUniqueId( cartItem ) {
+      return ( cartItem.id + '--' + cartItem.colorway.id + '--' + cartItem.size.id );
+    }
+
+    $addToCartCta.addEventListener( 'click', function addToCart( event ) {
       var formElements = $addToCartForm.get( 0 ).elements;
       var formElementsLength = formElements.length;
-      var i = 0, j = 0;
       var current;
-      var cart = [];
+      var cart = getCartData();
       var currentOrder = {};
       var colorway;
       var currentChildrenLength;
+      var currentColorway;
+      var currentColorwayId;
+      var existingCartLength;
+      var currentExistingCartItem;
 
-      for ( ; i < formElementsLength; ++i ) {
+      // if ( existingCart && existingCart.length ) {
+      //   console.log( 'existingCart', existingCart );
+      //   existingCart = JSON.parse( existingCart );
+      // } else {
+      //   existingCart = false;
+      // }
+
+      if ( cart && cart.length ) {
+        cart = JSON.parse( cart );
+      } else {
+        cart = {};
+      }
+
+      for ( var i = 0; i < formElementsLength; ++i ) {
         current = formElements[i];
+
+        if ( /(productId|vendorProductId)/.test( current.name ) ) {
+          continue;
+        }
+
+        if ( current.nodeName.toLowerCase() === 'fieldset' ) {
+          continue;
+        }
+
+        if ( current.nodeName.toLowerCase() === 'button' ) {
+          continue;
+        }
+
+        console.log( 'i:', i );
+        console.log( 'current', current );
 
         if ( /[a-z]+\[[0-9]+\]\[size\]/.test( current.name ) ) {
           currentOrder.size = {
@@ -383,29 +457,51 @@
           colorway = current.value.split( '--' );
           currentOrder.id = colorway[0];
           currentOrder.colorway = {
-            "id": colorway[1]
+            "id": colorway[1],
+            "choices": []
           };
 
           currentChildrenLength = current.children.length;
-          for ( j = 0; j < currentChildrenLength; ++j ) {
+          for ( var j = 0; j < currentChildrenLength; ++j ) {
             // console.log( 'current.children[j]', current.children[j], current.children[j].selected );
-            if ( current.children[j].selected ) {
-              currentOrder.colorway.vendorId = current.children[j].getAttribute( 'data-vendor-id' );
-              currentOrder.colorway.name = current.children[j].textContent;
+            currentColorway = current.children[j];
+            currentColorwayId = currentColorway.value.split( '--' );
+            currentColorwayId = currentColorwayId[1];
+
+            currentOrder.colorway.choices.push( {
+              "id": currentColorwayId,
+              "vendorId": currentColorway.getAttribute( 'data-vendor-id' ),
+              "name": currentColorway.textContent
+            } );
+
+            if ( currentColorway.selected ) {
+              currentOrder.colorway.vendorId = currentColorway.getAttribute( 'data-vendor-id' );
+              currentOrder.colorway.name = currentColorway.textContent;
             }
           }
         }
 
         if ( /[a-z]+\[[0-9]+\]\[quantity\]/.test( current.name ) ) {
-          currentOrder.quantity = parseInt( current.value, 10 );
-          cart.push( currentOrder );
+          var uniqueId = getUniqueId( currentOrder );
+          var quantity = parseInt( current.value, 10 );
+
+          console.log( 'uniqueId', uniqueId );
+
+          if ( cart.hasOwnProperty( uniqueId ) ) {
+            console.log( 'uniqueId exists already' );
+            cart[uniqueId].quantity += quantity;
+          } else {
+            console.log( 'uniqueId does NOT exist already' );
+            currentOrder.quantity = quantity;
+            cart[uniqueId] = currentOrder;
+          }
           currentOrder = {};
         }
-      }
-      i = 0;
+      } // for loop for formElements
+
+      console.log( 'cart', cart );
 
       localStorage.setItem( 'cart', JSON.stringify( cart ) );
-      console.log( cart );
       populateCart( cart );
     } );
 
@@ -471,6 +567,40 @@
         // } );
       },
       "isFirstItemUndeletable": true
+    } );
+
+    var $$cartContents = $( $cartContents );
+    $$cartContents.repeater( {
+      "hide": function hideRepeaterRow() {
+        var $$row = $( this );
+        var $wrappers = $$row.find( '.table-cell-wrapper' );
+
+        // $addToCartForm.height( $addToCartForm.height() - $row.height() );
+
+        $wrappers.css( {
+          "height": "0",
+          "opacity": "0"
+        } );
+
+        setTimeout( function () {
+          $$row.remove();
+        }, 250 );
+
+        if ( ( $$row.prev().length === 0 ) && ( $$row.next().length === 0 ) ) {
+          $$cartContents.css( {
+            "height": "0",
+            "opacity": "0"
+          } );
+
+          setTimeout( function () {
+            emptyCart();
+            $$cartContents.css( {
+              "height": "",
+              "opacity": ""
+            } );
+          }, 250 );
+        }
+      }
     } );
     // });
   } else if ( isCollectionPage ) {
