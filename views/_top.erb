@@ -76,19 +76,19 @@
             <div id="cart" class="cart" aria-hidden="true">
               <h2 class="cart-heading sr-only" data-translate="CART">Cart</h2>
               <p id="cart-empty" class="cart-text" data-translate="CART_EMPTY"><%= @copy.CART_EMPTY[@language] %></p>
-              <table id="cart-contents" class="cart-contents repeater-cart" hidden>
-                <thead>
-                  <th scope="col">Product</th>
-                  <th scope="col">Size</th>
-                  <th scope="col">Colorway</th>
-                  <th scope="col">
-                    <abbr title="Quantity" aria-label="Quantity">Qty</abbr>
-                  </th>
-                  <th scope="col" style="color:transparent;text-shadow:none;">Actions</th>
-                </thead>
-                <tbody data-repeater-list="cart"></tbody>
-              </table>
               <form id="checkout" action="/purchase/">
+                <table id="cart-contents" class="cart-contents repeater-cart" hidden>
+                  <thead>
+                    <th scope="col">Product</th>
+                    <th scope="col">Size</th>
+                    <th scope="col">Colorway</th>
+                    <th scope="col">
+                      <abbr title="Quantity" aria-label="Quantity">Qty</abbr>
+                    </th>
+                    <th scope="col" style="color:transparent;text-shadow:none;">Actions</th>
+                  </thead>
+                  <tbody data-repeater-list="cart"></tbody>
+                </table>
                 <button id="checkout-cta" disabled>Checkout</button>
               </form>
             </div><!--/#cart-->

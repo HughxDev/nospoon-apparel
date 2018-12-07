@@ -481,6 +481,10 @@ nav, .hamburger, audio, .volume {
   z-index: 5;
 }
 
+#checkout {
+  width: 100%;
+}
+
 .cart {
   text-align: center;
   position: absolute;
