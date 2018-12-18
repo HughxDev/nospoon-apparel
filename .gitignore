@@ -2,7 +2,9 @@
 img/png/
 node_modules/
 dist/
+ja/
 local.apparel.nospoon.tv/
+local.*.apparel.nospoon.tv/
 data/**/*.json
 .env
 customers.yaml

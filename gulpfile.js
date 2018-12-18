@@ -8,6 +8,7 @@ const pump = require('pump');
 const imagemin = require('gulp-imagemin');
 const webp = require('gulp-webp');
 const del = require('del');
+const replace = require('gulp-replace');
 
 gulp.task( 'del', () => {
   return del( [ './dist/' ] );
@@ -56,7 +57,7 @@ gulp.task( 'jsmin', ( cb ) => {
   ], cb );
 } );
 
-function processImages( source = 'src', cb ) {
+function processImages( source = 'src', dest = 'dist', cb ) {
   var imgSources = [
     `./${source}/**/*.{png,gif,jpg,jpeg,jxr,webp,bpg,bmp,svg}`,
     `!./${source}/img/source/**/*`
@@ -81,16 +82,28 @@ function processImages( source = 'src', cb ) {
     ], {
       "verbose": true
     } ),
-    gulp.dest('./dist/')
+    gulp.dest(`./${dest}/`)
   ], cb );
 }
 
 gulp.task( 'img', ( cb ) => {
-  processImages( 'public', cb );
+  processImages( 'public', 'dist', cb );
 } );
 
 gulp.task( 'img-postprocess', ( cb ) => {
-  processImages( 'dist', cb );
+  processImages( 'dist', 'dist', cb );
+} );
+
+gulp.task( 'img-postprocess-ja', ( cb ) => {
+  processImages( 'ja', 'ja', cb );
+} );
+
+gulp.task( 'delocalize', ( cb ) => {
+  pump( [
+    gulp.src('./dist/**/*.html'),
+    replace('//local.', '//' ),
+    gulp.dest('./dist/')
+  ], cb );
 } );
 
 gulp.task( 'audio', ( cb ) => {
@@ -110,12 +123,14 @@ gulp.task( 'favicon', ( cb ) => {
 gulp.task( 'default',
   gulp.series(
     'del',
-    gulp.parallel( 'cssmin', 'fonts', 'htmlmin', 'jsmin', 'img', 'audio', 'favicon' )
+    gulp.parallel( 'cssmin', 'fonts', 'htmlmin', 'jsmin', 'img', 'audio', 'favicon' ),
+    'delocalize'
   )
 );
 
 gulp.task( 'update-noimg',
   gulp.series(
-    gulp.parallel( 'cssmin', 'fonts', 'htmlmin', 'jsmin', 'audio', 'favicon' )
+    gulp.parallel( 'cssmin', 'fonts', 'htmlmin', 'jsmin', 'audio', 'favicon' ),
+    'delocalize'
   )
 );
