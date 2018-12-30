@@ -10,13 +10,18 @@ variants:
   - type: 't-shirt'
     is_dropshipped: true
     vendor: print-aura
-    apparel: royal-apparel-5051org
+    apparel_id: royal-apparel-5051org
     sizes:
-      - XS
-      - S
-      - M
-      - L
-      - XL
+      - id: XS
+        vendor_id: '2'
+      - id: S
+        vendor_id: '1'
+      - id: M
+        vendor_id: '3'
+      - id: L
+        vendor_id: '4'
+      - id: XL
+        vendor_id: '5'
     colorways:
       - id: natural
         vendor_id: '40'

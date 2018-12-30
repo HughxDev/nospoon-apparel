@@ -10,35 +10,46 @@ variants:
   - type: 't-shirt'
     is_dropshipped: true
     vendor: printful
-    apparel: american-apparel-2001
+    apparel_id: american-apparel-2001
     sizes:
-      - XS
-      - S
-      - M
-      - L
-      - XL
+      - id: XS
+        vendor_id: '2'
+      - id: S
+        vendor_id: '1'
+      - id: M
+        vendor_id: '3'
+      - id: L
+        vendor_id: '4'
+      - id: XL
+        vendor_id: '5'
     colorways:
       - id: white
+        vendor_id: 'X'
         name: White
         tags: [ white ]
         hex: 0xFFFFFF
       - id: black
+        vendor_id: 'X'
         name: Black
         tags: [ black ]
         hex: 0x000000
       - id: cranberry
+        vendor_id: 'X'
         name: Cranberry
         tags: [ red ]
         hex: 0x990033
       - id: heather-grey
+        vendor_id: 'X'
         name: Heather Grey
         tags: [ gray, grey ]
         hex: 0xB0B0B2
       - id: kelly-green
+        vendor_id: 'X'
         name: Kelly Green
         tags: [ green ]
         hex: 0x1A8145
       - id: teal
+        vendor_id: 'X'
         name: Teal
         tags: [ blue, turquoise, teal, tiffany, cyan, sky-blue, blue-green ]
         hex: 0x0092C1
