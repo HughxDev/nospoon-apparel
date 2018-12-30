@@ -9,3 +9,4 @@ data/**/*.json
 .env
 customers.yaml
 passenger.log
+/index.html
