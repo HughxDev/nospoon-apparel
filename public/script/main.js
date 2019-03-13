@@ -328,6 +328,10 @@
     return localStorage.getItem( 'cart' );
   }
 
+  function getUniqueId( cartItem ) {
+    return ( cartItem.id + '--' + cartItem.colorway.id + '--' + cartItem.size.id );
+  }
+
   var $language = document.getElementById( 'language' );
   var $englishText = document.querySelectorAll( '[lang="en"]:not(html):not([data-translate-preserve])' );
   var $japaneseText = document.querySelectorAll( '[lang="ja"]:not(html):not([data-translate-preserve])' );
@@ -385,7 +389,7 @@
         }, 250 );
       }
     }
-  } );
+  } ); // $$cartContents
 
   if ( isProductPage ) {
     $addToCartForm = $( '#add-to-cart' );
@@ -404,10 +408,6 @@
     }
 
     var existingCart = getCartData();
-
-    function getUniqueId( cartItem ) {
-      return ( cartItem.id + '--' + cartItem.colorway.id + '--' + cartItem.size.id );
-    }
 
     $addToCartCta.addEventListener( 'click', function addToCart( event ) {
       var formElements = $addToCartForm.get( 0 ).elements;

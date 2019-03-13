@@ -7,8 +7,8 @@ modernizr.build({
     // "img/webp-alpha"
   ]
 }, function (result) {
-  fs.writeFile( 'src/script/modernizr.js', result, 'utf8', function ( err ) {
-    if ( !err ) {
+  fs.writeFile( 'public/script/modernizr.js', result, 'utf8', function ( error ) {
+    if ( !error ) {
       console.log( 'Built modernizr!' );
       process.exit();
     } else {

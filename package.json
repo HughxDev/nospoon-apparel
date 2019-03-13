@@ -1,13 +1,16 @@
 {
   "scripts": {
     "svg2png": "inkscape -z -e $OUTFILE -w $WIDTH $INFILE",
-    "build": "node modernizr-build.js && gulp",
+    "build-test": "node modernizr-build.js && gulp",
     "crunch": "find ./src/img/png/ -type f -name \"*.png\" -exec guetzli --verbose --quality 84 {} {}.jpg \\; && rename \"s/png.jpg/jpg/\" ./src/img/png/*.png.jpg",
     "progressive": "find ./src/img/png/ -type f -name \"*.jpg\" -exec jpegtran -outfile {}.prog -progressive {} \\; && rename \"s/jpg.prog/prog.jpg/\" ./src/img/png/*.prog",
-    "static": "rm -rf local.apparel.nospoon.tv/ & wget -r http://local.apparel.nospoon.tv --domains local.apparel.nospoon.tv",
-    "static-ja": "rm -rf local.ja.apparel.nospoon.tv/ & wget -r http://local.ja.apparel.nospoon.tv --domains local.ja.apparel.nospoon.tv",
-    "sync": "scp -r dist/ nospoon@hughguiney.com:/srv/www/nospoon-apparel/public/dist/",
-    "sync-ja": "scp -r ja/ nospoon@hughguiney.com:/srv/www/nospoon-apparel/public/ja/",
+    "static": "rm -rf local.apparel.nospoon.tv/ & rm -rf dist/ & wget -r http://local.apparel.nospoon.tv --domains local.apparel.nospoon.tv --exclude-domains js.stripe.com,checkout.stripe.com; mv local.apparel.nospoon.tv dist",
+    "static-ja": "rm -rf local.ja.apparel.nospoon.tv/ & rm -rf ja/ & wget -r http://local.ja.apparel.nospoon.tv --domains local.ja.apparel.nospoon.tv --exclude-domains js.stripe.com,checkout.stripe.com; mv local.ja.apparel.nospoon.tv ja",
+    "build": "yarn static; yarn static-ja; gulp postprocess",
+    "upload": "yarn sync; yarn sync-ja",
+    "update": "yarn build && yarn upload",
+    "sync": "ssh nospoon@hughguiney.com \"rm -rf /srv/www/nospoon-apparel/public/dist/\"; scp -r dist/ nospoon@hughguiney.com:/srv/www/nospoon-apparel/public/dist/",
+    "sync-ja": "ssh nospoon@hughguiney.com \"rm -rf /srv/www/nospoon-apparel/public/ja/\"; scp -r ja/ nospoon@hughguiney.com:/srv/www/nospoon-apparel/public/ja/",
     "yaml2json": "yaml2json data/ --pretty --save --recursive",
     "log": "subl /usr/local/var/log/httpd/error_log"
   },
