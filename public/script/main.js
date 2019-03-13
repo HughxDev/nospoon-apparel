@@ -1,71 +1,5 @@
 (function () {
   'use strict';
-  // https://stackoverflow.com/a/46261084/214325
-  function getBostonTime() {
-    // create Date object for current location
-    var date = new Date();
-
-    // convert to milliseconds, add local time zone offset and get UTC time in milliseconds
-    var utcTime = date.getTime() + (date.getTimezoneOffset() * 60000);
-
-    // time offset for Boston is +9
-    var timeOffset = 9;
-
-    // create new Date object for a different timezone using supplied its GMT offset.
-    return new Date(utcTime + (3600000 * timeOffset));
-  }
-
-  function isLastDay( dt ) {
-    return new Date( dt.getTime() + 86400000 ).getDate() === 1;
-  }
-
-  function isNewYears() {
-    return ( $month.textContent === '12' ) && ( $day.textContent === '31' );
-  }
-
-  function displayBostonTime() {
-    var BostonTime = getBostonTime();
-    var isCurrentlyLastDay = isLastDay( BostonTime );
-    var hours = BostonTime.getHours();
-    var minutes = BostonTime.getMinutes();
-    var seconds = BostonTime.getSeconds();
-
-    if ( !$year.textContent.length || isNewYears() ) {
-      $year.textContent = BostonTime.getFullYear();
-    }
-
-    if ( !$month.textContent.length || isCurrentlyLastDay ) {
-      $month.textContent = BostonTime.getMonth();
-    }
-
-    if ( !$day.textContent.length || ( hours >= 23 ) || ( hours <= 1 ) ) {
-      $day.textContent = BostonTime.getDate();
-    }
-
-    if ( !$hour.textContent.length || ( seconds >= 59 ) || ( seconds <= 1 ) ) {
-      if ( hours >= 12 ) {
-        $hour.textContent = hours - 12;
-        $am.hidden = true;
-        $pm.hidden = false;
-      } else {
-        $am.hidden = false;
-        $pm.hidden = true;
-      }
-
-      if ( hours === 0 ) {
-        $hour.textContent = '12';
-      }
-    }
-
-    $minutes.textContent = ( minutes >= 10 ) ? minutes : '0' + minutes;
-    $seconds.textContent = ( seconds >= 10 ) ? seconds : '0' + seconds;
-    $datetime.setAttribute( 'datetime', BostonTime.toISOString() );
-  }
-
-  function playMusic() {
-    $someday.play();
-  }
-
   // Init
   var $html = document.documentElement;
   $html.classList.remove( 'no-js' );
@@ -168,10 +102,6 @@
     }
   }
 
-  function isPlaying( media ) {
-    return !!( media.currentTime > 0 && !media.paused && !media.ended && media.readyState > 2 );
-  }
-
   takecartLinksOutOfTabOrder();
 
   $hamburger.addEventListener( 'keypress', hamburgerKeyHandler );
@@ -194,26 +124,6 @@
   if ( $currentYear && ( $currentYear.textContent !== currentYear ) ) {
     $currentYear.textContent = currentYear;
   }
-
-  // displayBostonTime();
-
-  // setTimeout( function () {
-  //   // $currentTime.style.opacity = 1;
-  // }, 1000 );
-
-  // setInterval( displayBostonTime, 1000 );
-
-  function startMusic() {
-    if ( !isPlaying( $someday ) ) {
-      playMusic();
-    }
-
-    window.removeEventListener( 'scroll', startMusic );
-    document.removeEventListener( 'click', startMusic );
-  }
-
-  // window.addEventListener( 'scroll', startMusic );
-  // document.addEventListener( 'click', startMusic );
 
   // Language
   function hideElements( $elements ) {
