@@ -15,10 +15,10 @@
     <script src="https://js.stripe.com/v3/"></script>
     <script src="https://checkout.stripe.com/checkout.js"></script>
     <script src="/script/polyfills/object.assign.js"></script>
-    <% if defined?(jquery) %>
-      <script src="/node_modules/jquery/dist/jquery.slim.min.js"></script>
-      <script src="/node_modules/jquery.repeater/jquery.repeater.min.js"></script>
-    <% end %>
+    <%# if defined?(jquery) %>
+    <script src="/node_modules/jquery/dist/jquery.slim.min.js"></script>
+    <script src="/node_modules/jquery.repeater/jquery.repeater.min.js"></script>
+    <%# end %>
     <script src="/script/main.js"></script>
     <script src="/script/checkout.js"></script>
     <% if defined?(scripts) %><script src="/script/<%= scripts %>.js"></script><% end %>
