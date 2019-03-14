@@ -6,6 +6,7 @@ require 'money'
 require 'stripe'
 require 'dotenv/load'
 require 'yaml/store'
+require 'json/minify'
 
 # set :tld_size, 2
 Hash.use_dot_syntax = true
@@ -24,6 +25,9 @@ class NoSpoonApparel < Sinatra::Base
     @language = get_language(subdomain)
     @locale = get_locale(@language)
     @supported_languages = [ :en, :ja ]
+
+    @productData = "var NoSpoonApparel = {};NoSpoonApparel.lang = #{JSON.minify(@lang)};"
+    @productData.strip!
   end
 
   # https://stackoverflow.com/a/37891309/214325
@@ -554,6 +558,8 @@ class NoSpoonApparel < Sinatra::Base
     end
     @jsonData += ']'
 
+    @productData += "NoSpoonApparel.products = #{JSON.minify(@jsonData)};"
+
     erb :collection, :locals => {
       :language => @language,
       :locale => @locale,
@@ -585,6 +591,8 @@ class NoSpoonApparel < Sinatra::Base
         @missing_description_languages.push(supported_language)
       end
     end
+
+    @productData += "NoSpoonApparel.product = #{JSON.minify(@jsonData)};"
 
     erb :product, :locals => {
       :language => @language,

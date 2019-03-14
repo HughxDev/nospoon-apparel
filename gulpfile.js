@@ -17,7 +17,7 @@ const revCssUrl = require('gulp-rev-css-url');
 function noop() {}
 
 gulp.task( 'del', () => {
-  return del( [ './dist/' ] );
+  return del( [ './dist/', './ja' ] );
 } );
 
 function processCSS( source = 'src', dest = 'dist', cb = noop ) {
@@ -194,28 +194,43 @@ gulp.task( 'favicon-postprocess', ( cb ) => {
   processFavicon( 'ja', 'ja', cb );
 } );
 
-gulp.task( 'rev', ( cb ) => {
+function revision( source = 'dist', dest = 'dist', cb = noop ) {
   // @todo - Fonts are broken because rev-css-url does not replace inside @font-face for some reason (even though it claims to)
   pump( [
-    gulp.src( `dist/**/*.{ico,png,gif,jpg,jpeg,jxr,webp,bpg,bmp,svg,js,css}` ), // eot,otf,woff,woff2
+    gulp.src( `${source}/**/*.{ico,png,gif,jpg,jpeg,jxr,webp,bpg,bmp,svg,js,css}` ), // eot,otf,woff,woff2
     rev(),
     revCssUrl(),
     revDelete(),
-    gulp.dest( `./dist/` ),
+    gulp.dest( `./${dest}/` ),
     rev.manifest(),
-    gulp.dest( `./dist/` ),
+    gulp.dest( `./${dest}/` ),
   ], cb );
+}
+
+gulp.task( 'rev', ( cb ) => {
+  revision( 'dist', 'dist' );
+  // @todo: en and ja should share assets instead of having duplicates
+  revision( 'ja', 'ja', cb );
 } );
 
-gulp.task( 'rev-rewrite', ( cb ) => {
+function revisionRewrite( source = 'dist', dest = 'dist', cb = noop ) {
   pump( [
-    gulp.src( `dist/**/index.html` ),
+    gulp.src( `${source}/**/index.html` ),
     revRewrite( {
-      "manifest": gulp.src( `dist/rev-manifest.json` )
+      "manifest": gulp.src( `${dest}/rev-manifest.json` )
     } ),
-    gulp.dest( 'dist' ),
+    gulp.dest( `${dest}` ),
   ], cb );
+}
+
+gulp.task( 'rev-rewrite', ( cb ) => {
+  revisionRewrite( 'dist', 'dist'/*, cb*/ );
+  revisionRewrite( 'ja', 'ja', cb );
 } );
+
+// gulp.task( 'rev-rewrite-ja', ( cb ) => {
+//   revisionRewrite( 'ja', 'ja', cb );
+// } );
 
 gulp.task( 'default',
   gulp.series(
@@ -247,11 +262,12 @@ gulp.task( 'postprocess',
       'htmlmin-postprocess',
       'jsmin-postprocess',
       'audio-postprocess',
-      'favicon-postprocess'
+      'favicon-postprocess',
+      'img-postprocess'
     ),
-    'img-postprocess',
     'delocalize',
     'rev',
     'rev-rewrite'
+    // 'rev-rewrite-ja'
   )
 );

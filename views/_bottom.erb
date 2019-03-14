@@ -3,15 +3,7 @@
         <p>© <span id="est-year">2016</span>–<span id="current-year">2018</span> No Spoon Apparel</p>
       </footer>
     </div><!--/#shading-->
-    <script>
-      var NoSpoonApparel = {};
-      NoSpoonApparel.lang = <%= @lang %>;
-      <% if defined?(@product) %>
-      NoSpoonApparel.product = <%= @jsonData %>;
-      <% elsif defined?(@products) %>
-      NoSpoonApparel.products = <%= @jsonData %>;
-      <% end %>
-    </script>
+    <script><%= @productData %></script>
     <script src="https://js.stripe.com/v3/"></script>
     <script src="https://checkout.stripe.com/checkout.js"></script>
     <script src="/script/polyfills/object.assign.js"></script>
