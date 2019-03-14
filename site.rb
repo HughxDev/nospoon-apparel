@@ -545,9 +545,11 @@ class NoSpoonApparel < Sinatra::Base
     end
 
     product_files.each_with_index do |product, index|
-      @jsonData += File.read(product, :encoding => 'utf-8')
-      if index < ( product_files.count - 1 )
-        @jsonData += ','
+      if File.basename(product) != 'print-aura.json'
+        @jsonData += File.read(product, :encoding => 'utf-8')
+        if index < ( product_files.count - 1 )
+          @jsonData += ','
+        end
       end
     end
     @jsonData += ']'

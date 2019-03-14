@@ -9,6 +9,10 @@ const imagemin = require('gulp-imagemin');
 const webp = require('gulp-webp');
 const del = require('del');
 const replace = require('gulp-replace');
+const rev = require('gulp-rev');
+const revRewrite = require('gulp-rev-rewrite');
+const revDelete = require('gulp-rev-delete-original');
+const revCssUrl = require('gulp-rev-css-url');
 
 function noop() {}
 
@@ -26,11 +30,13 @@ function processCSS( source = 'src', dest = 'dist', cb = noop ) {
     cssnano()
   ];
 
-  pump( [
+  var pipeline = [
     gulp.src( `./${source}/style/**/*.css` ),
     postcss( plugins ),
-    gulp.dest( `./${dest}/style/` )
-  ], cb );
+    gulp.dest( `./${dest}/style/` ),
+  ];
+
+  pump( pipeline, cb );
 }
 
 gulp.task( 'cssmin', ( cb ) => {
@@ -43,10 +49,12 @@ gulp.task( 'cssmin-postprocess', ( cb ) => {
 } );
 
 function processFonts( source = 'public', dest = 'dist', cb = noop ) {
-  pump( [
+  var pipeline = [
     gulp.src('./src/style/fonts/*.{eot,otf,ttf,woff,woff2}'),
     gulp.dest('./dist/style/fonts/')
-  ], cb );
+  ];
+
+  pump( pipeline, cb );
 }
 
 gulp.task( 'fonts', ( cb ) => {
@@ -79,11 +87,13 @@ gulp.task( 'htmlmin-postprocess', ( cb ) => {
 } );
 
 function processJS( source = 'public', dest = 'dist', cb = noop ) {
-  pump( [
+  var pipeline = [
     gulp.src( `./${source}/script/**/*.js` ),
     uglify(),
     gulp.dest( `./${dest}/script` )
-  ], cb );
+  ];
+
+  pump( pipeline, cb );
 }
 
 gulp.task( 'jsmin', ( cb ) => {
@@ -95,10 +105,24 @@ gulp.task( 'jsmin-postprocess', ( cb ) => {
   processJS( 'ja', 'ja' , cb );
 } );
 
-function processImages( source = 'src', dest = 'dist', cb = noop ) {
+function processImages( source = 'public', dest = 'dist', cb = noop ) {
   var imgSources = [
-    `./${source}/**/*.{png,gif,jpg,jpeg,jxr,webp,bpg,bmp,svg}`,
+    `./${source}/img/**/*.{png,gif,jpg,jpeg,jxr,webp,bpg,bmp,svg}`,
     `!./${source}/img/source/**/*`
+  ];
+  // var imgSources = `./${source}/img/**/*.{png,gif,jpg,jpeg,jxr,webp,bpg,bmp,svg}`;
+
+  var pipeline = [
+    gulp.src( imgSources ),
+    imagemin( [
+      imagemin.gifsicle(),
+      // imagemin.jpegtran(),
+      imagemin.optipng(),
+      imagemin.svgo()
+    ], {
+      "verbose": true
+    } ),
+    gulp.dest(`./${dest}/img/`)
   ];
 
   // pump( [
@@ -110,18 +134,7 @@ function processImages( source = 'src', dest = 'dist', cb = noop ) {
   //   gulp.dest('./dist/')
   // ] );
 
-  pump( [
-    gulp.src( imgSources ),
-    imagemin( [
-      imagemin.gifsicle(),
-      // imagemin.jpegtran(),
-      imagemin.optipng(),
-      imagemin.svgo()
-    ], {
-      "verbose": true
-    } ),
-    gulp.dest(`./${dest}/`)
-  ], cb );
+  pump( pipeline, cb );
 }
 
 gulp.task( 'img', ( cb ) => {
@@ -129,8 +142,8 @@ gulp.task( 'img', ( cb ) => {
 } );
 
 gulp.task( 'img-postprocess', ( cb ) => {
-  processImages( 'dist', 'dist' ),
-  processImages( 'ja', 'ja', cb );
+  processImages( 'public', 'dist' ),
+  processImages( 'public', 'ja', cb );
 } );
 
 gulp.task( 'img-postprocess-ja', ( cb ) => {
@@ -146,10 +159,12 @@ gulp.task( 'delocalize', ( cb ) => {
 } );
 
 function processAudio( source = 'public', dest = 'dist', cb ) {
-  pump( [
+  var pipeline = [
     gulp.src( `./${source}/audio/*.{mp3,wav,flac,aac,ac3}` ),
-    gulp.dest( `./${dest}/audio` )
-  ], cb );
+    gulp.dest( `./${dest}/audio/` )
+  ];
+
+  pump( pipeline, cb );
 }
 
 gulp.task( 'audio', ( cb ) => {
@@ -162,10 +177,12 @@ gulp.task( 'audio-postprocess', ( cb ) => {
 } );
 
 function processFavicon( source = 'public', dest = 'dist', cb = noop ) {
-  pump( [
+  var pipeline = [
     gulp.src( `./${source}/*.{ico,png}` ),
     gulp.dest( `./${dest}/` )
-  ], cb );
+  ];
+
+  pump( pipeline, cb );
 }
 
 gulp.task( 'favicon', ( cb ) => {
@@ -175,6 +192,29 @@ gulp.task( 'favicon', ( cb ) => {
 gulp.task( 'favicon-postprocess', ( cb ) => {
   processFavicon( 'dist', 'dist' );
   processFavicon( 'ja', 'ja', cb );
+} );
+
+gulp.task( 'rev', ( cb ) => {
+  // @todo - Fonts are broken because rev-css-url does not replace inside @font-face for some reason (even though it claims to)
+  pump( [
+    gulp.src( `dist/**/*.{ico,png,gif,jpg,jpeg,jxr,webp,bpg,bmp,svg,js,css}` ), // eot,otf,woff,woff2
+    rev(),
+    revCssUrl(),
+    revDelete(),
+    gulp.dest( `./dist/` ),
+    rev.manifest(),
+    gulp.dest( `./dist/` ),
+  ], cb );
+} );
+
+gulp.task( 'rev-rewrite', ( cb ) => {
+  pump( [
+    gulp.src( `dist/**/index.html` ),
+    revRewrite( {
+      "manifest": gulp.src( `dist/rev-manifest.json` )
+    } ),
+    gulp.dest( 'dist' ),
+  ], cb );
 } );
 
 gulp.task( 'default',
@@ -209,6 +249,9 @@ gulp.task( 'postprocess',
       'audio-postprocess',
       'favicon-postprocess'
     ),
-    'delocalize'
+    'img-postprocess',
+    'delocalize',
+    'rev',
+    'rev-rewrite'
   )
 );
