@@ -1,4 +1,23 @@
 {
+  "name": "nospoon-apparel",
+  "license": "UNLICENSED",
+  "private": true,
+  "version": "0.0.0",
+  "description": "No Spoon Apparel Website",
+  "homepage": "https://apparel.nospoon.tv",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NoSpoonProductions/nospoon-apparel.git"
+  },
+  "author": {
+    "name": "Hugh Guiney",
+    "email": "nospoonapparel@hughguiney.com",
+    "url": "https://apparel.nospoon.tv"
+  },
+  "bugs": {
+    "url": "https://github.com/NoSpoonProductions/nospoon-apparel/issues",
+    "email": "nospoonapparel@hughguiney.com"
+  },
   "scripts": {
     "svg2png": "inkscape -z -e $OUTFILE -w $WIDTH $INFILE",
     "build-test": "node modernizr-build.js && gulp",
