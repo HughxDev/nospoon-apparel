@@ -89,7 +89,12 @@ gulp.task( 'htmlmin-postprocess', ( cb ) => {
 function processJS( source = 'public', dest = 'dist', cb = noop ) {
   var pipeline = [
     gulp.src( `./${source}/script/**/*.js` ),
-    uglify(),
+    uglify( {
+      "compress": {
+        "drop_console": true,
+        "drop_debugger": true,
+      }
+    } ),
     gulp.dest( `./${dest}/script` )
   ];
 
@@ -105,9 +110,27 @@ gulp.task( 'jsmin-postprocess', ( cb ) => {
   processJS( 'ja', 'ja' , cb );
 } );
 
+function png2webp( source = 'public', dest = 'dist', cb = noop ) {
+  var pngSrcs = [
+    `./${source}/**/*.png`,
+    `!./${source}/img/source/**/*`
+  ];
+
+  var pipeline = [
+    gulp.src( pngSrcs ),
+    webp( {
+      "lossless": true
+      // "nearLossless": 100
+    } ),
+    gulp.dest(`./${dest}/`),
+  ];
+
+  pump( pipeline, cb );
+}
+
 function processImages( source = 'public', dest = 'dist', cb = noop ) {
   var imgSources = [
-    `./${source}/img/**/*.{png,gif,jpg,jpeg,jxr,webp,bpg,bmp,svg}`,
+    `./${source}/**/*.{png,gif,jpg,jpeg,jxr,webp,bpg,bmp,svg}`,
     `!./${source}/img/source/**/*`
   ];
   // var imgSources = `./${source}/img/**/*.{png,gif,jpg,jpeg,jxr,webp,bpg,bmp,svg}`;
@@ -122,17 +145,8 @@ function processImages( source = 'public', dest = 'dist', cb = noop ) {
     ], {
       "verbose": true
     } ),
-    gulp.dest(`./${dest}/img/`)
+    gulp.dest(`./${dest}/`),
   ];
-
-  // pump( [
-  //   gulp.src( imgSources ),
-  //   webp( {
-  //     "lossless": true
-  //     // "nearLossless": 100
-  //   } ),
-  //   gulp.dest('./dist/')
-  // ] );
 
   pump( pipeline, cb );
 }
@@ -142,8 +156,10 @@ gulp.task( 'img', ( cb ) => {
 } );
 
 gulp.task( 'img-postprocess', ( cb ) => {
-  processImages( 'public', 'dist' ),
-  processImages( 'public', 'ja', cb );
+  processImages( 'public', 'dist' );
+  png2webp( 'dist' , 'dist' );
+  processImages( 'public', 'ja' );
+  png2webp( 'ja' , 'ja', cb );
 } );
 
 gulp.task( 'img-postprocess-ja', ( cb ) => {
@@ -208,8 +224,10 @@ function revision( source = 'dist', dest = 'dist', cb = noop ) {
 }
 
 gulp.task( 'rev', ( cb ) => {
-  revision( 'dist', 'dist' );
+  revision( 'dist', 'dist', cb );
+} );
   // @todo: en and ja should share assets instead of having duplicates
+gulp.task( 'rev-ja', ( cb ) => {
   revision( 'ja', 'ja', cb );
 } );
 
@@ -224,13 +242,12 @@ function revisionRewrite( source = 'dist', dest = 'dist', cb = noop ) {
 }
 
 gulp.task( 'rev-rewrite', ( cb ) => {
-  revisionRewrite( 'dist', 'dist'/*, cb*/ );
-  revisionRewrite( 'ja', 'ja', cb );
+  revisionRewrite( 'dist', 'dist', cb );
 } );
 
-// gulp.task( 'rev-rewrite-ja', ( cb ) => {
-//   revisionRewrite( 'ja', 'ja', cb );
-// } );
+gulp.task( 'rev-rewrite-ja', ( cb ) => {
+  revisionRewrite( 'ja', 'ja', cb );
+} );
 
 gulp.task( 'default',
   gulp.series(
@@ -263,11 +280,12 @@ gulp.task( 'postprocess',
       'jsmin-postprocess',
       'audio-postprocess',
       'favicon-postprocess',
-      'img-postprocess'
     ),
+    'img-postprocess',
     'delocalize',
     'rev',
-    'rev-rewrite'
-    // 'rev-rewrite-ja'
+    'rev-ja',
+    'rev-rewrite',
+    'rev-rewrite-ja'
   )
 );

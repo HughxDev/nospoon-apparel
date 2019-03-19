@@ -29,7 +29,7 @@
     "gulp-rev-delete-original": "^0.2.3",
     "gulp-rev-rewrite": "^1.1.4",
     "gulp-uglify": "^3.0.1",
-    "gulp-webp": "^3.0.0",
+    "gulp-webp": "^4.0.1",
     "jquery": "^3.3.1",
     "jquery.repeater": "^1.2.1",
     "modernizr": "^3.6.0",

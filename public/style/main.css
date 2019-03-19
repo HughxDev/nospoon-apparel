@@ -896,7 +896,8 @@ html[lang="ja"] .sub-brand {
   width: 100%;
 }
 
-.column.column--image > img {
+.column.column--image > img,
+.column.column--image > picture > img {
   width: 100%;
 }
 
@@ -969,7 +970,8 @@ input, select, textarea {
 }
 
 @media only screen and (min-width: 44em) {
-  .column > img {
+  .column > img,
+  .column > picture > img {
     position: sticky;
     position: -webkit-sticky;
     top: 12.5%;

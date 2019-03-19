@@ -8,21 +8,30 @@
           <a class="product-link" title="View product" href="/collection/<%= product.id %>/">
             <% if product.key?('variants') %>
             <% product.variants[0].colorways.each do |colorway| %>
-            <img
-              id="<%= product.id %>--<%= colorway.id %>"
-              src="/collection/<%= product.id %>/product--<%= colorway.id %>.png"
-              srcset="
-                /collection/<%= product.id %>/product--<%= colorway.id %>.png 1x,
-                /collection/<%= product.id %>/product--<%= colorway.id %>@2x.png 2x,
-                /collection/<%= product.id %>/product--<%= colorway.id %>@3x.png 3x"
-              sizes="(min-width: 342px) 256px"
-              width="256"
-              height="256"
-              alt="Product shot"
-              data-translate="PRODUCT_SHOT"
-              data-translate-target="alt"
-              <%= ( product.variants[0].colorways.index(colorway) == 0 ) ? '' : ' hidden' %>
-            />
+            <picture>
+              <source
+                type="image/webp"
+                srcset="
+                  /collection/<%= product.id %>/product--<%= colorway.id %>.webp 1x,
+                  /collection/<%= product.id %>/product--<%= colorway.id %>@2x.webp 2x,
+                  /collection/<%= product.id %>/product--<%= colorway.id %>@3x.webp 3x"
+              />
+              <img
+                id="<%= product.id %>--<%= colorway.id %>"
+                src="/collection/<%= product.id %>/product--<%= colorway.id %>.png"
+                srcset="
+                  /collection/<%= product.id %>/product--<%= colorway.id %>.png 1x,
+                  /collection/<%= product.id %>/product--<%= colorway.id %>@2x.png 2x,
+                  /collection/<%= product.id %>/product--<%= colorway.id %>@3x.png 3x"
+                sizes="(min-width: 342px) 256px"
+                width="256"
+                height="256"
+                alt="Product shot"
+                data-translate="PRODUCT_SHOT"
+                data-translate-target="alt"
+                <%= ( product.variants[0].colorways.index(colorway) == 0 ) ? '' : ' hidden' %>
+              />
+            </picture>
             <% end %>
             <% end %>
           </a>

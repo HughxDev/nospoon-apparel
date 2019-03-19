@@ -171,6 +171,61 @@
     return $tr.id;
   }
 
+  function xhr( url, callback ) {
+    var request;
+
+    if ( window.XMLHttpRequest ) {
+      request = new XMLHttpRequest(); // browsers besides IE
+    } else if ( window.ActiveXObject ) {
+      request = new ActiveXObject( 'Microsoft.XMLHTTP' ); // IE
+    } else {
+      console.error( 'Could not create XHR object!' );
+    }
+
+    request.onreadystatechange = function () {
+      if ( request.readyState === 4 ) { // request completed
+        if ( request.status === 200 ) { // HTTP response code (200 == OK)
+          callback( null, JSON.parse( request.responseText ) );
+        } else {
+          callback( request.status, null );
+        }
+      }
+    };
+    request.open( 'GET', url, true );
+    request.send( '' );
+
+    return request;
+  }
+
+  function getRevisionManifest( callback ) {
+    xhr( '/rev-manifest.json', function getRevisionManifestXhrCallback( error, data ) {
+      if ( !error ) {
+        callback( data );
+      }
+    } )
+  }
+
+  function buildCartImage( product, colorway, revisionManifest ) {
+    var $img = document.createElement( 'img' );
+    var $source = document.createElement( 'source' );
+    var $picture = document.createElement( 'picture' );
+
+    var pngSrc = 'collection/' + product + '/product--' + colorway + '.png';
+    var webpSrc = pngSrc.replace( /\.png$/i, '.webp' );
+
+    $img.width = 128;
+    $img.height = 128;
+    $img.src = '/' + revisionManifest[pngSrc];
+
+    $source.type = 'image/webp';
+    $source.srcset = '/' + revisionManifest[webpSrc];
+
+    $picture.appendChild( $source );
+    $picture.appendChild( $img );
+
+    return $picture;
+  }
+
   function populateCart( cart ) {
     if ( !cart ) {
       cart = JSON.parse( localStorage.getItem( 'cart' ) );
@@ -183,7 +238,12 @@
     var $td;
     var $div;
     var order = [ 'id', 'size', 'colorway', 'quantity', 'actions' ];
-    var $img;
+    // var $img;
+    // var $picture;
+    // var $source;
+    // var webpSrc;
+    // var pngSrc;
+    var cartImageElements = {};
     var orderLength = order.length;
     // var map = [];
     // var mapItem = {};
@@ -199,6 +259,8 @@
     // var $colorwayOption;
     // var currentColorwayOption;
     var $qtySelect;
+    var product;
+    var colorway;
 
     while ( $tbody.firstChild ) {
       $tbody.removeChild( $tbody.firstChild );
@@ -219,11 +281,10 @@
           $div.setAttribute( 'class', 'table-cell-wrapper table-cell-wrapper--cart' );
 
           if ( order[j] === 'id' ) {
-            $img = document.createElement( 'img' );
-            $img.src = '/collection/' + cart[current][order[j]] + '/product--' + cart[current].colorway.id + '.png';
-            $img.width = 128;
-            $img.height = 128;
-            $div.appendChild( $img );
+            product = cart[current][order[j]];
+            colorway = cart[current].colorway.id;
+
+            $div.appendChild( buildCartImage( product, colorway, NoSpoonApparel.revisionManifest ) );
           } else if ( order[j] === 'size' ) {
             $div.textContent = cart[current].size.id;
             // $sizeSelect = document.createElement( 'select' );
@@ -349,7 +410,14 @@
   var $addToCartForm;
   var rowSlideSpeed = 250;
 
-  populateCart();
+  if ( !NoSpoonApparel.revisionManifest ) {
+    getRevisionManifest( function gotRevisionManifest( manifest ) {
+      NoSpoonApparel.revisionManifest = manifest;
+      populateCart();
+    } );
+  } else {
+    populateCart();
+  }
 
   var $$cartContents = $( $cartContents );
   $$cartContents.repeater( {
@@ -524,7 +592,14 @@
       console.log( 'cart', cart );
 
       localStorage.setItem( 'cart', JSON.stringify( cart ) );
-      populateCart( cart );
+      if ( !NoSpoonApparel.revisionManifest ) {
+        getRevisionManifest( function gotRevisionManifest( manifest ) {
+          NoSpoonApparel.revisionManifest = manifest;
+          populateCart( cart );
+        } );
+      } else {
+        populateCart( cart );
+      }
     } );
 
     $yourOrder.addEventListener( 'change', function ( event ) {

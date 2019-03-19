@@ -12,7 +12,7 @@
                 </a>
                 <meta itemprop="position" content="1" />
               </span
-              > <span aria-hidden="true">&gt;</span
+              >&nbsp;<span aria-hidden="true">&gt;</span
               > <span itemprop="itemListElement" itemscope="itemscope" itemtype="http://schema.org/ListItem">
                 <a itemprop="item" href="/collection/t-shirts/" rel="up">
                   <span itemprop="name" data-translate="T_SHIRTS"><%= @copy.T_SHIRTS[@language] %></span>
@@ -25,18 +25,27 @@
             <div id="<%= @data.id %>" class="column column--image">
               <% if @data.key?('variants') %>
               <% @data.variants[0].colorways.each do |colorway| %>
-              <img
-                id="<%= @data.id %>--<%= colorway.id %>"
-                src="/collection/<%= @data.id %>/product--<%= colorway.id %>@2x.png"
-                srcset="
-                  /collection/<%= @data.id %>/product--<%= colorway.id %>@2x.png 1x,
-                  /collection/<%= @data.id %>/product--<%= colorway.id %>@3x.png 2x
-                "
-                alt="Product shot"
-                data-translate="PRODUCT_SHOT"
-                data-translate-target="alt"
-                <%= ( @data.variants[0].colorways.index(colorway) == 0 ) ? '' : ' hidden' %>
-              />
+              <picture>
+                <source
+                  type="image/webp"
+                  srcset="
+                    /collection/<%= @data.id %>/product--<%= colorway.id %>@2x.webp 1x,
+                    /collection/<%= @data.id %>/product--<%= colorway.id %>@3x.webp 2x
+                  "
+                />
+                <img
+                  id="<%= @data.id %>--<%= colorway.id %>"
+                  src="/collection/<%= @data.id %>/product--<%= colorway.id %>@2x.png"
+                  srcset="
+                    /collection/<%= @data.id %>/product--<%= colorway.id %>@2x.png 1x,
+                    /collection/<%= @data.id %>/product--<%= colorway.id %>@3x.png 2x
+                  "
+                  alt="Product shot"
+                  data-translate="PRODUCT_SHOT"
+                  data-translate-target="alt"
+                  <%= ( @data.variants[0].colorways.index(colorway) == 0 ) ? '' : ' hidden' %>
+                />
+              </picture>
               <% end %>
               <% end %>
             </div>
